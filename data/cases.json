@@ -1,0 +1,744 @@
+{
+  "overview": {
+    "what_is_jev": "Jev（jev-1.13.0）是 TypeSafe AI 的 System One 决策模型，只回答类型化选择题（Noul 是非 / Choice 单选 / Score 打分），输出校准概率与置信度，不生成自由文本。厂商称用 RLCD（强化学习校准决策）训练、并行采样一次查询给出全部输出，定位是与慢推理大模型互补的快判断层。",
+    "launch_date": "2026-09-14 官方博客发布（waitlist 制）；09-18 上架 OpenRouter beta；09-22 前后取消候补名单全面开放",
+    "pricing_claim": "输入 $0.042/M token、输出免费；端到端 70-500ms，自称快 40-200x（另有「快 194 倍/便宜 445 倍」口径）；注册送 $5 额度",
+    "caveat": "除框架接入类有官方 release notes 核实外，大部分效果与成本数字为作者自报或转述，尚无独立复现。"
+  },
+  "categories": [
+    {
+      "id": "browser",
+      "name": "浏览器与 Computer Use",
+      "tagline": "每一步选哪个操作、点哪个页面元素",
+      "intro": "点按钮本质是离散多选题，Jev 每步只选操作和元素，单步快、成本低，短任务 demo 普遍在 7 秒级。但转述的长任务实测 Jev 1/20 vs GPT Luna 17/20：零推理、遇弹窗或验证码不会回退。适合短链路和高并发测试，不适合长链路自主操作。",
+      "cases": [
+        {
+          "title": "browser-use/jev-ultrafast",
+          "who": "Browser Use",
+          "what": "每步只做两个决策：选操作、选页面元素",
+          "result": "同任务耗时中位数 9.45s→7.09s，通信次数 1092→101（作者自测三轮）",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-24",
+          "url": "https://github.com/browser-use/jev-ultrafast"
+        },
+        {
+          "title": "Jev × Browser Use 7 秒查航班",
+          "who": "Browser Use（@0xTykoo 转述）",
+          "what": "网页 agent 查苏黎世—伦敦航班",
+          "result": "约 7.1 秒、成本 4 厘美金；计时从初始页面观察完成后开始",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100669930001822202"
+        },
+        {
+          "title": "jev-ultrafast 长链路 20 题实测",
+          "who": "Browser Use 创始人（@SUOHA_AI 转述）",
+          "what": "20 道真实长任务网页操作",
+          "result": "Jev 1/20 vs GPT Luna 17/20；零推理，遇弹窗/验证码不会回退",
+          "evidence": "转述未核",
+          "polarity": "反面",
+          "date": "2026-09-20",
+          "url": "https://x.com/i/status/2101367171687280894"
+        },
+        {
+          "title": "Lightpanda × Jev",
+          "who": "Lightpanda",
+          "what": "Jev 做决策，Lightpanda 浏览器执行点击",
+          "result": "单机 129 个 agent（Chrome 约 12），内存省 11 倍，6.7s vs 14.1s",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103512634293162443"
+        },
+        {
+          "title": "Playwright CLI + Jev 对比 MCP",
+          "who": "filip_hric",
+          "what": "用模糊指令（新建看板）驱动浏览器测试",
+          "result": "比 Playwright MCP 插件便宜 98%、快一倍",
+          "evidence": "第三方实测",
+          "polarity": "正面",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103450014143947164"
+        },
+        {
+          "title": "百路无头浏览器对抗测试",
+          "who": "Rafal Wilinski（前 Zapier AI Agent 负责人）",
+          "what": "在页面状态+预设动作中 100ms 选一个，并发轰炸前端",
+          "result": "上百路无头浏览器一轮几美分；输出免费使并发边际成本近零",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-20",
+          "url": "https://x.com/rafalwilinski/status/2100882207879434359"
+        },
+        {
+          "title": "jev-use（Jev + Cua Driver）",
+          "who": "Cua（@trycua）",
+          "what": "用 Jev + Cua Driver 做快速 computer use",
+          "result": "三平台 dev preview（trycua/cua Draft #3943），无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": ""
+        },
+        {
+          "title": "jevwright",
+          "who": "Ice-Hazymoon",
+          "what": "AI 找一次页面控件并记录，之后照记录回放测试",
+          "result": "7★ 早期项目，作者称成本极低、速度快，无实测数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-29",
+          "url": "https://github.com/Ice-Hazymoon/jevwright"
+        }
+      ]
+    },
+    {
+      "id": "routing",
+      "name": "Agent 路由与调度",
+      "tagline": "这件事交给谁做、用哪个模型、要不要升级",
+      "intro": "路由是在固定候选里挑一个，正好是 Jev 的题型：firstmate 派单 25 个任务与 Fable 判断全同，派单成本降 71%。但把 Jev 当整条编码链路的路由器时，theo 实测耗时约 5 倍、成本略高，Magpie 作者也自述内部测试效果差。路由分错不报错只变差，上线前要先配评测集。",
+      "cases": [
+        {
+          "title": "firstmate 派单决策",
+          "who": "kunchenguid",
+          "what": "派单：读规则、查额度、选 harness×模型×推理力度",
+          "result": "25 任务与 Fable 决策全同，单次~200ms；派单成本 -71%、耗时 -90%",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": "https://x.com/i/status/2100468943853085061"
+        },
+        {
+          "title": "OpenRouter Jev Router",
+          "who": "OpenRouter",
+          "what": "每轮请求前判难度，决定沿用、加推理强度或换模型",
+          "result": "官方自测 423 个 agent 任务 237 vs Auto Router 130（约 +82%）",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-28",
+          "url": "https://x.com/i/status/2104011604472082941"
+        },
+        {
+          "title": "theo 自费实测 Jev Router",
+          "who": "theo（t3.gg 创始人）",
+          "what": "自费 $1,000 用 Jev Router 跑编码任务",
+          "result": "DeepSWE 上与 GPT-6 Astra low 档基本持平、成本略高、耗时约 5 倍",
+          "evidence": "第三方实测",
+          "polarity": "反面",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103774771788108008"
+        },
+        {
+          "title": "Vercel fx auto 模式",
+          "who": "Vercel（rauchg）",
+          "what": "fx 默认 auto 模式用 Jev，每条命令另有安全评审模型把关",
+          "result": "Jev p95 快 18x 且更准（厂商口径）",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": ""
+        },
+        {
+          "title": "Holon 调度器语义判断",
+          "who": "Holon 作者",
+          "what": "事件插队或入队、关联工作项、唤醒睡眠 agent、丢弃过期结果",
+          "result": "好于预期并重启方案；自训分类器因过度保守失败；无量化数据",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-21",
+          "url": "https://x.com/i/status/2101827553048883467"
+        },
+        {
+          "title": "主模型前置分诊台",
+          "who": "一线用户（@realchendahuang 汇总 60 多条反馈）",
+          "what": "主模型前面先分诊，大模型只做兜底",
+          "result": "有团队把 LLM 参与压到约 10%；有人全流程实测 $0.0036",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-24",
+          "url": "https://x.com/i/status/2102744556286652805"
+        },
+        {
+          "title": "MLforge 置信度门",
+          "who": "CoreWeave Hacks 参赛仓 MLforge",
+          "what": "typed Choice + 校准概率决定是否要第二意见",
+          "result": "置信度 <0.40 触发 second_opinion；无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-16",
+          "url": ""
+        },
+        {
+          "title": "Magpie 语义模型路由",
+          "who": "yetone（Magpie）",
+          "what": "按语义给请求选模型",
+          "result": "作者自述内部测试效果差，因大量用户要求仍上线",
+          "evidence": "作者自报",
+          "polarity": "反面",
+          "date": "2026-09-27",
+          "url": "https://x.com/i/status/2104042148496842898"
+        }
+      ]
+    },
+    {
+      "id": "judge",
+      "name": "分类·打分·Judge",
+      "tagline": "这条内容属于哪类、值几分、过不过",
+      "intro": "类目固定、量大的分类和打分是 Jev 最稳的场景：多份第三方实测都是快几倍到几十倍、便宜几十到几百倍。准确率则只是持平或略高：verysmallwoods 实测 Banking77 为 81.6% vs Haiku 80.1%，而嵌入+逻辑回归能到 94.25%。类目固定时经典小模型可能更准更便宜，用前应先对可信标注验证。",
+      "cases": [
+        {
+          "title": "Every 用 Jev 给全部文章打分",
+          "who": "Every（Dan Shipper）",
+          "what": "当 judge 给自己写过的全部内容打分",
+          "result": "实测约一周，对比 Fable 级模型快 25x、便宜 600x",
+          "evidence": "第三方实测",
+          "polarity": "正面",
+          "date": "2026-09-16",
+          "url": "https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds"
+        },
+        {
+          "title": "662 次对照 Haiku 实测",
+          "who": "@verysmallwoods",
+          "what": "两个 Kaggle 分类数据集，对照 Claude Haiku 4.5",
+          "result": "准确率 96.5% vs 93.5%、81.6% vs 80.1%；千次$0.08 vs $2.47",
+          "evidence": "第三方实测",
+          "polarity": "中性",
+          "date": "2026-09-22",
+          "url": "https://x.com/i/status/2102183268137206157"
+        },
+        {
+          "title": "LangChain Jev-as-a-Judge",
+          "who": "LangChain",
+          "what": "回放 500 个真实 agent 决策，对比 LLM judge",
+          "result": "单次约 0.44 秒/$0.00035，质量波动比 LLM judge 低 92~913 倍",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-19",
+          "url": "https://x.com/i/status/2101709596922392606"
+        },
+        {
+          "title": "AI 相关性预筛分类",
+          "who": "@Khazix0918",
+          "what": "AI 相关性预筛分类，对照 GLM 5.3 Flash 等",
+          "result": "GLM 5.3 Flash 全对但最慢最贵；Jev 准确性第二、便宜很多",
+          "evidence": "第三方实测",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100614133171552435"
+        },
+        {
+          "title": "1,018 篇论文主题分类",
+          "who": "nutlope",
+          "what": "DeepSeek V4 Flash 先摘要，再由 Jev 分到 24 个主题",
+          "result": "总价 $0.08，单篇端到端中位 256ms",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": "https://x.com/i/status/2100426999546184123"
+        },
+        {
+          "title": "邮件分类级联",
+          "who": "nutlope",
+          "what": "给邮件分类，拿不准的升级给 Kimi K3",
+          "result": "1.42 秒分完 100 封，96/100 正确，约 $0.07",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100718364922683499"
+        },
+        {
+          "title": "AI 问卷后台换掉 Flash-Lite",
+          "who": "匿名团队（@realchendahuang 汇总）",
+          "what": "替换线上判断接口原用的 Gemini 3.5 Flash-Lite",
+          "result": "速度 x2、成本 -85%",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-24",
+          "url": "https://x.com/i/status/2102744556286652805"
+        },
+        {
+          "title": "Notra 生产分类器切换",
+          "who": "Notra（170⭐）",
+          "what": "生产环境用开关把分类器从 LLM 切到 Jev",
+          "result": "目标 300ms p50",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": ""
+        },
+        {
+          "title": "Kiln 锁模型只改外围",
+          "who": "Kiln",
+          "what": "锁死 Jev，只改输入侧 harness，给多音字「还」注音",
+          "result": "错误减半、成本 1/7",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-27",
+          "url": "https://x.com/i/status/2103880928409862323"
+        },
+        {
+          "title": "嵌入+逻辑回归压过 Jev",
+          "who": "gist 作者 nicobrenner",
+          "what": "Banking77 意图分类：嵌入+逻辑回归对比 Jev 零样本",
+          "result": "bge-large+LR 94.25% vs Jev 零样本 87.0%；分类器 642KB",
+          "evidence": "作者自报",
+          "polarity": "反面",
+          "date": "2026-09-27",
+          "url": "https://gist.github.com/nicobrenner/056a5aaff5d0119c0032ecdad5029557"
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "安全·合规·监控",
+      "tagline": "这条命令或内容危险吗、要不要拦",
+      "intro": "监控和初筛要求量大、便宜，Jev 在成本上优势明显（CoT 监控便宜 566x、漏扫约 $0.02/次）。但两份第三方实测指向同一边界：Southbridge 发现编码绕过即可漏拦，LessWrong 实测对有害样本漏报风险更高；另有红队自报间接注入成功率 43.5%。适合防手滑，不适合单独防蓄意攻击。",
+      "cases": [
+        {
+          "title": "Jev 当 CoT 监控器",
+          "who": "llmpsychosis（LessWrong）",
+          "what": "筛查 2,200 条 ReasoningShield 标注思维链",
+          "result": "精确匹配 71.5%≈Sonnet 5，542ms，便宜 566x；Harmful 级 F1 落后",
+          "evidence": "第三方实测",
+          "polarity": "中性",
+          "date": "2026-09-24",
+          "url": "https://www.lesswrong.com/posts/GHCNKiFzDYThTELFp/jev-as-a-cot-monitor-6x-faster-and-500x-cheaper"
+        },
+        {
+          "title": "Southbridge：Jev 当 agent 监工",
+          "who": "Southbridge",
+          "what": "在 22 万次真实工具调用上判进度、判危险命令",
+          "result": "测进度/估耗时最准；拦危险命令会漏，hex/Python 可绕过、约 1% 重试翻供",
+          "evidence": "第三方实测",
+          "polarity": "中性",
+          "date": "2026-09-21",
+          "url": "https://www.southbridge.ai/blog/jev-watching-the-agents"
+        },
+        {
+          "title": "DTap 红队 Jev 1.13",
+          "who": "自称 DecodingTrust 团队（@zrrrr_cn）",
+          "what": "红队测试 Jev 1.13 驱动的 agent 工具调用",
+          "result": "直接滥用 ASR 70.1%、间接提示注入 43.5%；自门控可显著降 ASR",
+          "evidence": "作者自报",
+          "polarity": "反面",
+          "date": "2026-09-27",
+          "url": "https://x.com/i/status/2104003596375425117"
+        },
+        {
+          "title": "Depth First Labs 漏洞初筛",
+          "who": "Depth First Labs",
+          "what": "漏洞扫描初筛，难例升级给前沿模型",
+          "result": "约 $0.02/次、约 2 秒，称接近 GPT-5.6 Luna 找洞数（自有基准）",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103587218812248390"
+        },
+        {
+          "title": "验证码套利爆料",
+          "who": "@kenonews",
+          "what": "用 Jev 破验证码，对标真人打码市场",
+          "result": "市场约 1 美分/个 vs Jev 0.68 美分/100 个，自算毛利 99.32%",
+          "evidence": "作者自报",
+          "polarity": "反面",
+          "date": "2026-09-21",
+          "url": "https://x.com/i/status/2101656436136661163"
+        },
+        {
+          "title": "jev-security-scan",
+          "who": "win4r",
+          "what": "装前零执行检查 Agent Skill/MCP 有无可疑行为",
+          "result": "本地静态检查 + Jev 判定，不启动服务；1★ 新仓，无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-19",
+          "url": "https://github.com/win4r/jev-security-scan"
+        },
+        {
+          "title": "pg-redact",
+          "who": "pg-redact 作者（Show HN）",
+          "what": "在 Postgres 里做内容感知的 PII 脱敏",
+          "result": "Show HN 2-3 分低热度，无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "realtime",
+      "name": "游戏与实时控制",
+      "tagline": "每秒几次：下一步动作做什么",
+      "intro": "单次几百毫秒、输出免费，让「每一步都问一次模型」变得可负担：贪吃蛇 $1 走一万步，Doom 约 $7/小时。能落地的形态是分层：高频控制留给代码、低频判断给模型、安全层握否决权（jev-drone）。直接拿去做需要预测的交易，转述案例 14 小时亏 300%+。",
+      "cases": [
+        {
+          "title": "TypeSafe 官方 Doom demo",
+          "who": "TypeSafe AI",
+          "what": "让 Jev 实时玩 Doom",
+          "result": "The Register 报道 plays Doom demo；端到端 70-500ms（厂商口径）",
+          "evidence": "官方",
+          "polarity": "正面",
+          "date": "2026-09-16",
+          "url": "https://www.theregister.com/ai-and-ml/2026/09/16/typesafe-ai-debuts-model-for-machines-that-plays-doom/5296711"
+        },
+        {
+          "title": "Doom / Minecraft 实时决策",
+          "who": "@NFT_Chen",
+          "what": "实时打 Doom、Minecraft 自动生存",
+          "result": "Doom 每秒约 10 次决策、约 $7/小时；Minecraft 2 分钟约 1 分钱",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": "https://x.com/i/status/2100234300218388988"
+        },
+        {
+          "title": "Pipecat 语音管线 operator",
+          "who": "@jonptaylor（@kwindla 转述）",
+          "what": "在 Pipecat 语音管线里当 operator 角色",
+          "result": "指令准确率 92.6%、中位 296ms vs GPT-5.6 Luna 81.3%、1008ms",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-20",
+          "url": "https://x.com/i/status/2101394993957274021"
+        },
+        {
+          "title": "jev-drone 无人机战术层",
+          "who": "RomanSlack",
+          "what": "仿真无人机每秒约 3 次战术判断，安全层握否决权",
+          "result": "0 碰撞，目标可见率 19%→82%，安全反射介入 65-71%→9%",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-27",
+          "url": "https://github.com/RomanSlack/jev-drone"
+        },
+        {
+          "title": "JevHarness 玩宝可梦",
+          "who": "TianyuCodings",
+          "what": "LLM 先写任务专属决策流程，冻结后只跑代码+Jev 判断",
+          "result": "宝可梦 5 轮迭代胜率 25%→75%（@NFT_Chen 推文口径）",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-21",
+          "url": "https://github.com/TianyuCodings/JevHarness"
+        },
+        {
+          "title": "贪吃蛇每步一问",
+          "who": "@chenchengpro",
+          "what": "贪吃蛇每走一步问一次 Jev",
+          "result": "200 请求 $0.02，$1 可走一万步",
+          "evidence": "第三方实测",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": "https://x.com/i/status/2100516953496670430"
+        },
+        {
+          "title": "jev-pokemon",
+          "who": "christianmat",
+          "what": "用 Jev 的决策速度玩宝可梦红",
+          "result": "开源，全程直播 token 与成本；无胜率数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-25",
+          "url": "https://jev-pokemon.vercel.app/"
+        },
+        {
+          "title": "链上自动交易",
+          "who": "Monad 团队 @jarrodwatts（@SUOHA_AI 转述）",
+          "what": "纯 AI 原生链上自动交易系统",
+          "result": "demo 跑 14 小时亏 300%+",
+          "evidence": "转述未核",
+          "polarity": "反面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100619720772694036"
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "name": "上下文·记忆·检索",
+      "tagline": "哪段代码、哪个技能、哪条记忆该进上下文",
+      "intro": "Jev 在这里做「留谁、选谁」：Jevgrep 逐层缩小代码范围，10 个任务成本 $7.62→$5.44。但纯检索和压缩并不稳：GoSail 实测重排没打赢 bge-m3，Teknium 发现 Jev 即时压缩等价于一条删工具调用的规则，而且每次压缩都会打断缓存。",
+      "cases": [
+        {
+          "title": "Jevgrep",
+          "who": "dzhng",
+          "what": "逐层缩小代码搜索范围，给 coding agent 带行号片段",
+          "result": "10 个任务成本 $7.62→$5.44；v0.4 称与 subagent 持平、省 30%",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-28",
+          "url": "https://github.com/dzhng/jevgrep"
+        },
+        {
+          "title": "Hermes 压缩评测证伪即时压缩",
+          "who": "Teknium（Hermes）",
+          "what": "在 Hermes 公开压缩评测上跑 Jev 即时压缩",
+          "result": "结果等价于直接删工具调用的程序化规则；每次压缩打断缓存",
+          "evidence": "第三方实测",
+          "polarity": "反面",
+          "date": "2026-09-21",
+          "url": "https://x.com/Teknium/status/2101398453578555898"
+        },
+        {
+          "title": "Agent Skills Hub 检索重排",
+          "who": "GoSail",
+          "what": "给 33,047 条技能目录做检索重排",
+          "result": "164 条查询、9,831 对标注、总成本 $2.6；Jev 单独重排没打赢 bge-m3",
+          "evidence": "第三方实测",
+          "polarity": "反面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100877682972258619"
+        },
+        {
+          "title": "Jev-Mem 记忆控制器",
+          "who": "报告作者未核（@omarsar0 转述）",
+          "what": "轻量控制器全权做记忆存取，LLM 只在最后作答",
+          "result": "构建快 6.6x、查询延迟降 36.7%，LoCoMo 0.777、较最强基线 +11%",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103603205821366311"
+        },
+        {
+          "title": "Jev Skill Suggestion",
+          "who": "claude-code-templates Mod（@realfxw 推荐）",
+          "what": "按用户指令挑出高置信度命中的技能再注入",
+          "result": "技能常态零占用上下文；无独立效果数据",
+          "evidence": "转述未核",
+          "polarity": "中性",
+          "date": "2026-09-21",
+          "url": "https://x.com/i/status/2101942956567433395"
+        },
+        {
+          "title": "Instant compaction 插件",
+          "who": "@tamarajtran",
+          "what": "给工具调用打分、丢弃无关项做即时压缩",
+          "result": "插件已开源；@NFT_Chen 演示 156k→62k（该号有炒作前科）",
+          "evidence": "转述未核",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": ""
+        },
+        {
+          "title": "RSI-Jev 记忆排序 RL",
+          "who": "Shanghua Gao",
+          "what": "在 2B 决策模型上用 RL 学把正确记忆排在前面",
+          "result": "59 个 RL 实验多数失败；有效做法使长记忆基准 +60%",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-29",
+          "url": "https://github.com/Shanghua-Gao/RSI-Jev"
+        },
+        {
+          "title": "Custom Relevance 排序",
+          "who": "jev.foglight.co",
+          "what": "描述需求，让 Jev 给内容做相关性排序",
+          "result": "Show HN 2-3 分低热度，无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "platform",
+      "name": "框架与平台接入",
+      "tagline": "框架内的类型化判断：Noul/Choice/Score",
+      "intro": "发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。",
+      "cases": [
+        {
+          "title": "OpenRouter 上架 Jev",
+          "who": "OpenRouter",
+          "what": "官宣 Jev 上架 OpenRouter beta",
+          "result": "waitlist 期结束，可直接调用",
+          "evidence": "官方",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100744709589316009"
+        },
+        {
+          "title": "pydantic-ai TypeSafeModel",
+          "who": "Pydantic",
+          "what": "pydantic-ai v2.45.0 新增 TypeSafeModel",
+          "result": "release notes 核实；19,869★ 框架原生接入",
+          "evidence": "官方",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": ""
+        },
+        {
+          "title": "DSPy 3.4.0 决策类型",
+          "who": "DSPy",
+          "what": "新增 Noul/Choice/Score 三种实验性决策类型",
+          "result": "ReAnchor 优化器按任务指标校准决策置信度（release notes 核实）",
+          "evidence": "官方",
+          "polarity": "正面",
+          "date": "2026-09-25",
+          "url": ""
+        },
+        {
+          "title": "LangChain：Building a Harness with Jev",
+          "who": "LangChain（Sydney Runkle）",
+          "what": "把 Jev 当 agent 决策层写进 harness 指南",
+          "result": "官方账号官宣「LangChain 🤝 Jev!」；登上 Interrupt 主题演讲",
+          "evidence": "官方",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": "https://x.com/i/status/2100843185383862626"
+        },
+        {
+          "title": "Vercel AI Gateway",
+          "who": "Vercel",
+          "what": "Jev 进 Vercel AI Gateway，免排队直调",
+          "result": "Arcturus 转述：Vercel 称其为 AI Gateway 史上采用最快模型",
+          "evidence": "转述未核",
+          "polarity": "正面",
+          "date": "2026-09-18",
+          "url": ""
+        },
+        {
+          "title": "Pydantic AI Gateway",
+          "who": "Pydantic",
+          "what": "Pydantic AI Gateway 上架 Jev",
+          "result": "一个 key 统一管用量与护栏；价格、限流未披露",
+          "evidence": "官方",
+          "polarity": "中性",
+          "date": "2026-09-26",
+          "url": "https://x.com/i/status/2103559381530955859"
+        },
+        {
+          "title": "DuckDB 扩展",
+          "who": "hamiltonulmer",
+          "what": "做成 DuckDB 扩展，SQL 里逐行给 CSV/parquet 分类",
+          "result": "1k 行约 10 秒，作者称优于通用 LLM 分类",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-17",
+          "url": "https://x.com/i/status/2100370557405667768"
+        },
+        {
+          "title": "Bannerbear 字段映射",
+          "who": "Bannerbear（@yongfook）",
+          "what": "模板与数据源字段名不一致时一键映射",
+          "result": "首个公开上线用例；无效果数据",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-18",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "opensource",
+      "name": "开源复刻与自部署",
+      "tagline": "不调 API，在本地做同一道选择题",
+      "intro": "Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。",
+      "cases": [
+        {
+          "title": "Jev in 25 Lines of Python",
+          "who": "nobodywho.ai",
+          "what": "25 行 Python 读本地小模型的选项 logits 复现 Jev",
+          "result": "Qwen3-0.6B GGUF 钓鱼分类给出 Phishing 0.885；HN 329 分",
+          "evidence": "作者自报",
+          "polarity": "反面",
+          "date": "2026-09-23",
+          "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/"
+        },
+        {
+          "title": "logprobs 限选项分类 + 视觉",
+          "who": "allanrbo",
+          "what": "用普通模型 logprobs 做限选项分类，含摄像头画面",
+          "result": "本地 Gemma 4 12B 三问判断约 1 FPS，gpt-6-luna 约 0.2 FPS",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-28",
+          "url": "http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html"
+        },
+        {
+          "title": "Bespoke-Nimble-9B",
+          "who": "Bespoke Labs",
+          "what": "Qwen3.5-9B LoRA 复刻，数据、权重、配方全公开",
+          "result": "324 条自建评测 Nimble 90.1% vs Jev 93.2%（原始 9B 66.4%）",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-19",
+          "url": "https://github.com/bespokelabsai/nimble"
+        },
+        {
+          "title": "DiffusionGemma 当本地 Jev",
+          "who": "Matt Mastracci / vLLM",
+          "what": "vLLM 补丁把 DiffusionGemma 当本地 Jev 跑",
+          "result": "与云端 Jev 智能大致打平，暖机后本地 DGX Spark 多数任务更快",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-20",
+          "url": "https://x.com/mmastrac/status/2100626193943052784"
+        },
+        {
+          "title": "CLM-8B",
+          "who": "斯坦福＋NVIDIA（@jackyk02 牵头）",
+          "what": "对比学习把「状态→动作」决策做成向量检索",
+          "result": "自称比 Jev 推理快最多 9 倍、效果相当；微调后 DeepSWE 81.6%",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-25",
+          "url": "https://github.com/Contrastive-LM/CLM"
+        },
+        {
+          "title": "Together tev1-4B",
+          "who": "Together AI（nutlope）",
+          "what": "Qwen3.5 4B 自训 Jev 式决策模型并上架",
+          "result": "训练 $17、约 25 分钟、37,840 条示例；输入 $0.042/M、输出免费",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-24",
+          "url": "https://github.com/togethercomputer/tev1"
+        },
+        {
+          "title": "$42 自训 Jev 级判断模型",
+          "who": "AstroHanRay",
+          "what": "Qwen3.5-4B + rank-8 LoRA + RLCD 复刻",
+          "result": "3.2 万题、9 GPU 小时约 $42；自称 JevBench 120 题逐题打平",
+          "evidence": "作者自报",
+          "polarity": "正面",
+          "date": "2026-09-21",
+          "url": "https://x.com/i/status/2101709185155231895"
+        },
+        {
+          "title": "Kev 4B",
+          "who": "Jared Palmer",
+          "what": "开源 Kev 4B，走与 Jev 相同的 /v1/systemone 契约",
+          "result": "OpenRouter 在架，$0.042/M 输入、$0 输出，约 $0.019/千次决策",
+          "evidence": "官方",
+          "polarity": "中性",
+          "date": "2026-09-26",
+          "url": "https://openrouter.ai/jaredpalmer/kev-4b"
+        },
+        {
+          "title": "githubnext/localjev",
+          "who": "GitHub Next",
+          "what": "团队不是人人有 Jev 权限，用本地推理拼「穷人版 Jev」",
+          "result": "对比评测 diffusiongemma/Qwen MoE/Gemma 4；174★，结论数字未读",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-19",
+          "url": "https://github.com/githubnext/localjev"
+        },
+        {
+          "title": "Jevstiller",
+          "who": "Jevstiller 作者（Show HN）",
+          "what": "用 Jev 答案蒸馏本地小模型抢答，拿不准回落 Jev",
+          "result": "本地 CPU 约 15ms、Jev API 约 300ms；用公式约束与 Jev 一致率下限",
+          "evidence": "作者自报",
+          "polarity": "中性",
+          "date": "2026-09-29",
+          "url": "https://jevstiller.pages.dev/posts/the-guarantee/"
+        }
+      ]
+    }
+  ]
+}

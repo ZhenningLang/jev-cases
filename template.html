@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jev 落地图鉴</title>
+<meta name="description" content="__DESC__">
+<meta property="og:title" content="Jev 落地图鉴：判断题，别让 AI 写作文">
+<meta property="og:description" content="__DESC__">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__SITE__">
+<meta property="og:image" content="__SITE__og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="__SITE__og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a field guide. Hero = one live "Jev response" specimen; index = one plate per category (the plate is a sample decision drawn as a probability distribution); below, each category is a ledger of cases. */
+:root {
+  --bg: #eceee9;
+  --paper: #f7f8f5;
+  --ink: #15171b;
+  --muted: #5d6268;
+  --rule: #cfd3cc;
+  --accent: #2448e8;
+  --accent-soft: #d9e0fb;
+  --bar: #c5cac2;
+  --pos: #1f7a4d;
+  --neg: #b4382f;
+  --neutral: #7a6f2e;
+  --font-display: "Schibsted Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step-0: 0.9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(1.9rem, 4vw, 2.6rem);
+  --step-4: clamp(2.4rem, 7vw, 4.6rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
+    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
+  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px); background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Top bar */
+.topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 20px; padding-block: 14px; border-bottom: 1px solid var(--rule); font-size: 0.85rem; }
+.topbar .brand { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.topbar nav { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.topbar a { text-decoration: none; }
+.topbar a:hover { color: var(--accent); }
+.wx { display: inline-flex; align-items: center; gap: 6px; }
+.wx b { color: var(--accent); font-weight: 700; }
+
+/* Hero */
+.hero { padding-block: 56px 40px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+.hero h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 12px 0 20px; text-wrap: balance; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lede { max-width: 36em; margin: 0; color: var(--muted); font-size: var(--step-1); line-height: 1.75; }
+.hero .facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 24px; }
+.hero .facts div { display: grid; }
+.hero .facts b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; }
+.specimen { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px; font-family: var(--font-mono); font-size: 0.82rem; min-width: 0; }
+.specimen .q { font-family: var(--font-body); font-size: 1rem; font-weight: 500; margin: 6px 0 16px; }
+.specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: 0.74rem; }
+
+/* distribution rows (shared by hero + plates) */
+.dist { display: grid; gap: 9px; }
+.dist .row { display: grid; grid-template-columns: minmax(0, 8.5em) minmax(0, 1fr) 3.2em; gap: 10px; align-items: center; }
+.dist .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dist .track { height: 10px; background: color-mix(in srgb, var(--bar) 40%, transparent); border-radius: 2px; overflow: hidden; }
+.dist .fill { height: 100%; background: var(--bar); width: 0; transition: width 900ms cubic-bezier(.2,.7,.2,1); }
+.dist .row.win .fill { background: var(--accent); }
+.dist .row.win .name, .dist .row.win .p { color: var(--accent); font-weight: 500; }
+.dist .p { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Index of plates */
+.section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
+.section-head h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; margin: 0; letter-spacing: -0.01em; }
+.plates { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; padding-block: 22px 8px; }
+.plate { display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; transition: transform 200ms ease, border-color 200ms ease; min-width: 0; }
+.plate:hover { transform: translateY(-3px); border-color: var(--accent); }
+.plate .art { aspect-ratio: 16 / 10; max-width: 100%; padding: 16px; border-bottom: 1px solid var(--rule); background:
+  linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 100% 20px; background-color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; }
+.plate .art .q { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--ink); line-height: 1.4; background: var(--paper); align-self: flex-start; padding-right: 6px; }
+.plate .art .dist { gap: 6px; }
+.plate .art .dist .row { grid-template-columns: minmax(0, 6.2em) minmax(0, 1fr) 2.8em; gap: 8px; background: var(--paper); }
+.plate .art .dist .track { height: 7px; }
+.plate .body { padding: 14px 16px 16px; display: grid; gap: 6px; flex: 1; align-content: start; }
+.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.plate h3 .n { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.plate p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+.plate .go { margin-top: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
+
+/* score & noul variants */
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: end; height: 64px; }
+.scale .col { display: grid; gap: 4px; justify-items: center; height: 100%; grid-template-rows: 1fr auto; }
+.scale .bar { width: 100%; background: var(--bar); border-radius: 2px 2px 0 0; align-self: end; height: 0; transition: height 900ms cubic-bezier(.2,.7,.2,1); }
+.scale .col.win .bar { background: var(--accent); }
+.scale .col.win span { color: var(--accent); font-weight: 500; }
+.noul { display: grid; gap: 8px; }
+.noul .split { display: flex; height: 22px; border-radius: 3px; overflow: hidden; }
+.noul .split div { height: 100%; }
+.noul .legend { display: flex; justify-content: space-between; }
+
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 18px 0; }
+.chip { font: inherit; font-family: var(--font-mono); font-size: 0.78rem; background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 13px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Category ledgers */
+.cat { padding-block: 44px 8px; scroll-margin-top: 16px; }
+.cat-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 40px; align-items: start; border-top: 2px solid var(--ink); padding-top: 16px; }
+.cat-head h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: 900; line-height: 1.08; margin: 4px 0 0; letter-spacing: -0.02em; text-wrap: balance; }
+.cat-head p { margin: 0; max-width: 38em; }
+.cat-head .tag { color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+.cases { list-style: none; margin: 18px 0 0; padding: 0; }
+.case { display: grid; grid-template-columns: 6.2em minmax(0, 1.2fr) minmax(0, 1fr) 8.5em; gap: 6px 22px; padding-block: 16px; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.case .date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.case .title { font-weight: 700; line-height: 1.45; }
+.case .title a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
+.case .title a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+.case .who { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); }
+.case .what { margin: 2px 0 0; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+.case .result { font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.6; }
+.case .result .pol { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+.pol.pos { background: var(--pos); } .pol.neg { background: var(--neg); } .pol.neu { background: var(--neutral); }
+.ev { font-family: var(--font-mono); font-size: 0.72rem; justify-self: start; border: 1px solid var(--rule); border-radius: 4px; padding: 1px 7px; white-space: nowrap; color: var(--muted); }
+.ev.official { border-color: var(--ink); color: var(--ink); }
+.ev.third { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.empty { padding: 18px 0; color: var(--muted); font-size: 0.9rem; }
+
+.follow { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center; padding: 26px 28px; border-radius: 14px; background: var(--ink); color: var(--bg); }
+.follow h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; }
+.follow p { margin: 0; opacity: 0.8; max-width: 40em; }
+.follow .name { font-family: var(--font-display); font-weight: 900; font-size: 1.25rem; border: 1px solid currentColor; border-radius: 8px; padding: 10px 16px; white-space: nowrap; }
+.case .anchor { margin-left: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; opacity: 0; }
+.case:hover .anchor, .case .anchor:focus-visible { opacity: 1; }
+.case:target { background: var(--accent-soft); }
+@media (max-width: 640px) { .follow { grid-template-columns: minmax(0, 1fr); } .case .anchor { opacity: 1; } }
+footer { margin-top: 32px; padding-block: 24px 48px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.85rem; display: grid; gap: 6px; }
+footer p { margin: 0; max-width: 60em; }
+.legend-line { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; color: var(--muted); font-size: 0.8rem; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 36px 24px; }
+  .cat-head { grid-template-columns: minmax(0, 1fr); }
+  .case { grid-template-columns: minmax(0, 1fr) auto; }
+  .case .date { grid-column: 1; grid-row: 1; }
+  .case .ev { grid-column: 2; grid-row: 1; justify-self: end; }
+  .case .main, .case .result { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="brand">jev-cases · 更新于 __UPDATED__</span>
+    <nav>
+      <a class="wx" href="#follow">公众号 <b>小郎碎碎念</b></a>
+      <a href="__REPO__/issues/new?title=%E6%8F%90%E4%BA%A4%E6%A1%88%E4%BE%8B%EF%BC%9A&body=%E8%B0%81%E5%81%9A%E7%9A%84%EF%BC%9A%0A%E7%94%A8+Jev+%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%EF%BC%9A%0A%E7%BB%93%E6%9E%9C%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89%EF%BC%9A%0A%E6%9D%A5%E6%BA%90%E9%93%BE%E6%8E%A5%EF%BC%9A" target="_blank" rel="noopener">提交案例 ↗</a>
+      <a href="__REPO__" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+  <header class="hero">
+    <div>
+      <div class="label">Field guide · 新模型落地案例 · 第 1 册</div>
+      <h1>Jev 落地图鉴<br><em>判断题</em>，<span style="white-space:nowrap">别让 AI 写作文</span></h1>
+      <p class="lede">__LEDE__</p>
+      <div class="facts">__FACTS__</div>
+    </div>
+    <figure class="specimen" aria-label="一次 Jev 请求的示意">
+      <div class="label">POST /v1/classifier · 示意</div>
+      <div class="q">这封邮件应该转给哪个团队？</div>
+      <div class="dist">__HERO__</div>
+      <div class="foot"><span>type: choice · 4 candidates</span><span>output_tokens: 0</span></div>
+    </figure>
+  </header>
+
+  <section aria-labelledby="idx">
+    <div class="section-head">
+      <h2 id="idx">按「让它判断什么」分类</h2>
+      <span class="label">__COUNT__</span>
+    </div>
+    <div class="plates">__PLATES__</div>
+  </section>
+
+  <div class="filters" role="group" aria-label="按证据筛选">
+    <span class="label">筛选</span>
+    <button class="chip" id="f-all" data-f="all" aria-pressed="true">全部</button>
+    <button class="chip" id="f-third" data-f="third" aria-pressed="false">只看第三方实测 / 官方</button>
+    <button class="chip" id="f-neg" data-f="neg" aria-pressed="false">只看反面结果</button>
+  </div>
+  <div class="legend-line" style="padding-top:10px">
+    <span><i class="pol pos" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 正面</span>
+    <span><i class="pol neg" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 反面</span>
+    <span><i class="pol neu" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 中性 / 有保留</span>
+    <span>每类卡片上的分布图是示意，不是实测数据</span>
+  </div>
+
+  <main>__CATS__</main>
+
+  <section class="follow" id="follow" aria-labelledby="follow-h">
+    <div>
+      <h2 id="follow-h">这些案例背后的判断，我写在公众号里</h2>
+      <p>哪类场景该交给 Jev、哪类别碰、怎么先配评测集再上线。AI 编程工程化的实操，微信搜索公众号关注。</p>
+    </div>
+    <span class="name">小郎碎碎念</span>
+  </section>
+
+  <footer>
+    <p>__CAVEAT__</p>
+    <p>发现遗漏或错误，请在 <a href="__REPO__/issues" target="_blank" rel="noopener">GitHub Issues</a> 提交，附来源链接。素材来自个人 RSS 信息流（2026-09-14 起的 X、HN、博客与 GitHub），整理于 2026-09-29。数字与结论照录来源，标签说明证据强度：官方 = 官方渠道核实；第三方实测 = 独立测评；作者自报 = 作者自己说的，未复现；转述未核 = 二手转述，原始材料没拿到。</p>
+  </footer>
+</div>
+
+<script>
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  document.querySelectorAll("[data-w]").forEach(el => el.style.width = el.dataset.w + "%");
+  document.querySelectorAll("[data-h]").forEach(el => el.style.height = el.dataset.h + "%");
+}));
+function applyFilter(f) {
+  document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === f)));
+  document.querySelectorAll(".cat").forEach(sec => {
+    let shown = 0;
+    sec.querySelectorAll(".case").forEach(li => {
+      const ok = f === "all" || (f === "third" && (li.dataset.ev === "third" || li.dataset.ev === "official")) || (f === "neg" && li.dataset.pol === "neg");
+      li.hidden = !ok; if (ok) shown++;
+    });
+    sec.querySelector(".empty").hidden = shown > 0;
+  });
+  try { localStorage.setItem("jev-filter", f); } catch (e) {}
+}
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.f)));
+let saved = "all";
+try { saved = localStorage.getItem("jev-filter") || "all"; } catch (e) {}
+// A shared link to one case must show that case, so it overrides the remembered filter.
+applyFilter(location.hash.includes("-") ? "all" : (["all", "third", "neg"].includes(saved) ? saved : "all"));
+</script>
+</body>
+</html>
