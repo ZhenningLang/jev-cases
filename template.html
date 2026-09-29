@@ -29,6 +29,7 @@
   --pos: #1f7a4d;
   --neg: #b4382f;
   --neutral: #7a6f2e;
+  --panel-l: 0.93; --panel-c: 0.045; --strong-l: 0.5; --strong-c: 0.16; --soft-l: 0.8; --soft-c: 0.08;
   --font-display: "Schibsted Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
   --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -41,18 +42,19 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+html, body { overflow-x: clip; }
 body { margin: 0; padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px); background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
 a { color: inherit; }
@@ -69,16 +71,36 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .wx { display: inline-flex; align-items: center; gap: 6px; }
 .wx b { color: var(--accent); font-weight: 700; }
 
-/* Hero */
-.hero { padding-block: 56px 40px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: end; }
-.hero h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 12px 0 20px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p.lede { max-width: 36em; margin: 0; color: var(--muted); font-size: var(--step-1); line-height: 1.75; }
-.hero .facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 24px; }
-.hero .facts div { display: grid; }
-.hero .facts b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; }
+/* Intro: key info first */
+.intro { padding-block: 40px 8px; display: grid; gap: 14px; }
+.intro h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.intro .sub { margin: 0; font-size: var(--step-1); color: var(--muted); max-width: 36em; line-height: 1.6; }
+.intro .sub b { color: var(--ink); font-weight: 700; }
+.intro .row { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 4px; }
+.primer { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.85rem; padding: 7px 14px 7px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper); transition: border-color 200ms ease, transform 200ms ease; }
+.primer:hover { border-color: var(--accent); transform: translateY(-1px); }
+.primer .glyph { display: inline-grid; gap: 2px; width: 22px; }
+.primer .glyph i { display: block; height: 3px; border-radius: 2px; background: var(--bar); }
+.primer .glyph i:first-child { background: var(--accent); width: 100%; } .primer .glyph i:nth-child(2) { width: 40%; } .primer .glyph i:nth-child(3) { width: 18%; }
+.primer .arrow { color: var(--accent); font-family: var(--font-mono); }
+.intro .meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+/* About Jev (end of page) */
+.about { margin-top: 64px; padding-top: 18px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: start; scroll-margin-top: 16px; }
+.about h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: 900; line-height: 1.1; margin: 4px 0 14px; letter-spacing: -0.02em; }
+.about p { margin: 0 0 14px; max-width: 36em; }
+.about .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 18px 0; font-size: 0.88rem; }
+.about .facts dt { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); padding-top: 2px; }
+.about .facts dd { margin: 0; }
+.about blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); color: var(--muted); font-size: 0.9rem; }
+.about blockquote b { color: var(--ink); font-size: 1.05rem; }
+.back { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); text-decoration: none; }
 .specimen { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px; font-family: var(--font-mono); font-size: 0.82rem; min-width: 0; }
-.specimen .q { font-family: var(--font-body); font-size: 1rem; font-weight: 500; margin: 6px 0 16px; }
+.specimen .ask, .specimen .ans { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 12px; align-items: start; }
+.specimen .ask { font-family: var(--font-body); font-size: 1rem; font-weight: 500; line-height: 1.5; margin: 14px 0 16px; }
+.specimen .ask small { font-weight: 400; font-size: 0.8rem; color: var(--muted); }
+.specimen .who { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; color: var(--muted); padding-top: 3px; }
+.specimen .ans .who { color: var(--accent); padding-top: 0; }
 .specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: 0.74rem; }
 
 /* distribution rows (shared by hero + plates) */
@@ -91,34 +113,40 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .dist .row.win .name, .dist .row.win .p { color: var(--accent); font-weight: 500; }
 .dist .p { text-align: right; font-variant-numeric: tabular-nums; }
 
-/* Index of plates */
+/* Index of plates: each category gets its own hue (--h, an oklch hue); lightness and chroma come from theme tokens */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
 .section-head h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; margin: 0; letter-spacing: -0.01em; }
-.plates { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; padding-block: 22px 8px; }
-.plate { display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; transition: transform 200ms ease, border-color 200ms ease; min-width: 0; }
-.plate:hover { transform: translateY(-3px); border-color: var(--accent); }
-.plate .art { aspect-ratio: 16 / 10; max-width: 100%; padding: 16px; border-bottom: 1px solid var(--rule); background:
-  linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 100% 20px; background-color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; }
-.plate .art .q { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--ink); line-height: 1.4; background: var(--paper); align-self: flex-start; padding-right: 6px; }
-.plate .art .dist { gap: 6px; }
-.plate .art .dist .row { grid-template-columns: minmax(0, 6.2em) minmax(0, 1fr) 2.8em; gap: 8px; background: var(--paper); }
-.plate .art .dist .track { height: 7px; }
-.plate .body { padding: 14px 16px 16px; display: grid; gap: 6px; flex: 1; align-content: start; }
-.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.plates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding-block: 22px 8px; }
+.plate { --tint: oklch(var(--panel-l) var(--panel-c) var(--h)); --strong: oklch(var(--strong-l) var(--strong-c) var(--h)); --soft: oklch(var(--soft-l) var(--soft-c) var(--h));
+  display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; transition: transform 220ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease; min-width: 0; }
+.plate:hover { transform: translateY(-4px); border-color: var(--strong); }
+.plate .art { background: var(--tint); padding: 16px 16px 0; display: grid; grid-template-rows: auto 1fr; min-height: 220px; }
+.plate .stat { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.9rem, 3.2vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; color: var(--strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plate .stat-label { min-height: 2.9em; margin-top: 6px; font-size: 0.82rem; line-height: 1.45; color: var(--ink); max-width: 17em; }
+.plate .stat-src { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+.plate svg { display: block; width: 100%; height: auto; max-width: 100%; margin-top: 10px; align-self: end; }
+.plate svg .s { fill: var(--strong); } .plate svg .so { fill: var(--soft); } .plate svg .pp { fill: var(--paper); } .plate svg .ik { fill: var(--ink); }
+.plate svg .ln { stroke: var(--strong); fill: none; stroke-width: 2; stroke-linecap: round; } .plate svg .lnm { stroke: var(--soft); fill: none; stroke-width: 2; }
+.plate svg text { font-family: var(--font-mono); font-size: 10px; fill: var(--ink); }
+.plate svg text.on { fill: var(--paper); font-weight: 500; }
+.plate svg text.st { fill: var(--strong); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; }
+.plate svg text.st2 { font-size: 15px; font-weight: 700; }
+.plate .body { padding: 14px 16px 16px; display: grid; gap: 8px; flex: 1; align-content: start; }
+.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.12rem; font-weight: 900; line-height: 1.3; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .plate h3 .n { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-.plate p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
-.plate .go { margin-top: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
-
-/* score & noul variants */
-.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: end; height: 64px; }
-.scale .col { display: grid; gap: 4px; justify-items: center; height: 100%; grid-template-rows: 1fr auto; }
-.scale .bar { width: 100%; background: var(--bar); border-radius: 2px 2px 0 0; align-self: end; height: 0; transition: height 900ms cubic-bezier(.2,.7,.2,1); }
-.scale .col.win .bar { background: var(--accent); }
-.scale .col.win span { color: var(--accent); font-weight: 500; }
-.noul { display: grid; gap: 8px; }
-.noul .split { display: flex; height: 22px; border-radius: 3px; overflow: hidden; }
-.noul .split div { height: 100%; }
-.noul .legend { display: flex; justify-content: space-between; }
+.plate .judges { margin: 0; font-size: 0.86rem; line-height: 1.55; color: var(--muted); }
+.plate .pit { margin: 0; font-size: 0.8rem; line-height: 1.5; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+.plate .pit::before { content: "翻车"; flex: none; font-family: var(--font-mono); font-size: 0.66rem; color: var(--neg); border: 1px solid var(--neg); border-radius: 3px; padding: 0 4px; }
+.plate .go { font-family: var(--font-mono); font-size: 0.75rem; color: var(--strong); }
+.swipe-hint { display: none; }
+@media (max-width: 1000px) { .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .plates { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .plates::-webkit-scrollbar { display: none; }
+  .plate { flex: 0 0 82%; scroll-snap-align: start; }
+  .plate .art { min-height: 0; }
+  .swipe-hint { display: inline; }
+}
 
 /* Filters */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 18px 0; }
@@ -160,7 +188,7 @@ footer p { margin: 0; max-width: 60em; }
 .legend-line { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; color: var(--muted); font-size: 0.8rem; }
 
 @media (max-width: 860px) {
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 36px 24px; }
+  .about { grid-template-columns: minmax(0, 1fr); }
   .cat-head { grid-template-columns: minmax(0, 1fr); }
   .case { grid-template-columns: minmax(0, 1fr) auto; }
   .case .date { grid-column: 1; grid-row: 1; }
@@ -172,32 +200,27 @@ footer p { margin: 0; max-width: 60em; }
 <body>
 <div class="wrap">
   <div class="topbar">
-    <span class="brand">jev-cases · 更新于 __UPDATED__</span>
+    <span class="brand">jev-cases</span>
     <nav>
       <a class="wx" href="#follow">公众号 <b>小郎碎碎念</b></a>
       <a href="__REPO__/issues/new?title=%E6%8F%90%E4%BA%A4%E6%A1%88%E4%BE%8B%EF%BC%9A&body=%E8%B0%81%E5%81%9A%E7%9A%84%EF%BC%9A%0A%E7%94%A8+Jev+%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%EF%BC%9A%0A%E7%BB%93%E6%9E%9C%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89%EF%BC%9A%0A%E6%9D%A5%E6%BA%90%E9%93%BE%E6%8E%A5%EF%BC%9A" target="_blank" rel="noopener">提交案例 ↗</a>
       <a href="__REPO__" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
   </div>
-  <header class="hero">
-    <div>
-      <div class="label">Field guide · 新模型落地案例 · 第 1 册</div>
-      <h1>Jev 落地图鉴<br><em>判断题</em>，<span style="white-space:nowrap">别让 AI 写作文</span></h1>
-      <p class="lede">__LEDE__</p>
-      <div class="facts">__FACTS__</div>
+  <header class="intro">
+    <div class="label">新模型落地案例 · 第 1 册 · Jev</div>
+    <h1>Jev 落地图鉴</h1>
+    <p class="sub"><b>__TOTAL__ 个真实案例</b>，按「让它判断什么」分成 <b>__NCAT__ 类</b>。每类先看一个亮点数字、一个翻车点，再点进去看全部案例和来源。</p>
+    <div class="row">
+      <a class="primer" href="#about"><span class="glyph" aria-hidden="true"><i></i><i></i><i></i></span>第一次听说 Jev？30 秒看懂<span class="arrow">↓</span></a>
+      <span class="meta">更新于 __UPDATED__</span>
     </div>
-    <figure class="specimen" aria-label="一次 Jev 请求的示意">
-      <div class="label">POST /v1/classifier · 示意</div>
-      <div class="q">这封邮件应该转给哪个团队？</div>
-      <div class="dist">__HERO__</div>
-      <div class="foot"><span>type: choice · 4 candidates</span><span>output_tokens: 0</span></div>
-    </figure>
   </header>
 
   <section aria-labelledby="idx">
     <div class="section-head">
       <h2 id="idx">按「让它判断什么」分类</h2>
-      <span class="label">__COUNT__</span>
+      <span class="label">__COUNT__<span class="swipe-hint"> · 左右滑动</span></span>
     </div>
     <div class="plates">__PLATES__</div>
   </section>
@@ -212,10 +235,27 @@ footer p { margin: 0; max-width: 60em; }
     <span><i class="pol pos" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 正面</span>
     <span><i class="pol neg" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 反面</span>
     <span><i class="pol neu" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 中性 / 有保留</span>
-    <span>每类卡片上的分布图是示意，不是实测数据</span>
+    <span>卡片上的大数字取自该类最有代表性的一条案例，下方小字是来源和证据强度</span>
   </div>
 
   <main>__CATS__</main>
+
+  <section class="about" id="about" aria-labelledby="about-h">
+    <div>
+      <div class="label">附录</div>
+      <h2 id="about-h">Jev 是什么</h2>
+      <p>__LEDE__</p>
+      <dl class="facts">__FACTS__</dl>
+      <blockquote><b>判断题，别让 AI 写作文。</b><br>Vonng《<a href="https://vonng.com/ai/jev-shutup-model/" target="_blank" rel="noopener">无嘴模型：AI 的 OLTP 时刻</a>》</blockquote>
+      <p style="margin-top:18px"><a class="back" href="#idx">↑ 回到分类</a></p>
+    </div>
+    <figure class="specimen" aria-label="一次 Jev 调用的示意">
+      <div class="label">示意 · 一次调用长这样</div>
+      <div class="ask"><span class="who">你问</span><span>这封邮件该转给哪个团队？<br><small>选项：账单 / 技术支持 / 销售 / 垃圾邮件</small></span></div>
+      <div class="ans"><span class="who">Jev 答</span><div class="dist">__HERO__</div></div>
+      <div class="foot"><span>不写一个字，只给每个选项的概率</span><span>输出 0 token</span></div>
+    </figure>
+  </section>
 
   <section class="follow" id="follow" aria-labelledby="follow-h">
     <div>
