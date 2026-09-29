@@ -29,6 +29,7 @@
   --pos: #1f7a4d;
   --neg: #b4382f;
   --neutral: #7a6f2e;
+  --panel-l: 0.93; --panel-c: 0.045; --strong-l: 0.5; --strong-c: 0.16; --soft-l: 0.8; --soft-c: 0.08;
   --font-display: "Schibsted Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
   --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -41,18 +42,19 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070;
+  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+html, body { overflow-x: clip; }
 body { margin: 0; padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px); background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
 a { color: inherit; }
@@ -69,16 +71,36 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .wx { display: inline-flex; align-items: center; gap: 6px; }
 .wx b { color: var(--accent); font-weight: 700; }
 
-/* Hero */
-.hero { padding-block: 56px 40px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: end; }
-.hero h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 12px 0 20px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p.lede { max-width: 36em; margin: 0; color: var(--muted); font-size: var(--step-1); line-height: 1.75; }
-.hero .facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 24px; }
-.hero .facts div { display: grid; }
-.hero .facts b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; }
+/* Intro: key info first */
+.intro { padding-block: 40px 8px; display: grid; gap: 14px; }
+.intro h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.intro .sub { margin: 0; font-size: var(--step-1); color: var(--muted); max-width: 36em; line-height: 1.6; }
+.intro .sub b { color: var(--ink); font-weight: 700; }
+.intro .row { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 4px; }
+.primer { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.85rem; padding: 7px 14px 7px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper); transition: border-color 200ms ease, transform 200ms ease; }
+.primer:hover { border-color: var(--accent); transform: translateY(-1px); }
+.primer .glyph { display: inline-grid; gap: 2px; width: 22px; }
+.primer .glyph i { display: block; height: 3px; border-radius: 2px; background: var(--bar); }
+.primer .glyph i:first-child { background: var(--accent); width: 100%; } .primer .glyph i:nth-child(2) { width: 40%; } .primer .glyph i:nth-child(3) { width: 18%; }
+.primer .arrow { color: var(--accent); font-family: var(--font-mono); }
+.intro .meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+/* About Jev (end of page) */
+.about { margin-top: 64px; padding-top: 18px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: start; scroll-margin-top: 16px; }
+.about h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: 900; line-height: 1.1; margin: 4px 0 14px; letter-spacing: -0.02em; }
+.about p { margin: 0 0 14px; max-width: 36em; }
+.about .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 18px 0; font-size: 0.88rem; }
+.about .facts dt { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); padding-top: 2px; }
+.about .facts dd { margin: 0; }
+.about blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); color: var(--muted); font-size: 0.9rem; }
+.about blockquote b { color: var(--ink); font-size: 1.05rem; }
+.back { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); text-decoration: none; }
 .specimen { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px; font-family: var(--font-mono); font-size: 0.82rem; min-width: 0; }
-.specimen .q { font-family: var(--font-body); font-size: 1rem; font-weight: 500; margin: 6px 0 16px; }
+.specimen .ask, .specimen .ans { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 12px; align-items: start; }
+.specimen .ask { font-family: var(--font-body); font-size: 1rem; font-weight: 500; line-height: 1.5; margin: 14px 0 16px; }
+.specimen .ask small { font-weight: 400; font-size: 0.8rem; color: var(--muted); }
+.specimen .who { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; color: var(--muted); padding-top: 3px; }
+.specimen .ans .who { color: var(--accent); padding-top: 0; }
 .specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: 0.74rem; }
 
 /* distribution rows (shared by hero + plates) */
@@ -91,34 +113,40 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .dist .row.win .name, .dist .row.win .p { color: var(--accent); font-weight: 500; }
 .dist .p { text-align: right; font-variant-numeric: tabular-nums; }
 
-/* Index of plates */
+/* Index of plates: each category gets its own hue (--h, an oklch hue); lightness and chroma come from theme tokens */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
 .section-head h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; margin: 0; letter-spacing: -0.01em; }
-.plates { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; padding-block: 22px 8px; }
-.plate { display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; transition: transform 200ms ease, border-color 200ms ease; min-width: 0; }
-.plate:hover { transform: translateY(-3px); border-color: var(--accent); }
-.plate .art { aspect-ratio: 16 / 10; max-width: 100%; padding: 16px; border-bottom: 1px solid var(--rule); background:
-  linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 100% 20px; background-color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; }
-.plate .art .q { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--ink); line-height: 1.4; background: var(--paper); align-self: flex-start; padding-right: 6px; }
-.plate .art .dist { gap: 6px; }
-.plate .art .dist .row { grid-template-columns: minmax(0, 6.2em) minmax(0, 1fr) 2.8em; gap: 8px; background: var(--paper); }
-.plate .art .dist .track { height: 7px; }
-.plate .body { padding: 14px 16px 16px; display: grid; gap: 6px; flex: 1; align-content: start; }
-.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.plates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding-block: 22px 8px; }
+.plate { --tint: oklch(var(--panel-l) var(--panel-c) var(--h)); --strong: oklch(var(--strong-l) var(--strong-c) var(--h)); --soft: oklch(var(--soft-l) var(--soft-c) var(--h));
+  display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; transition: transform 220ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease; min-width: 0; }
+.plate:hover { transform: translateY(-4px); border-color: var(--strong); }
+.plate .art { background: var(--tint); padding: 16px 16px 0; display: grid; grid-template-rows: auto 1fr; min-height: 220px; }
+.plate .stat { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.9rem, 3.2vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; color: var(--strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plate .stat-label { min-height: 2.9em; margin-top: 6px; font-size: 0.82rem; line-height: 1.45; color: var(--ink); max-width: 17em; }
+.plate .stat-src { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+.plate svg { display: block; width: 100%; height: auto; max-width: 100%; margin-top: 10px; align-self: end; }
+.plate svg .s { fill: var(--strong); } .plate svg .so { fill: var(--soft); } .plate svg .pp { fill: var(--paper); } .plate svg .ik { fill: var(--ink); }
+.plate svg .ln { stroke: var(--strong); fill: none; stroke-width: 2; stroke-linecap: round; } .plate svg .lnm { stroke: var(--soft); fill: none; stroke-width: 2; }
+.plate svg text { font-family: var(--font-mono); font-size: 10px; fill: var(--ink); }
+.plate svg text.on { fill: var(--paper); font-weight: 500; }
+.plate svg text.st { fill: var(--strong); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; }
+.plate svg text.st2 { font-size: 15px; font-weight: 700; }
+.plate .body { padding: 14px 16px 16px; display: grid; gap: 8px; flex: 1; align-content: start; }
+.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.12rem; font-weight: 900; line-height: 1.3; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .plate h3 .n { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-.plate p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
-.plate .go { margin-top: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
-
-/* score & noul variants */
-.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: end; height: 64px; }
-.scale .col { display: grid; gap: 4px; justify-items: center; height: 100%; grid-template-rows: 1fr auto; }
-.scale .bar { width: 100%; background: var(--bar); border-radius: 2px 2px 0 0; align-self: end; height: 0; transition: height 900ms cubic-bezier(.2,.7,.2,1); }
-.scale .col.win .bar { background: var(--accent); }
-.scale .col.win span { color: var(--accent); font-weight: 500; }
-.noul { display: grid; gap: 8px; }
-.noul .split { display: flex; height: 22px; border-radius: 3px; overflow: hidden; }
-.noul .split div { height: 100%; }
-.noul .legend { display: flex; justify-content: space-between; }
+.plate .judges { margin: 0; font-size: 0.86rem; line-height: 1.55; color: var(--muted); }
+.plate .pit { margin: 0; font-size: 0.8rem; line-height: 1.5; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+.plate .pit::before { content: "翻车"; flex: none; font-family: var(--font-mono); font-size: 0.66rem; color: var(--neg); border: 1px solid var(--neg); border-radius: 3px; padding: 0 4px; }
+.plate .go { font-family: var(--font-mono); font-size: 0.75rem; color: var(--strong); }
+.swipe-hint { display: none; }
+@media (max-width: 1000px) { .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .plates { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .plates::-webkit-scrollbar { display: none; }
+  .plate { flex: 0 0 82%; scroll-snap-align: start; }
+  .plate .art { min-height: 0; }
+  .swipe-hint { display: inline; }
+}
 
 /* Filters */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 18px 0; }
@@ -160,7 +188,7 @@ footer p { margin: 0; max-width: 60em; }
 .legend-line { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; color: var(--muted); font-size: 0.8rem; }
 
 @media (max-width: 860px) {
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 36px 24px; }
+  .about { grid-template-columns: minmax(0, 1fr); }
   .cat-head { grid-template-columns: minmax(0, 1fr); }
   .case { grid-template-columns: minmax(0, 1fr) auto; }
   .case .date { grid-column: 1; grid-row: 1; }
@@ -172,96 +200,170 @@ footer p { margin: 0; max-width: 60em; }
 <body>
 <div class="wrap">
   <div class="topbar">
-    <span class="brand">jev-cases · 更新于 2026-09-29</span>
+    <span class="brand">jev-cases</span>
     <nav>
       <a class="wx" href="#follow">公众号 <b>小郎碎碎念</b></a>
       <a href="https://github.com/ZhenningLang/jev-cases/issues/new?title=%E6%8F%90%E4%BA%A4%E6%A1%88%E4%BE%8B%EF%BC%9A&body=%E8%B0%81%E5%81%9A%E7%9A%84%EF%BC%9A%0A%E7%94%A8+Jev+%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%EF%BC%9A%0A%E7%BB%93%E6%9E%9C%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89%EF%BC%9A%0A%E6%9D%A5%E6%BA%90%E9%93%BE%E6%8E%A5%EF%BC%9A" target="_blank" rel="noopener">提交案例 ↗</a>
       <a href="https://github.com/ZhenningLang/jev-cases" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
   </div>
-  <header class="hero">
-    <div>
-      <div class="label">Field guide · 新模型落地案例 · 第 1 册</div>
-      <h1>Jev 落地图鉴<br><em>判断题</em>，<span style="white-space:nowrap">别让 AI 写作文</span></h1>
-      <p class="lede">Jev（jev-1.13.0）是 TypeSafe AI 的 System One 决策模型，只回答类型化选择题（Noul 是非 / Choice 单选 / Score 打分），输出校准概率与置信度，不生成自由文本。厂商称用 RLCD（强化学习校准决策）训练、并行采样一次查询给出全部输出，定位是与慢推理大模型互补的快判断层。</p>
-      <div class="facts"><div><span class="label">发布</span><b>2026-09-14</b></div><div><span class="label">收录案例</span><b>67 个</b></div><div><span class="label">分类</span><b>8 类</b></div></div>
+  <header class="intro">
+    <div class="label">新模型落地案例 · 第 1 册 · Jev</div>
+    <h1>Jev 落地图鉴</h1>
+    <p class="sub"><b>67 个真实案例</b>，按「让它判断什么」分成 <b>8 类</b>。每类先看一个亮点数字、一个翻车点，再点进去看全部案例和来源。</p>
+    <div class="row">
+      <a class="primer" href="#about"><span class="glyph" aria-hidden="true"><i></i><i></i><i></i></span>第一次听说 Jev？30 秒看懂<span class="arrow">↓</span></a>
+      <span class="meta">更新于 2026-09-29</span>
     </div>
-    <figure class="specimen" aria-label="一次 Jev 请求的示意">
-      <div class="label">POST /v1/classifier · 示意</div>
-      <div class="q">这封邮件应该转给哪个团队？</div>
-      <div class="dist"><div class="row win"><span class="name">billing</span><span class="track"><span class="fill" style="display:block" data-w="81"></span></span><span class="p">0.81</span></div><div class="row"><span class="name">tech-support</span><span class="track"><span class="fill" style="display:block" data-w="12"></span></span><span class="p">0.12</span></div><div class="row"><span class="name">sales</span><span class="track"><span class="fill" style="display:block" data-w="5"></span></span><span class="p">0.05</span></div><div class="row"><span class="name">spam</span><span class="track"><span class="fill" style="display:block" data-w="2"></span></span><span class="p">0.02</span></div></div>
-      <div class="foot"><span>type: choice · 4 candidates</span><span>output_tokens: 0</span></div>
-    </figure>
   </header>
 
   <section aria-labelledby="idx">
     <div class="section-head">
       <h2 id="idx">按「让它判断什么」分类</h2>
-      <span class="label">8 类 · 67 个案例 · 点卡片跳到该类</span>
+      <span class="label">8 类 · 67 个案例 · 点卡片跳到该类<span class="swipe-hint"> · 左右滑动</span></span>
     </div>
     <div class="plates">
-    <a class="plate" href="#browser">
-      <div class="art" aria-hidden="true"><div class="q">下一步点哪个元素？</div><div class="dist"><div class="row win"><span class="name">#search-btn</span><span class="track"><span class="fill" style="display:block" data-w="86"></span></span><span class="p">0.86</span></div><div class="row"><span class="name">#cookie-ok</span><span class="track"><span class="fill" style="display:block" data-w="9"></span></span><span class="p">0.09</span></div><div class="row"><span class="name">#nav-login</span><span class="track"><span class="fill" style="display:block" data-w="4"></span></span><span class="p">0.04</span></div><div class="row"><span class="name">其他</span><span class="track"><span class="fill" style="display:block" data-w="1"></span></span><span class="p">0.01</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>choice</span><span>示意</span></div></div>
+    <a class="plate" href="#browser" style="--h:250">
+      <div class="art">
+        <div><div class="stat">7 秒</div>
+        <div class="stat-label">查完一次航班<span class="stat-src">Browser Use · 转述未核</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
+<circle cx="20" cy="16" r="3" class="pp"/><circle cx="30" cy="16" r="3" class="pp"/><circle cx="40" cy="16" r="3" class="pp"/><rect x="54" y="11" width="120" height="10" rx="5" class="pp"/>
+<rect x="22" y="36" width="92" height="6" rx="3" class="so"/><rect x="22" y="48" width="150" height="6" rx="3" class="so"/><rect x="22" y="60" width="118" height="6" rx="3" class="so"/>
+<rect x="22" y="76" width="56" height="20" rx="5" class="so"/><text x="50" y="90" text-anchor="middle">取消</text>
+<rect x="88" y="76" width="80" height="20" rx="5" class="s"/><text x="128" y="90" text-anchor="middle" class="on">搜索航班</text>
+<path d="M156 86 L156 104 L160.5 99.5 L164 107 L167 105.6 L163.6 98.4 L170 98.4 Z" class="ik"/></svg>
+      </div>
       <div class="body">
         <h3>浏览器与 Computer Use<span class="n">8 例</span></h3>
-        <p>每一步选哪个操作、点哪个页面元素</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">每一步选哪个操作、点哪个页面元素</p>
+        <p class="pit">长任务 20 道只做对 1 道</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#routing">
-      <div class="art" aria-hidden="true"><div class="q">这个任务交给哪个模型？</div><div class="dist"><div class="row win"><span class="name">Astra·low</span><span class="track"><span class="fill" style="display:block" data-w="64"></span></span><span class="p">0.64</span></div><div class="row"><span class="name">Fable·high</span><span class="track"><span class="fill" style="display:block" data-w="21"></span></span><span class="p">0.21</span></div><div class="row"><span class="name">本地 Qwen</span><span class="track"><span class="fill" style="display:block" data-w="15"></span></span><span class="p">0.15</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>choice</span><span>示意</span></div></div>
+    <a class="plate" href="#routing" style="--h:295">
+      <div class="art">
+        <div><div class="stat">−71%</div>
+        <div class="stat-label">派单成本，25 个任务与 Fable 判断全同<span class="stat-src">firstmate · 作者自报</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<path d="M70 55 C 110 55, 110 20, 150 20" class="lnm"/><path d="M70 55 L150 55" class="ln" stroke-width="3"/><path d="M70 55 C 110 55, 110 90, 150 90" class="lnm"/>
+<rect x="6" y="38" width="64" height="34" rx="6" class="pp"/><text x="38" y="59" text-anchor="middle">新任务</text>
+<rect x="150" y="8" width="84" height="24" rx="12" class="so"/><text x="192" y="24" text-anchor="middle">大模型 · 贵</text>
+<rect x="150" y="43" width="84" height="24" rx="12" class="s"/><text x="192" y="59" text-anchor="middle" class="on">小模型 · 快 ✓</text>
+<rect x="150" y="78" width="84" height="24" rx="12" class="so"/><text x="192" y="94" text-anchor="middle">转人工</text></svg>
+      </div>
       <div class="body">
         <h3>Agent 路由与调度<span class="n">8 例</span></h3>
-        <p>这件事交给谁做、用哪个模型、要不要升级</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">这件事交给谁做、用哪个模型、要不要升级</p>
+        <p class="pit">theo 实测编码路由：耗时约 5 倍</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#judge">
-      <div class="art" aria-hidden="true"><div class="q">这篇文章和 AI 编程的相关度（1–5）</div><div class="scale"><div class="col"><div class="bar" data-h="4"></div><span>1</span></div><div class="col"><div class="bar" data-h="10"></div><span>2</span></div><div class="col"><div class="bar" data-h="25"></div><span>3</span></div><div class="col win"><div class="bar" data-h="100"></div><span>4</span></div><div class="col"><div class="bar" data-h="54"></div><span>5</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>score</span><span>示意</span></div></div>
+    <a class="plate" href="#judge" style="--h:155">
+      <div class="art">
+        <div><div class="stat">600×</div>
+        <div class="stat-label">比 Fable 级模型便宜，给文章打分<span class="stat-src">Every · 第三方实测</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<rect x="8" y="14" width="44" height="56" rx="4" class="so"/><rect x="14" y="20" width="44" height="56" rx="4" class="pp"/>
+<rect x="20" y="30" width="30" height="4" rx="2" class="so"/><rect x="20" y="40" width="24" height="4" rx="2" class="so"/><rect x="20" y="50" width="28" height="4" rx="2" class="so"/>
+<path d="M66 48 C 110 20, 150 10, 172 30" class="ln" stroke-dasharray="4 5"/>
+<g transform="rotate(14 172 42)"><rect x="160" y="28" width="24" height="30" rx="3" class="pp"/><rect x="165" y="36" width="14" height="3" rx="1.5" class="so"/><rect x="165" y="43" width="10" height="3" rx="1.5" class="so"/></g>
+<rect x="96" y="66" width="44" height="38" rx="5" class="so"/><text x="118" y="92" text-anchor="middle">账单</text>
+<rect x="148" y="66" width="44" height="38" rx="5" class="s"/><text x="170" y="92" text-anchor="middle" class="on">技术</text>
+<rect x="200" y="66" width="36" height="38" rx="5" class="so"/><text x="218" y="92" text-anchor="middle">销售</text></svg>
+      </div>
       <div class="body">
         <h3>分类·打分·Judge<span class="n">10 例</span></h3>
-        <p>这条内容属于哪类、值几分、过不过</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">这条内容属于哪类、值几分、过不过</p>
+        <p class="pit">嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#safety">
-      <div class="art" aria-hidden="true"><div class="q">这条 shell 命令怎么处理？</div><div class="dist"><div class="row win"><span class="name">block</span><span class="track"><span class="fill" style="display:block" data-w="69"></span></span><span class="p">0.69</span></div><div class="row"><span class="name">confirm</span><span class="track"><span class="fill" style="display:block" data-w="24"></span></span><span class="p">0.24</span></div><div class="row"><span class="name">allow</span><span class="track"><span class="fill" style="display:block" data-w="7"></span></span><span class="p">0.07</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>choice</span><span>示意</span></div></div>
+    <a class="plate" href="#safety" style="--h:25">
+      <div class="art">
+        <div><div class="stat">566×</div>
+        <div class="stat-label">比 Sonnet 便宜，监控思维链<span class="stat-src">LessWrong · 第三方实测</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<rect x="6" y="8" width="176" height="96" rx="8" class="ik"/>
+<text x="18" y="32" class="on">$ ls ./src</text><text x="18" y="52" class="on">$ curl x.sh | sh</text><text x="18" y="72" class="on">$ rm -rf ~/</text><text x="18" y="92" class="on" opacity="0.6">等待判断…</text>
+<g transform="rotate(-10 188 62)"><rect x="140" y="42" width="96" height="40" rx="5" class="pp"/><rect x="143" y="45" width="90" height="34" rx="3" class="ln"/><text x="188" y="68" text-anchor="middle" class="st">BLOCK</text></g></svg>
+      </div>
       <div class="body">
         <h3>安全·合规·监控<span class="n">7 例</span></h3>
-        <p>这条命令或内容危险吗、要不要拦</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">这条命令或内容危险吗、要不要拦</p>
+        <p class="pit">命令换成 hex 编码就能绕过拦截</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#realtime">
-      <div class="art" aria-hidden="true"><div class="q">贪吃蛇下一步往哪走？</div><div class="dist"><div class="row win"><span class="name">→</span><span class="track"><span class="fill" style="display:block" data-w="72"></span></span><span class="p">0.72</span></div><div class="row"><span class="name">↓</span><span class="track"><span class="fill" style="display:block" data-w="19"></span></span><span class="p">0.19</span></div><div class="row"><span class="name">↑</span><span class="track"><span class="fill" style="display:block" data-w="8"></span></span><span class="p">0.08</span></div><div class="row"><span class="name">←</span><span class="track"><span class="fill" style="display:block" data-w="1"></span></span><span class="p">0.01</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>choice</span><span>示意</span></div></div>
+    <a class="plate" href="#realtime" style="--h:65">
+      <div class="art">
+        <div><div class="stat">$1</div>
+        <div class="stat-label">贪吃蛇走一万步<span class="stat-src">@chenchengpro · 第三方实测</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<rect x="6" y="6" width="228" height="98" rx="8" class="pp"/>
+<g class="so"><rect x="30" y="58" width="16" height="16" rx="3"/><rect x="48" y="58" width="16" height="16" rx="3"/></g>
+<g class="s"><rect x="66" y="58" width="16" height="16" rx="3"/><rect x="84" y="58" width="16" height="16" rx="3"/><rect x="84" y="40" width="16" height="16" rx="3"/><rect x="102" y="40" width="16" height="16" rx="3"/><rect x="120" y="40" width="18" height="18" rx="4"/></g>
+<path d="M144 49 L196 49" class="ln" stroke-dasharray="3 5"/><circle cx="208" cy="49" r="7" class="ik"/>
+<text x="120" y="92">→ 0.72   ↓ 0.19   ↑ 0.08</text></svg>
+      </div>
       <div class="body">
         <h3>游戏与实时控制<span class="n">8 例</span></h3>
-        <p>每秒几次：下一步动作做什么</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">每秒几次：下一步动作做什么</p>
+        <p class="pit">链上自动交易 14 小时亏 300%+</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#context">
-      <div class="art" aria-hidden="true"><div class="q">这段技能说明和当前任务相关吗？</div><div class="noul"><div class="split"><div style="width:83%;background:var(--accent)"></div><div style="width:17%;background:var(--bar)"></div></div><div class="legend"><span>true 0.83</span><span>false 0.17</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>noul</span><span>示意</span></div></div>
+    <a class="plate" href="#context" style="--h:200">
+      <div class="art">
+        <div><div class="stat">−29%</div>
+        <div class="stat-label">Jevgrep 跑 10 个任务的成本：$7.62→$5.44<span class="stat-src">dzhng · 作者自报</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<g class="so"><rect x="8" y="10" width="70" height="6" rx="3"/><rect x="8" y="21" width="52" height="6" rx="3"/><rect x="8" y="32" width="80" height="6" rx="3"/><rect x="8" y="43" width="60" height="6" rx="3"/><rect x="8" y="54" width="76" height="6" rx="3"/><rect x="8" y="65" width="44" height="6" rx="3"/><rect x="8" y="76" width="66" height="6" rx="3"/><rect x="8" y="87" width="56" height="6" rx="3"/></g>
+<rect x="8" y="32" width="80" height="6" rx="3" class="s"/><rect x="8" y="65" width="44" height="6" rx="3" class="s"/>
+<path d="M98 8 L150 36" class="lnm"/><path d="M98 100 L150 74" class="lnm"/>
+<rect x="150" y="28" width="84" height="54" rx="6" class="pp"/><rect x="160" y="42" width="60" height="7" rx="3" class="s"/><rect x="160" y="56" width="40" height="7" rx="3" class="s"/>
+<text x="192" y="100" text-anchor="middle">只留 2 段进上下文</text></svg>
+      </div>
       <div class="body">
         <h3>上下文·记忆·检索<span class="n">8 例</span></h3>
-        <p>哪段代码、哪个技能、哪条记忆该进上下文</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">哪段代码、哪个技能、哪条记忆该进上下文</p>
+        <p class="pit">检索重排没打赢 bge-m3</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#platform">
-      <div class="art" aria-hidden="true"><div class="q">这条回答被给定上下文支持吗？</div><div class="noul"><div class="split"><div style="width:91%;background:var(--accent)"></div><div style="width:9%;background:var(--bar)"></div></div><div class="legend"><span>true 0.91</span><span>false 0.09</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>noul</span><span>示意</span></div></div>
+    <a class="plate" href="#platform" style="--h:340">
+      <div class="art">
+        <div><div class="stat">6 家</div>
+        <div class="stat-label">框架和网关两周内接入<span class="stat-src">官方 release notes / 官方账号</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<g class="lnm"><path d="M120 55 L42 20"/><path d="M120 55 L198 20"/><path d="M120 55 L40 55"/><path d="M120 55 L200 55"/><path d="M120 55 L42 90"/><path d="M120 55 L198 90"/></g>
+<g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
+<g text-anchor="middle"><text x="42" y="24">OpenRouter</text><text x="198" y="24">Vercel</text><text x="40" y="59">LangChain</text><text x="200" y="59">DSPy</text><text x="42" y="94">pydantic-ai</text><text x="198" y="94">Pydantic GW</text></g>
+<circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text></svg>
+      </div>
       <div class="body">
         <h3>框架与平台接入<span class="n">8 例</span></h3>
-        <p>框架内的类型化判断：Noul/Choice/Score</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">在常用框架和网关里直接调用 Jev</p>
+        <p class="pit">只证明能接，不证明好用</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a>
-    <a class="plate" href="#opensource">
-      <div class="art" aria-hidden="true"><div class="q">这条工单属于哪一类？（本地 4B）</div><div class="dist"><div class="row win"><span class="name">退款</span><span class="track"><span class="fill" style="display:block" data-w="74"></span></span><span class="p">0.74</span></div><div class="row"><span class="name">物流</span><span class="track"><span class="fill" style="display:block" data-w="17"></span></span><span class="p">0.17</span></div><div class="row"><span class="name">其他</span><span class="track"><span class="fill" style="display:block" data-w="9"></span></span><span class="p">0.09</span></div></div><div style="display:flex;justify-content:space-between;color:var(--muted)"><span>choice</span><span>示意</span></div></div>
+    <a class="plate" href="#opensource" style="--h:110">
+      <div class="art">
+        <div><div class="stat">$17</div>
+        <div class="stat-label">25 分钟自训一个同类模型<span class="stat-src">Together AI · 作者自报</span></div></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+<rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
+<text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
+<path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
+<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg>
+      </div>
       <div class="body">
         <h3>开源复刻与自部署<span class="n">10 例</span></h3>
-        <p>不调 API，在本地做同一道选择题</p>
-        <span class="go">查看案例 ↓</span>
+        <p class="judges">不调 API，在本地做同一道选择题</p>
+        <p class="pit">自报成绩多略低于 Jev，还没有中立横评</p>
+        <span class="go">看全部案例 ↓</span>
       </div>
     </a></div>
   </section>
@@ -276,7 +378,7 @@ footer p { margin: 0; max-width: 60em; }
     <span><i class="pol pos" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 正面</span>
     <span><i class="pol neg" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 反面</span>
     <span><i class="pol neu" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 中性 / 有保留</span>
-    <span>每类卡片上的分布图是示意，不是实测数据</span>
+    <span>卡片上的大数字取自该类最有代表性的一条案例，下方小字是来源和证据强度</span>
   </div>
 
   <main>
@@ -778,7 +880,7 @@ footer p { margin: 0; max-width: 60em; }
     <section class="cat" id="platform" aria-labelledby="h-platform">
       <div class="cat-head">
         <div><div class="label">8 个案例</div><h2 id="h-platform">框架与平台接入</h2></div>
-        <div><p class="tag">框架内的类型化判断：Noul/Choice/Score</p><p>发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。</p></div>
+        <div><p class="tag">在常用框架和网关里直接调用 Jev</p><p>发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。</p></div>
       </div>
       <ul class="cases">
         <li class="case" id="platform-1" data-ev="official" data-pol="pos">
@@ -955,6 +1057,23 @@ footer p { margin: 0; max-width: 60em; }
       </ul>
       <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
     </section></main>
+
+  <section class="about" id="about" aria-labelledby="about-h">
+    <div>
+      <div class="label">附录</div>
+      <h2 id="about-h">Jev 是什么</h2>
+      <p>Jev 是 TypeSafe 在 9 月 14 日发布的模型。它不写文字，只做选择题：给它一段内容和几个选项，它直接返回每个选项的概率。所以它快、便宜，适合 agent 里「选哪个」「过不过」「危不危险」这类小判断。</p>
+      <dl class="facts"><dt>发布</dt><dd>2026-09-14 官方博客发布（waitlist 制）；09-18 上架 OpenRouter beta；09-22 前后取消候补名单全面开放</dd><dt>价格与速度</dt><dd>厂商口径：输入 $0.042/M token、输出免费；端到端 70-500ms，自称快 40-200x（另有「快 194 倍/便宜 445 倍」口径）；注册送 $5 额度</dd><dt>注意</dt><dd>除框架接入类有官方 release notes 核实外，大部分效果与成本数字为作者自报或转述，尚无独立复现。</dd></dl>
+      <blockquote><b>判断题，别让 AI 写作文。</b><br>Vonng《<a href="https://vonng.com/ai/jev-shutup-model/" target="_blank" rel="noopener">无嘴模型：AI 的 OLTP 时刻</a>》</blockquote>
+      <p style="margin-top:18px"><a class="back" href="#idx">↑ 回到分类</a></p>
+    </div>
+    <figure class="specimen" aria-label="一次 Jev 调用的示意">
+      <div class="label">示意 · 一次调用长这样</div>
+      <div class="ask"><span class="who">你问</span><span>这封邮件该转给哪个团队？<br><small>选项：账单 / 技术支持 / 销售 / 垃圾邮件</small></span></div>
+      <div class="ans"><span class="who">Jev 答</span><div class="dist"><div class="row win"><span class="name">账单</span><span class="track"><span class="fill" style="display:block" data-w="81"></span></span><span class="p">0.81</span></div><div class="row"><span class="name">技术支持</span><span class="track"><span class="fill" style="display:block" data-w="12"></span></span><span class="p">0.12</span></div><div class="row"><span class="name">销售</span><span class="track"><span class="fill" style="display:block" data-w="5"></span></span><span class="p">0.05</span></div><div class="row"><span class="name">垃圾邮件</span><span class="track"><span class="fill" style="display:block" data-w="2"></span></span><span class="p">0.02</span></div></div></div>
+      <div class="foot"><span>不写一个字，只给每个选项的概率</span><span>输出 0 token</span></div>
+    </figure>
+  </section>
 
   <section class="follow" id="follow" aria-labelledby="follow-h">
     <div>
