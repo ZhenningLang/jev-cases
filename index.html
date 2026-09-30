@@ -7,7 +7,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#15171b">
+<meta name="theme-color" content="#fbf6ee">
 <meta name="description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
 <meta property="og:title" content="Jev 落地图鉴：判断题，别让 AI 写作文">
 <meta property="og:description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
@@ -19,26 +19,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Non-blocking: where Google Fonts is unreachable (e.g. mainland China) the page renders at once with system fonts. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <style>
-/* Layout: a field guide. Hero = one live "Jev response" specimen; index = one plate per category (the plate is a sample decision drawn as a probability distribution); below, each category is a ledger of cases. */
+/* Layout: an evidence ledger. Tokens and rationale live in DESIGN.md (light = open-design warm-editorial). */
 :root {
-  --bg: #eceee9;
-  --paper: #f7f8f5;
-  --ink: #15171b;
-  --muted: #5d6268;
-  --rule: #cfd3cc;
-  --accent: #2448e8;
-  --accent-soft: #d9e0fb;
-  --bar: #c5cac2;
-  --pos: #1f7a4d;
-  --neg: #b4382f;
-  --neutral: #7a6f2e;
-  --panel-l: 0.93; --panel-c: 0.045; --strong-l: 0.5; --strong-c: 0.16; --soft-l: 0.8; --soft-c: 0.08;
-  --font-display: "Schibsted Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
-  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --bg: #fbf6ee;
+  --paper: #fffdf8;
+  --ink: #201914;
+  --muted: #7a6d63;
+  --rule: #ded2c3;
+  --accent: #9b5b32;
+  --accent-strong: #6f3d1f;
+  --accent-soft: #f1e3cf;
+  --bar: #e3d6c5;
+  --pos: #4f8a4f;
+  --neg: #b33a3a;
+  --neutral: #a08a3c;
+  --font-display: Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+  --font-body: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Georgia only has old-style (uneven) digits; headline figures use the CJK serif, whose digits are lining */
+  --font-figures: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", Georgia, serif;
   --step-0: 0.9375rem;
   --step-1: 1.125rem;
   --step-2: 1.5rem;
@@ -47,14 +49,14 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
-    color-scheme: dark;
+  --bg: #14110f; --paper: #1d1916; --ink: #efe6dc; --muted: #a3968a; --rule: #3a322b;
+  --accent: #e0a078; --accent-strong: #f0bb95; --accent-soft: #3a2a1f; --bar: #4a3f36; --pos: #7fbf7f; --neg: #ef8a80; --neutral: #cdb86a;
+  color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
+  --bg: #14110f; --paper: #1d1916; --ink: #efe6dc; --muted: #a3968a; --rule: #3a322b;
+  --accent: #e0a078; --accent-strong: #f0bb95; --accent-soft: #3a2a1f; --bar: #4a3f36; --pos: #7fbf7f; --neg: #ef8a80; --neutral: #cdb86a;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -79,9 +81,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 
 /* Intro: key info first */
 .intro { padding-block: 40px 8px; display: grid; gap: 14px; }
-.intro h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.intro h1 { font-family: var(--font-display); font-weight: 700; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
 .intro .sub { margin: 0; font-size: var(--step-1); color: var(--muted); max-width: 36em; line-height: 1.6; }
 .intro .sub b { color: var(--ink); font-weight: 700; }
+.intro .lede { margin: 6px 0 0; font-family: var(--font-figures); font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; max-width: 22em; }
+.intro .lede span { white-space: nowrap; }
+.intro .lede em { font-style: normal; color: var(--accent); white-space: nowrap; }
 .intro .row { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 4px; }
 .primer { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.85rem; padding: 7px 14px 7px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper); transition: border-color 200ms ease, transform 200ms ease; }
 .primer:hover { border-color: var(--accent); transform: translateY(-1px); }
@@ -109,7 +114,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .specimen .ans .who { color: var(--accent); padding-top: 0; }
 .specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: 0.74rem; }
 
-/* distribution rows (shared by hero + plates) */
+/* distribution rows (the "one Jev call" specimen in the appendix) */
 .dist { display: grid; gap: 9px; }
 .dist .row { display: grid; grid-template-columns: minmax(0, 8.5em) minmax(0, 1fr) 3.2em; gap: 10px; align-items: center; }
 .dist .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -119,39 +124,52 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .dist .row.win .name, .dist .row.win .p { color: var(--accent); font-weight: 500; }
 .dist .p { text-align: right; font-variant-numeric: tabular-nums; }
 
-/* Index of plates: each category gets its own hue (--h, an oklch hue); lightness and chroma come from theme tokens */
+/* Evidence ledger: one row per category */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
 .section-head h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; margin: 0; letter-spacing: -0.01em; }
-.plates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding-block: 22px 8px; }
-.plate { --tint: oklch(var(--panel-l) var(--panel-c) var(--h)); --strong: oklch(var(--strong-l) var(--strong-c) var(--h)); --soft: oklch(var(--soft-l) var(--soft-c) var(--h));
-  display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; transition: transform 220ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease; min-width: 0; }
-.plate:hover { transform: translateY(-4px); border-color: var(--strong); }
-.plate .art { background: var(--tint); padding: 16px 16px 0; display: grid; grid-template-rows: auto 1fr; min-height: 220px; }
-.plate .stat { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.9rem, 3.2vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; color: var(--strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.plate .stat-label { min-height: 2.9em; margin-top: 6px; font-size: 0.82rem; line-height: 1.45; color: var(--ink); max-width: 17em; }
-.plate .stat-src { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-.plate svg { display: block; width: 100%; height: auto; max-width: 100%; margin-top: 10px; align-self: end; }
-.plate svg .s { fill: var(--strong); } .plate svg .so { fill: var(--soft); } .plate svg .pp { fill: var(--paper); } .plate svg .ik { fill: var(--ink); }
-.plate svg .ln { stroke: var(--strong); fill: none; stroke-width: 2; stroke-linecap: round; } .plate svg .lnm { stroke: var(--soft); fill: none; stroke-width: 2; }
-.plate svg text { font-family: var(--font-mono); font-size: 10px; fill: var(--ink); }
-.plate svg text.on { fill: var(--paper); font-weight: 500; }
-.plate svg text.st { fill: var(--strong); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; }
-.plate svg text.st2 { font-size: 15px; font-weight: 700; }
-.plate .body { padding: 14px 16px 16px; display: grid; gap: 8px; flex: 1; align-content: start; }
-.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.12rem; font-weight: 900; line-height: 1.3; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.plate h3 .n { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-.plate .judges { margin: 0; font-size: 0.86rem; line-height: 1.55; color: var(--muted); }
-.plate .pit { margin: 0; font-size: 0.8rem; line-height: 1.5; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
-.plate .pit::before { content: "翻车"; flex: none; font-family: var(--font-mono); font-size: 0.66rem; color: var(--neg); border: 1px solid var(--neg); border-radius: 3px; padding: 0 4px; }
-.plate .go { font-family: var(--font-mono); font-size: 0.75rem; color: var(--strong); }
-.swipe-hint { display: none; }
-@media (max-width: 1000px) { .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) {
-  .plates { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px; overscroll-behavior-x: contain; scrollbar-width: none; }
-  .plates::-webkit-scrollbar { display: none; }
-  .plate { flex: 0 0 82%; scroll-snap-align: start; }
-  .plate .art { min-height: 0; }
-  .swipe-hint { display: inline; }
+.ledger { padding-block: 10px 8px; }
+.lhead, .lrow { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px 28px; }
+.lhead { padding-block: 10px 8px; border-bottom: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--muted); }
+.lrow { padding-block: 18px; border-bottom: 1px solid var(--rule); text-decoration: none; align-items: start; transition: background-color 180ms cubic-bezier(.2,.8,.2,1); }
+.lrow:hover { background: var(--paper); }
+.lrow h3 { margin: 0; font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+.lrow:hover h3 { color: var(--accent); }
+.l-name p { margin: 4px 0 0; font-size: 0.86rem; line-height: 1.55; color: var(--muted); }
+.l-ev { display: grid; gap: 8px; padding-top: 6px; }
+.l-cap { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); }
+.l-cap b { color: var(--accent-strong); font-weight: 500; }
+.l-stat { display: grid; gap: 2px; }
+.l-stat .stat { font-family: var(--font-figures); font-weight: 700; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.l-stat .stat-label { font-size: 0.82rem; line-height: 1.45; }
+.l-stat .stat-src { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
+.l-pit { margin: 0; font-size: 0.84rem; line-height: 1.55; color: var(--ink); display: flex; gap: 8px; align-items: baseline; padding-top: 4px; }
+.pit-tag { flex: none; font-family: var(--font-mono); font-size: 0.66rem; color: var(--neg); border: 1px solid var(--neg); border-radius: 3px; padding: 0 4px; }
+
+/* Evidence bar: solid = verifiable (official, third-party); tint / hatched = not (self-reported, relayed) */
+.evbar { display: flex; height: 10px; gap: 2px; border-radius: 2px; overflow: hidden; }
+.evbar.big { height: 18px; gap: 3px; }
+.seg { display: block; min-width: 4px; }
+.seg.official { background: var(--accent-strong); }
+.seg.third { background: var(--accent); }
+.seg.self { background: var(--accent-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+.seg.relay { background: repeating-linear-gradient(135deg, transparent 0 3px, color-mix(in srgb, var(--accent) 45%, transparent) 3px 4px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+.hero-ev { margin: 10px 0 0; max-width: 46rem; display: grid; gap: 10px; }
+.ev-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); }
+.ev-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.ev-legend .seg { width: 14px; height: 10px; border-radius: 1px; }
+
+/* Scene beside each category heading, drawn in the accent colour only */
+.scene { display: block; width: min(100%, 240px); height: auto; margin-top: 16px; }
+.scene .s { fill: var(--accent); } .scene .so { fill: var(--accent-soft); } .scene .pp { fill: var(--paper); } .scene .ik { fill: var(--ink); }
+.scene .ln { stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; } .scene .lnm { stroke: var(--bar); fill: none; stroke-width: 2; }
+.scene text { font-family: var(--font-mono); font-size: 10px; fill: var(--ink); }
+.scene text.on { fill: var(--paper); font-weight: 500; }
+.scene text.st { fill: var(--accent); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; }
+.scene text.st2 { font-size: 15px; font-weight: 700; }
+@media (max-width: 860px) {
+  .lhead { display: none; }
+  .lrow { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .scene { display: none; }
 }
 
 /* Filters */
@@ -177,8 +195,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .case .result .pol { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
 .pol.pos { background: var(--pos); } .pol.neg { background: var(--neg); } .pol.neu { background: var(--neutral); }
 .ev { font-family: var(--font-mono); font-size: 0.72rem; justify-self: start; border: 1px solid var(--rule); border-radius: 4px; padding: 1px 7px; white-space: nowrap; color: var(--muted); }
-.ev.official { border-color: var(--ink); color: var(--ink); }
-.ev.third { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.ev.official { border-color: var(--accent-strong); color: var(--paper); background: var(--accent-strong); }
+.ev.third { border-color: var(--accent); color: var(--paper); background: var(--accent); }
+.ev.self { border-color: color-mix(in srgb, var(--accent) 35%, transparent); background: var(--accent-soft); color: var(--ink); }
+.ev.relay { border-style: dashed; }
 .empty { padding: 18px 0; color: var(--muted); font-size: 0.9rem; }
 
 .follow { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center; padding: 26px 28px; border-radius: 14px; background: var(--ink); color: var(--bg); }
@@ -216,162 +236,75 @@ footer p { margin: 0; max-width: 60em; }
   <header class="intro">
     <div class="label">新模型落地案例 · 第 1 册 · Jev</div>
     <h1>Jev 落地图鉴</h1>
-    <p class="sub"><b>67 个真实案例</b>，按「让它判断什么」分成 <b>8 类</b>。每类先看一个亮点数字、一个翻车点，再点进去看全部案例和来源。</p>
+    <p class="lede"><span>67 个真实案例，</span><em>能核实的只有 17 个。</em></p>
+    <p class="sub">按「让它判断什么」分成 8 类。能核实指官方渠道确认或第三方实测，其余是作者自报或二手转述。每类先看证据硬不硬，再看亮点数字和翻车点。</p>
+    <figure class="hero-ev">
+      <span class="evbar big" role="img" aria-label="官方 7，第三方实测 10，作者自报 32，转述未核 18（共 67）"><span class="seg official" style="flex:7" title="官方 7"></span><span class="seg third" style="flex:10" title="第三方实测 10"></span><span class="seg self" style="flex:32" title="作者自报 32"></span><span class="seg relay" style="flex:18" title="转述未核 18"></span></span>
+      <figcaption class="ev-legend"><span><i class="seg official"></i>官方 7</span><span><i class="seg third"></i>第三方实测 10</span><span><i class="seg self"></i>作者自报 32</span><span><i class="seg relay"></i>转述未核 18</span></figcaption>
+    </figure>
     <div class="row">
       <a class="primer" href="#about"><span class="glyph" aria-hidden="true"><i></i><i></i><i></i></span>第一次听说 Jev？30 秒看懂<span class="arrow">↓</span></a>
-      <span class="meta">更新于 2026-09-29</span>
+      <span class="meta">更新于 2026-09-30</span>
     </div>
   </header>
 
   <section aria-labelledby="idx">
     <div class="section-head">
       <h2 id="idx">按「让它判断什么」分类</h2>
-      <span class="label">8 类 · 67 个案例 · 点卡片跳到该类<span class="swipe-hint"> · 左右滑动</span></span>
+      <span class="label">8 类 · 67 个案例 · 点一行跳到该类</span>
     </div>
-    <div class="plates">
-    <a class="plate" href="#browser" style="--h:250">
-      <div class="art">
-        <div><div class="stat">7 秒</div>
-        <div class="stat-label">查完一次航班<span class="stat-src">Browser Use · 转述未核</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
-<circle cx="20" cy="16" r="3" class="pp"/><circle cx="30" cy="16" r="3" class="pp"/><circle cx="40" cy="16" r="3" class="pp"/><rect x="54" y="11" width="120" height="10" rx="5" class="pp"/>
-<rect x="22" y="36" width="92" height="6" rx="3" class="so"/><rect x="22" y="48" width="150" height="6" rx="3" class="so"/><rect x="22" y="60" width="118" height="6" rx="3" class="so"/>
-<rect x="22" y="76" width="56" height="20" rx="5" class="so"/><text x="50" y="90" text-anchor="middle">取消</text>
-<rect x="88" y="76" width="80" height="20" rx="5" class="s"/><text x="128" y="90" text-anchor="middle" class="on">搜索航班</text>
-<path d="M156 86 L156 104 L160.5 99.5 L164 107 L167 105.6 L163.6 98.4 L170 98.4 Z" class="ik"/></svg>
-      </div>
-      <div class="body">
-        <h3>浏览器与 Computer Use<span class="n">8 例</span></h3>
-        <p class="judges">每一步选哪个操作、点哪个页面元素</p>
-        <p class="pit">长任务 20 道只做对 1 道</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <div class="ledger">
+      <div class="lhead" aria-hidden="true"><span>判断什么</span><span>证据构成</span><span>亮点数字</span><span>翻车点</span></div>
+      
+    <a class="lrow" href="#browser">
+      <div class="l-name"><h3>浏览器与 Computer Use</h3><p>每一步选哪个操作、点哪个页面元素</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 0，第三方实测 1，作者自报 4，转述未核 3（共 8）"><span class="seg third" style="flex:1" title="第三方实测 1"></span><span class="seg self" style="flex:4" title="作者自报 4"></span><span class="seg relay" style="flex:3" title="转述未核 3"></span></span><span class="l-cap"><b>1</b> / 8 可核实 · 反面 1</span></div>
+      <div class="l-stat"><span class="stat">7 秒</span><span class="stat-label">查完一次航班</span><span class="stat-src">Browser Use · 转述未核</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>长任务 20 道只做对 1 道</p>
     </a>
-    <a class="plate" href="#routing" style="--h:295">
-      <div class="art">
-        <div><div class="stat">−71%</div>
-        <div class="stat-label">派单成本，25 个任务与 Fable 判断全同<span class="stat-src">firstmate · 作者自报</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<path d="M70 55 C 110 55, 110 20, 150 20" class="lnm"/><path d="M70 55 L150 55" class="ln" stroke-width="3"/><path d="M70 55 C 110 55, 110 90, 150 90" class="lnm"/>
-<rect x="6" y="38" width="64" height="34" rx="6" class="pp"/><text x="38" y="59" text-anchor="middle">新任务</text>
-<rect x="150" y="8" width="84" height="24" rx="12" class="so"/><text x="192" y="24" text-anchor="middle">大模型 · 贵</text>
-<rect x="150" y="43" width="84" height="24" rx="12" class="s"/><text x="192" y="59" text-anchor="middle" class="on">小模型 · 快 ✓</text>
-<rect x="150" y="78" width="84" height="24" rx="12" class="so"/><text x="192" y="94" text-anchor="middle">转人工</text></svg>
-      </div>
-      <div class="body">
-        <h3>Agent 路由与调度<span class="n">8 例</span></h3>
-        <p class="judges">这件事交给谁做、用哪个模型、要不要升级</p>
-        <p class="pit">theo 实测编码路由：耗时约 5 倍</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#routing">
+      <div class="l-name"><h3>Agent 路由与调度</h3><p>这件事交给谁做、用哪个模型、要不要升级</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 0，第三方实测 1，作者自报 5，转述未核 2（共 8）"><span class="seg third" style="flex:1" title="第三方实测 1"></span><span class="seg self" style="flex:5" title="作者自报 5"></span><span class="seg relay" style="flex:2" title="转述未核 2"></span></span><span class="l-cap"><b>1</b> / 8 可核实 · 反面 2</span></div>
+      <div class="l-stat"><span class="stat">−71%</span><span class="stat-label">派单成本，25 个任务与 Fable 判断全同</span><span class="stat-src">firstmate · 作者自报</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>theo 实测编码路由：耗时约 5 倍</p>
     </a>
-    <a class="plate" href="#judge" style="--h:155">
-      <div class="art">
-        <div><div class="stat">600×</div>
-        <div class="stat-label">比 Fable 级模型便宜，给文章打分<span class="stat-src">Every · 第三方实测</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="8" y="14" width="44" height="56" rx="4" class="so"/><rect x="14" y="20" width="44" height="56" rx="4" class="pp"/>
-<rect x="20" y="30" width="30" height="4" rx="2" class="so"/><rect x="20" y="40" width="24" height="4" rx="2" class="so"/><rect x="20" y="50" width="28" height="4" rx="2" class="so"/>
-<path d="M66 48 C 110 20, 150 10, 172 30" class="ln" stroke-dasharray="4 5"/>
-<g transform="rotate(14 172 42)"><rect x="160" y="28" width="24" height="30" rx="3" class="pp"/><rect x="165" y="36" width="14" height="3" rx="1.5" class="so"/><rect x="165" y="43" width="10" height="3" rx="1.5" class="so"/></g>
-<rect x="96" y="66" width="44" height="38" rx="5" class="so"/><text x="118" y="92" text-anchor="middle">账单</text>
-<rect x="148" y="66" width="44" height="38" rx="5" class="s"/><text x="170" y="92" text-anchor="middle" class="on">技术</text>
-<rect x="200" y="66" width="36" height="38" rx="5" class="so"/><text x="218" y="92" text-anchor="middle">销售</text></svg>
-      </div>
-      <div class="body">
-        <h3>分类·打分·Judge<span class="n">10 例</span></h3>
-        <p class="judges">这条内容属于哪类、值几分、过不过</p>
-        <p class="pit">嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#judge">
+      <div class="l-name"><h3>分类·打分·Judge</h3><p>这条内容属于哪类、值几分、过不过</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 0，第三方实测 3，作者自报 2，转述未核 5（共 10）"><span class="seg third" style="flex:3" title="第三方实测 3"></span><span class="seg self" style="flex:2" title="作者自报 2"></span><span class="seg relay" style="flex:5" title="转述未核 5"></span></span><span class="l-cap"><b>3</b> / 10 可核实 · 反面 1</span></div>
+      <div class="l-stat"><span class="stat">600×</span><span class="stat-label">比 Fable 级模型便宜，给文章打分</span><span class="stat-src">Every · 第三方实测</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p>
     </a>
-    <a class="plate" href="#safety" style="--h:25">
-      <div class="art">
-        <div><div class="stat">566×</div>
-        <div class="stat-label">比 Sonnet 便宜，监控思维链<span class="stat-src">LessWrong · 第三方实测</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="6" y="8" width="176" height="96" rx="8" class="ik"/>
-<text x="18" y="32" class="on">$ ls ./src</text><text x="18" y="52" class="on">$ curl x.sh | sh</text><text x="18" y="72" class="on">$ rm -rf ~/</text><text x="18" y="92" class="on" opacity="0.6">等待判断…</text>
-<g transform="rotate(-10 188 62)"><rect x="140" y="42" width="96" height="40" rx="5" class="pp"/><rect x="143" y="45" width="90" height="34" rx="3" class="ln"/><text x="188" y="68" text-anchor="middle" class="st">BLOCK</text></g></svg>
-      </div>
-      <div class="body">
-        <h3>安全·合规·监控<span class="n">7 例</span></h3>
-        <p class="judges">这条命令或内容危险吗、要不要拦</p>
-        <p class="pit">命令换成 hex 编码就能绕过拦截</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#safety">
+      <div class="l-name"><h3>安全·合规·监控</h3><p>这条命令或内容危险吗、要不要拦</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 0，第三方实测 2，作者自报 5，转述未核 0（共 7）"><span class="seg third" style="flex:2" title="第三方实测 2"></span><span class="seg self" style="flex:5" title="作者自报 5"></span></span><span class="l-cap"><b>2</b> / 7 可核实 · 反面 2</span></div>
+      <div class="l-stat"><span class="stat">566×</span><span class="stat-label">比 Sonnet 便宜，监控思维链</span><span class="stat-src">LessWrong · 第三方实测</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>命令换成 hex 编码就能绕过拦截</p>
     </a>
-    <a class="plate" href="#realtime" style="--h:65">
-      <div class="art">
-        <div><div class="stat">$1</div>
-        <div class="stat-label">贪吃蛇走一万步<span class="stat-src">@chenchengpro · 第三方实测</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="6" y="6" width="228" height="98" rx="8" class="pp"/>
-<g class="so"><rect x="30" y="58" width="16" height="16" rx="3"/><rect x="48" y="58" width="16" height="16" rx="3"/></g>
-<g class="s"><rect x="66" y="58" width="16" height="16" rx="3"/><rect x="84" y="58" width="16" height="16" rx="3"/><rect x="84" y="40" width="16" height="16" rx="3"/><rect x="102" y="40" width="16" height="16" rx="3"/><rect x="120" y="40" width="18" height="18" rx="4"/></g>
-<path d="M144 49 L196 49" class="ln" stroke-dasharray="3 5"/><circle cx="208" cy="49" r="7" class="ik"/>
-<text x="120" y="92">→ 0.72   ↓ 0.19   ↑ 0.08</text></svg>
-      </div>
-      <div class="body">
-        <h3>游戏与实时控制<span class="n">8 例</span></h3>
-        <p class="judges">每秒几次：下一步动作做什么</p>
-        <p class="pit">链上自动交易 14 小时亏 300%+</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#realtime">
+      <div class="l-name"><h3>游戏与实时控制</h3><p>每秒几次：下一步动作做什么</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 1，第三方实测 1，作者自报 2，转述未核 4（共 8）"><span class="seg official" style="flex:1" title="官方 1"></span><span class="seg third" style="flex:1" title="第三方实测 1"></span><span class="seg self" style="flex:2" title="作者自报 2"></span><span class="seg relay" style="flex:4" title="转述未核 4"></span></span><span class="l-cap"><b>2</b> / 8 可核实 · 反面 1</span></div>
+      <div class="l-stat"><span class="stat">$1</span><span class="stat-label">贪吃蛇走一万步</span><span class="stat-src">@chenchengpro · 第三方实测</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>链上自动交易 14 小时亏 300%+</p>
     </a>
-    <a class="plate" href="#context" style="--h:200">
-      <div class="art">
-        <div><div class="stat">−29%</div>
-        <div class="stat-label">Jevgrep 跑 10 个任务的成本：$7.62→$5.44<span class="stat-src">dzhng · 作者自报</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<g class="so"><rect x="8" y="10" width="70" height="6" rx="3"/><rect x="8" y="21" width="52" height="6" rx="3"/><rect x="8" y="32" width="80" height="6" rx="3"/><rect x="8" y="43" width="60" height="6" rx="3"/><rect x="8" y="54" width="76" height="6" rx="3"/><rect x="8" y="65" width="44" height="6" rx="3"/><rect x="8" y="76" width="66" height="6" rx="3"/><rect x="8" y="87" width="56" height="6" rx="3"/></g>
-<rect x="8" y="32" width="80" height="6" rx="3" class="s"/><rect x="8" y="65" width="44" height="6" rx="3" class="s"/>
-<path d="M98 8 L150 36" class="lnm"/><path d="M98 100 L150 74" class="lnm"/>
-<rect x="150" y="28" width="84" height="54" rx="6" class="pp"/><rect x="160" y="42" width="60" height="7" rx="3" class="s"/><rect x="160" y="56" width="40" height="7" rx="3" class="s"/>
-<text x="192" y="100" text-anchor="middle">只留 2 段进上下文</text></svg>
-      </div>
-      <div class="body">
-        <h3>上下文·记忆·检索<span class="n">8 例</span></h3>
-        <p class="judges">哪段代码、哪个技能、哪条记忆该进上下文</p>
-        <p class="pit">检索重排没打赢 bge-m3</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#context">
+      <div class="l-name"><h3>上下文·记忆·检索</h3><p>哪段代码、哪个技能、哪条记忆该进上下文</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 0，第三方实测 2，作者自报 3，转述未核 3（共 8）"><span class="seg third" style="flex:2" title="第三方实测 2"></span><span class="seg self" style="flex:3" title="作者自报 3"></span><span class="seg relay" style="flex:3" title="转述未核 3"></span></span><span class="l-cap"><b>2</b> / 8 可核实 · 反面 2</span></div>
+      <div class="l-stat"><span class="stat">−29%</span><span class="stat-label">Jevgrep 跑 10 个任务的成本：$7.62→$5.44</span><span class="stat-src">dzhng · 作者自报</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>检索重排没打赢 bge-m3</p>
     </a>
-    <a class="plate" href="#platform" style="--h:340">
-      <div class="art">
-        <div><div class="stat">6 家</div>
-        <div class="stat-label">框架和网关两周内接入<span class="stat-src">官方 release notes / 官方账号</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<g class="lnm"><path d="M120 55 L42 20"/><path d="M120 55 L198 20"/><path d="M120 55 L40 55"/><path d="M120 55 L200 55"/><path d="M120 55 L42 90"/><path d="M120 55 L198 90"/></g>
-<g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
-<g text-anchor="middle"><text x="42" y="24">OpenRouter</text><text x="198" y="24">Vercel</text><text x="40" y="59">LangChain</text><text x="200" y="59">DSPy</text><text x="42" y="94">pydantic-ai</text><text x="198" y="94">Pydantic GW</text></g>
-<circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text></svg>
-      </div>
-      <div class="body">
-        <h3>框架与平台接入<span class="n">8 例</span></h3>
-        <p class="judges">在常用框架和网关里直接调用 Jev</p>
-        <p class="pit">只证明能接，不证明好用</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
+    <a class="lrow" href="#platform">
+      <div class="l-name"><h3>框架与平台接入</h3><p>在常用框架和网关里直接调用 Jev</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 5，第三方实测 0，作者自报 2，转述未核 1（共 8）"><span class="seg official" style="flex:5" title="官方 5"></span><span class="seg self" style="flex:2" title="作者自报 2"></span><span class="seg relay" style="flex:1" title="转述未核 1"></span></span><span class="l-cap"><b>5</b> / 8 可核实</span></div>
+      <div class="l-stat"><span class="stat">6 家</span><span class="stat-label">框架和网关两周内接入</span><span class="stat-src">官方 release notes / 官方账号</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>只证明能接，不证明好用</p>
     </a>
-    <a class="plate" href="#opensource" style="--h:110">
-      <div class="art">
-        <div><div class="stat">$17</div>
-        <div class="stat-label">25 分钟自训一个同类模型<span class="stat-src">Together AI · 作者自报</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
-<text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
-<path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
-<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg>
-      </div>
-      <div class="body">
-        <h3>开源复刻与自部署<span class="n">10 例</span></h3>
-        <p class="judges">不调 API，在本地做同一道选择题</p>
-        <p class="pit">自报成绩多略低于 Jev，还没有中立横评</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a></div>
+    <a class="lrow" href="#opensource">
+      <div class="l-name"><h3>开源复刻与自部署</h3><p>不调 API，在本地做同一道选择题</p></div>
+      <div class="l-ev"><span class="evbar" role="img" aria-label="官方 1，第三方实测 0，作者自报 9，转述未核 0（共 10）"><span class="seg official" style="flex:1" title="官方 1"></span><span class="seg self" style="flex:9" title="作者自报 9"></span></span><span class="l-cap"><b>1</b> / 10 可核实 · 反面 1</span></div>
+      <div class="l-stat"><span class="stat">$17</span><span class="stat-label">25 分钟自训一个同类模型</span><span class="stat-src">Together AI · 作者自报</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>自报成绩多略低于 Jev，还没有中立横评</p>
+    </a>
+    </div>
   </section>
 
   <div class="filters" role="group" aria-label="按证据筛选">
@@ -384,13 +317,20 @@ footer p { margin: 0; max-width: 60em; }
     <span><i class="pol pos" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 正面</span>
     <span><i class="pol neg" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 反面</span>
     <span><i class="pol neu" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 中性 / 有保留</span>
-    <span>卡片上的大数字取自该类最有代表性的一条案例，下方小字是来源和证据强度</span>
+    <span>亮点数字取自该类最有代表性的一条案例，下方小字是来源和证据强度</span>
   </div>
 
   <main>
     <section class="cat" id="browser" aria-labelledby="h-browser">
       <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-browser">浏览器与 Computer Use</h2></div>
+        <div><div class="label">8 个案例</div><h2 id="h-browser">浏览器与 Computer Use</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
+<circle cx="20" cy="16" r="3" class="pp"/><circle cx="30" cy="16" r="3" class="pp"/><circle cx="40" cy="16" r="3" class="pp"/><rect x="54" y="11" width="120" height="10" rx="5" class="pp"/>
+<rect x="22" y="36" width="92" height="6" rx="3" class="so"/><rect x="22" y="48" width="150" height="6" rx="3" class="so"/><rect x="22" y="60" width="118" height="6" rx="3" class="so"/>
+<rect x="22" y="76" width="56" height="20" rx="5" class="so"/><text x="50" y="90" text-anchor="middle">取消</text>
+<rect x="88" y="76" width="80" height="20" rx="5" class="s"/><text x="128" y="90" text-anchor="middle" class="on">搜索航班</text>
+<path d="M156 86 L156 104 L160.5 99.5 L164 107 L167 105.6 L163.6 98.4 L170 98.4 Z" class="ik"/></svg></div>
         <div><p class="tag">每一步选哪个操作、点哪个页面元素</p><p>点按钮本质是离散多选题，Jev 每步只选操作和元素，单步快、成本低，短任务 demo 普遍在 7 秒级。但转述的长任务实测 Jev 1/20 vs GPT Luna 17/20：零推理、遇弹窗或验证码不会回退。适合短链路和高并发测试，不适合长链路自主操作。</p></div>
       </div>
       <ul class="cases">
@@ -471,7 +411,13 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="routing" aria-labelledby="h-routing">
       <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-routing">Agent 路由与调度</h2></div>
+        <div><div class="label">8 个案例</div><h2 id="h-routing">Agent 路由与调度</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<path d="M70 55 C 110 55, 110 20, 150 20" class="lnm"/><path d="M70 55 L150 55" class="ln" stroke-width="3"/><path d="M70 55 C 110 55, 110 90, 150 90" class="lnm"/>
+<rect x="6" y="38" width="64" height="34" rx="6" class="pp"/><text x="38" y="59" text-anchor="middle">新任务</text>
+<rect x="150" y="8" width="84" height="24" rx="12" class="so"/><text x="192" y="24" text-anchor="middle">大模型 · 贵</text>
+<rect x="150" y="43" width="84" height="24" rx="12" class="s"/><text x="192" y="59" text-anchor="middle" class="on">小模型 · 快 ✓</text>
+<rect x="150" y="78" width="84" height="24" rx="12" class="so"/><text x="192" y="94" text-anchor="middle">转人工</text></svg></div>
         <div><p class="tag">这件事交给谁做、用哪个模型、要不要升级</p><p>路由是在固定候选里挑一个，正好是 Jev 的题型：firstmate 派单 25 个任务与 Fable 判断全同，派单成本降 71%。但把 Jev 当整条编码链路的路由器时，theo 实测耗时约 5 倍、成本略高，Magpie 作者也自述内部测试效果差。路由分错不报错只变差，上线前要先配评测集。</p></div>
       </div>
       <ul class="cases">
@@ -552,7 +498,15 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="judge" aria-labelledby="h-judge">
       <div class="cat-head">
-        <div><div class="label">10 个案例</div><h2 id="h-judge">分类·打分·Judge</h2></div>
+        <div><div class="label">10 个案例</div><h2 id="h-judge">分类·打分·Judge</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<rect x="8" y="14" width="44" height="56" rx="4" class="so"/><rect x="14" y="20" width="44" height="56" rx="4" class="pp"/>
+<rect x="20" y="30" width="30" height="4" rx="2" class="so"/><rect x="20" y="40" width="24" height="4" rx="2" class="so"/><rect x="20" y="50" width="28" height="4" rx="2" class="so"/>
+<path d="M66 48 C 110 20, 150 10, 172 30" class="ln" stroke-dasharray="4 5"/>
+<g transform="rotate(14 172 42)"><rect x="160" y="28" width="24" height="30" rx="3" class="pp"/><rect x="165" y="36" width="14" height="3" rx="1.5" class="so"/><rect x="165" y="43" width="10" height="3" rx="1.5" class="so"/></g>
+<rect x="96" y="66" width="44" height="38" rx="5" class="so"/><text x="118" y="92" text-anchor="middle">账单</text>
+<rect x="148" y="66" width="44" height="38" rx="5" class="s"/><text x="170" y="92" text-anchor="middle" class="on">技术</text>
+<rect x="200" y="66" width="36" height="38" rx="5" class="so"/><text x="218" y="92" text-anchor="middle">销售</text></svg></div>
         <div><p class="tag">这条内容属于哪类、值几分、过不过</p><p>类目固定、量大的分类和打分是 Jev 最稳的场景：多份第三方实测都是快几倍到几十倍、便宜几十到几百倍。准确率则只是持平或略高：verysmallwoods 实测 Banking77 为 81.6% vs Haiku 80.1%，而嵌入+逻辑回归能到 94.25%。类目固定时经典小模型可能更准更便宜，用前应先对可信标注验证。</p></div>
       </div>
       <ul class="cases">
@@ -651,7 +605,11 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="safety" aria-labelledby="h-safety">
       <div class="cat-head">
-        <div><div class="label">7 个案例</div><h2 id="h-safety">安全·合规·监控</h2></div>
+        <div><div class="label">7 个案例</div><h2 id="h-safety">安全·合规·监控</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<rect x="6" y="8" width="176" height="96" rx="8" class="ik"/>
+<text x="18" y="32" class="on">$ ls ./src</text><text x="18" y="52" class="on">$ curl x.sh | sh</text><text x="18" y="72" class="on">$ rm -rf ~/</text><text x="18" y="92" class="on" opacity="0.6">等待判断…</text>
+<g transform="rotate(-10 188 62)"><rect x="140" y="42" width="96" height="40" rx="5" class="pp"/><rect x="143" y="45" width="90" height="34" rx="3" class="ln"/><text x="188" y="68" text-anchor="middle" class="st">BLOCK</text></g></svg></div>
         <div><p class="tag">这条命令或内容危险吗、要不要拦</p><p>监控和初筛要求量大、便宜，Jev 在成本上优势明显（CoT 监控便宜 566x、漏扫约 $0.02/次）。但两份第三方实测指向同一边界：Southbridge 发现编码绕过即可漏拦，LessWrong 实测对有害样本漏报风险更高；另有红队自报间接注入成功率 43.5%。适合防手滑，不适合单独防蓄意攻击。</p></div>
       </div>
       <ul class="cases">
@@ -723,7 +681,13 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="realtime" aria-labelledby="h-realtime">
       <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-realtime">游戏与实时控制</h2></div>
+        <div><div class="label">8 个案例</div><h2 id="h-realtime">游戏与实时控制</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<rect x="6" y="6" width="228" height="98" rx="8" class="pp"/>
+<g class="so"><rect x="30" y="58" width="16" height="16" rx="3"/><rect x="48" y="58" width="16" height="16" rx="3"/></g>
+<g class="s"><rect x="66" y="58" width="16" height="16" rx="3"/><rect x="84" y="58" width="16" height="16" rx="3"/><rect x="84" y="40" width="16" height="16" rx="3"/><rect x="102" y="40" width="16" height="16" rx="3"/><rect x="120" y="40" width="18" height="18" rx="4"/></g>
+<path d="M144 49 L196 49" class="ln" stroke-dasharray="3 5"/><circle cx="208" cy="49" r="7" class="ik"/>
+<text x="120" y="92">→ 0.72   ↓ 0.19   ↑ 0.08</text></svg></div>
         <div><p class="tag">每秒几次：下一步动作做什么</p><p>单次几百毫秒、输出免费，让「每一步都问一次模型」变得可负担：贪吃蛇 $1 走一万步，Doom 约 $7/小时。能落地的形态是分层：高频控制留给代码、低频判断给模型、安全层握否决权（jev-drone）。直接拿去做需要预测的交易，转述案例 14 小时亏 300%+。</p></div>
       </div>
       <ul class="cases">
@@ -804,7 +768,13 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="context" aria-labelledby="h-context">
       <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-context">上下文·记忆·检索</h2></div>
+        <div><div class="label">8 个案例</div><h2 id="h-context">上下文·记忆·检索</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<g class="so"><rect x="8" y="10" width="70" height="6" rx="3"/><rect x="8" y="21" width="52" height="6" rx="3"/><rect x="8" y="32" width="80" height="6" rx="3"/><rect x="8" y="43" width="60" height="6" rx="3"/><rect x="8" y="54" width="76" height="6" rx="3"/><rect x="8" y="65" width="44" height="6" rx="3"/><rect x="8" y="76" width="66" height="6" rx="3"/><rect x="8" y="87" width="56" height="6" rx="3"/></g>
+<rect x="8" y="32" width="80" height="6" rx="3" class="s"/><rect x="8" y="65" width="44" height="6" rx="3" class="s"/>
+<path d="M98 8 L150 36" class="lnm"/><path d="M98 100 L150 74" class="lnm"/>
+<rect x="150" y="28" width="84" height="54" rx="6" class="pp"/><rect x="160" y="42" width="60" height="7" rx="3" class="s"/><rect x="160" y="56" width="40" height="7" rx="3" class="s"/>
+<text x="192" y="100" text-anchor="middle">只留 2 段进上下文</text></svg></div>
         <div><p class="tag">哪段代码、哪个技能、哪条记忆该进上下文</p><p>Jev 在这里做「留谁、选谁」：Jevgrep 逐层缩小代码范围，10 个任务成本 $7.62→$5.44。但纯检索和压缩并不稳：GoSail 实测重排没打赢 bge-m3，Teknium 发现 Jev 即时压缩等价于一条删工具调用的规则，而且每次压缩都会打断缓存。</p></div>
       </div>
       <ul class="cases">
@@ -885,7 +855,12 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="platform" aria-labelledby="h-platform">
       <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-platform">框架与平台接入</h2></div>
+        <div><div class="label">8 个案例</div><h2 id="h-platform">框架与平台接入</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<g class="lnm"><path d="M120 55 L42 20"/><path d="M120 55 L198 20"/><path d="M120 55 L40 55"/><path d="M120 55 L200 55"/><path d="M120 55 L42 90"/><path d="M120 55 L198 90"/></g>
+<g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
+<g text-anchor="middle"><text x="42" y="24">OpenRouter</text><text x="198" y="24">Vercel</text><text x="40" y="59">LangChain</text><text x="200" y="59">DSPy</text><text x="42" y="94">pydantic-ai</text><text x="198" y="94">Pydantic GW</text></g>
+<circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text></svg></div>
         <div><p class="tag">在常用框架和网关里直接调用 Jev</p><p>发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。</p></div>
       </div>
       <ul class="cases">
@@ -966,7 +941,12 @@ footer p { margin: 0; max-width: 60em; }
     </section>
     <section class="cat" id="opensource" aria-labelledby="h-opensource">
       <div class="cat-head">
-        <div><div class="label">10 个案例</div><h2 id="h-opensource">开源复刻与自部署</h2></div>
+        <div><div class="label">10 个案例</div><h2 id="h-opensource">开源复刻与自部署</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">
+<rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
+<text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
+<path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
+<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg></div>
         <div><p class="tag">不调 API，在本地做同一道选择题</p><p>Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。</p></div>
       </div>
       <ul class="cases">

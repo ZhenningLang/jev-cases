@@ -11,6 +11,7 @@
 | 文件 | 作用 |
 | --- | --- |
 | `data/cases.json` | 案例数据，唯一的事实源 |
+| `DESIGN.md` | 设计契约：配色、字体、证据强度的视觉编码，改样式先改这里 |
 | `template.html` | 页面样式和骨架 |
 | `build.py` | 把数据渲染进 `index.html`（静态页面，不靠 JS 也能读） |
 | `scripts/pull_notes.sh` | 从私有 RSS 笔记拉取 Jev 相关条目到 `.notes/`（不入库） |

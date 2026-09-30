@@ -11,7 +11,7 @@ ROOT = Path(__file__).parent
 SITE = "https://zhenninglang.github.io/jev-cases/"
 REPO = "https://github.com/ZhenningLang/jev-cases"
 
-# Plate illustrations: one small scene per category, drawn in the category hue (classes map to CSS in template.html).
+# Scene illustrations: one small scene per category, shown beside the category heading in the accent colour (classes map to CSS in template.html).
 SVG = {
     "browser": """
 <rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
@@ -62,6 +62,7 @@ SVG = {
 <g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g>""",
 }
 EV = {"官方": "official", "第三方实测": "third", "作者自报": "self", "转述未核": "relay"}
+EV_ORDER = ["官方", "第三方实测", "作者自报", "转述未核"]  # strongest first; the bar reads left to right from verifiable to not
 POL = {"正面": "pos", "反面": "neg", "中性": "neu"}
 e = lambda s: html.escape(str(s or ""), quote=True)
 
@@ -73,6 +74,19 @@ def dist(opts):
         f'<span class="track"><span class="fill" style="display:block" data-w="{p * 100:.0f}"></span></span>'
         f'<span class="p">{p:.2f}</span></div>'
         for n, p in opts)
+
+
+def evbar(cases, cls="evbar"):
+    """Stacked bar of evidence strength. Segment widths are shares of this set of cases."""
+    n = len(cases)
+    counts = {k: sum(1 for c in cases if c["evidence"] == k) for k in EV_ORDER}
+    segs = "".join(
+        f'<span class="seg {EV[k]}" style="flex:{v}" title="{k} {v}"></span>' for k, v in counts.items() if v)
+    return f'<span class="{cls}" role="img" aria-label="{e("，".join(f"{k} {v}" for k, v in counts.items()))}（共 {n}）">{segs}</span>', counts
+
+
+def verified(counts):
+    return counts["官方"] + counts["第三方实测"]
 
 
 def case(c, i, k):
@@ -98,24 +112,26 @@ def main():
     if missing:
         sys.exit(f"no plate illustration for category: {missing} (add a scene to SVG in build.py and highlight/pitfall/hue to cases.json)")
     total = sum(len(c["cases"]) for c in cats)
-    plates = "".join(f'''
-    <a class="plate" href="#{c["id"]}" style="--h:{c["hue"]}">
-      <div class="art">
-        <div><div class="stat">{e(c["highlight"]["stat"])}</div>
-        <div class="stat-label">{e(c["highlight"]["label"])}<span class="stat-src">{e(c["highlight"]["source"])}</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">{SVG[c["id"]]}</svg>
-      </div>
-      <div class="body">
-        <h3>{e(c["name"])}<span class="n">{len(c["cases"])} 例</span></h3>
-        <p class="judges">{e(c["tagline"])}</p>
-        <p class="pit">{e(c["pitfall"])}</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>''' for c in cats)
+    all_cases = [k for c in cats for k in c["cases"]]
+    hero_bar, hero_counts = evbar(all_cases, "evbar big")
+    rows = []
+    for c in cats:
+        bar, counts = evbar(c["cases"])
+        neg = sum(1 for k in c["cases"] if k["polarity"] == "反面")
+        rows.append(f'''
+    <a class="lrow" href="#{c["id"]}">
+      <div class="l-name"><h3>{e(c["name"])}</h3><p>{e(c["tagline"])}</p></div>
+      <div class="l-ev">{bar}<span class="l-cap"><b>{verified(counts)}</b> / {len(c["cases"])} 可核实{f" · 反面 {neg}" if neg else ""}</span></div>
+      <div class="l-stat"><span class="stat">{e(c["highlight"]["stat"])}</span><span class="stat-label">{e(c["highlight"]["label"])}</span><span class="stat-src">{e(c["highlight"]["source"])}</span></div>
+      <p class="l-pit"><span class="pit-tag">翻车</span>{e(c["pitfall"])}</p>
+    </a>''')
+    plates = "".join(rows)
+    legend = "".join(f'<span><i class="seg {EV[k]}"></i>{k} {v}</span>' for k, v in hero_counts.items())
     sections = "".join(f'''
     <section class="cat" id="{c["id"]}" aria-labelledby="h-{c["id"]}">
       <div class="cat-head">
-        <div><div class="label">{len(c["cases"])} 个案例</div><h2 id="h-{c["id"]}">{e(c["name"])}</h2></div>
+        <div><div class="label">{len(c["cases"])} 个案例</div><h2 id="h-{c["id"]}">{e(c["name"])}</h2>
+          <svg class="scene" viewBox="0 0 240 110" aria-hidden="true">{SVG[c["id"]]}</svg></div>
         <div><p class="tag">{e(c["tagline"])}</p><p>{e(c["intro"])}</p></div>
       </div>
       <ul class="cases">{"".join(case(c, i, k) for i, k in enumerate(c["cases"]))}
@@ -130,7 +146,8 @@ def main():
         "__DESC__": e(desc), "__SITE__": SITE, "__REPO__": REPO, "__UPDATED__": date.today().isoformat(),
         "__LEDE__": e(ov["plain"]), "__TOTAL__": str(total), "__NCAT__": str(len(cats)), "__FACTS__": facts, "__CAVEAT__": e(ov["caveat"]),
         "__HERO__": dist([["账单", .81], ["技术支持", .12], ["销售", .05], ["垃圾邮件", .02]]),
-        "__COUNT__": f"{len(cats)} 类 · {total} 个案例 · 点卡片跳到该类",
+        "__COUNT__": f"{len(cats)} 类 · {total} 个案例 · 点一行跳到该类",
+        "__VERIFIED__": str(verified(hero_counts)), "__EVBAR__": hero_bar, "__LEGEND__": legend,
         "__PLATES__": plates, "__CATS__": sections,
     }.items():
         out = out.replace(key, val)
