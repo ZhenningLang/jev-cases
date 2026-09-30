@@ -4,7 +4,8 @@
   "launch_date": "2026-09-14 官方博客发布（waitlist 制）；09-18 上架 OpenRouter beta；09-22 前后取消候补名单全面开放",
   "pricing_claim": "输入 $0.042/M token、输出免费；端到端 70-500ms，自称快 40-200x（另有「快 194 倍/便宜 445 倍」口径）；注册送 $5 额度",
   "caveat": "除框架接入类有官方 release notes 核实外，大部分效果与成本数字为作者自报或转述，尚无独立复现。",
-  "plain": "Jev 是 TypeSafe 在 9 月 14 日发布的模型。它不写文字，只做选择题：给它一段内容和几个选项，它直接返回每个选项的概率。所以它快、便宜，适合 agent 里「选哪个」「过不过」「危不危险」这类小判断。"
+  "plain": "Jev 是 TypeSafe 在 9 月 14 日发布的模型。它不写文字，只做选择题：给它一段内容和几个选项，它直接返回每个选项的概率。所以它快、便宜，适合 agent 里「选哪个」「过不过」「危不危险」这类小判断。",
+  "follow_note": "下面不是 Jev 本身的落地，而是 Jev 发布后别人跟着做的同类东西：开源复刻、竞品接口和本地运行环境。它们的数字大多是作者或厂商自报，单独列出，不和落地效果混在一起。"
  },
  "categories": [
   {
@@ -302,6 +303,26 @@
      "polarity": "反面",
      "date": "2026-09-27",
      "url": "https://gist.github.com/nicobrenner/056a5aaff5d0119c0032ecdad5029557"
+    },
+    {
+     "title": "Jev vs OpenAI Decisions 粗测",
+     "who": "@gunta85",
+     "what": "同题粗测 Jev 与 OpenAI Decisions，简单分类两者打平",
+     "result": "多选项、细微差别 Jev 占优，160ms vs 300ms；图像/OCR 输给 Decisions",
+     "evidence": "第三方实测",
+     "polarity": "中性",
+     "date": "2026-09-30",
+     "url": "https://x.com/i/status/2105037585529897171"
+    },
+    {
+     "title": "商品推荐分类对比 Claude",
+     "who": "swizec",
+     "what": "同为 prompt 工程、不训练，对比 Jev 与 Claude 做商品推荐分类",
+     "result": "速度、成本差距显著（未给数字）；还快到能每次按键调一次 API 实时玩游戏",
+     "evidence": "第三方实测",
+     "polarity": "正面",
+     "date": "2026-09-30",
+     "url": "https://swizec.com/blog/why-im-excited-about-jev-like-classifiers"
     }
    ],
    "hue": 155,
@@ -482,6 +503,16 @@
      "polarity": "反面",
      "date": "2026-09-18",
      "url": "https://x.com/i/status/2100619720772694036"
+    },
+    {
+     "title": "电话对话 turn 级预测",
+     "who": "muratcan（产品方）",
+     "what": "2,029 通真实电话，不接音频、只输入对话结构，逐轮预测",
+     "result": "38,012 次 turn 级预测，中位延迟 118ms；产品方营销数据，无准确率",
+     "evidence": "作者自报",
+     "polarity": "中性",
+     "date": "2026-09-30",
+     "url": ""
     }
    ],
    "hue": 65,
@@ -686,7 +717,7 @@
    "id": "opensource",
    "name": "开源复刻与自部署",
    "tagline": "不调 API，在本地做同一道选择题",
-   "intro": "Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。",
+   "intro": "Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间，最小的做到 0.5B、CPU 可跑。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），也有自称反超的（Eikos 困难档 82.9% vs 73.0%）。几乎所有数字都是作者自报，尚无中立横评。",
    "cases": [
     {
      "title": "Jev in 25 Lines of Python",
@@ -787,6 +818,46 @@
      "polarity": "中性",
      "date": "2026-09-29",
      "url": "https://jevstiller.pages.dev/posts/the-guarantee/"
+    },
+    {
+     "title": "Kev-0.5B",
+     "who": "jaredpalmer",
+     "what": "Qwen2.5-0.5B 底座，兼容 TypeSafe API 的决策模型",
+     "result": "称 MacBook Pro 上可训练和运行；Apache-2.0，无基准数据",
+     "evidence": "作者自报",
+     "polarity": "中性",
+     "date": "2026-09-19",
+     "url": "https://github.com/jaredpalmer/kev"
+    },
+    {
+     "title": "Open-Jev",
+     "who": "Zefan Cai（学术团队）",
+     "what": "开源 2B/9B LoRA adapter、decision head 和数据集",
+     "result": "MIT；与 Jev 的准确率对比未公布",
+     "evidence": "作者自报",
+     "polarity": "中性",
+     "date": "2026-09-21",
+     "url": "https://github.com/Zefan-Cai/Open-Jev"
+    },
+    {
+     "title": "Eikos",
+     "who": "@0xCVYH",
+     "what": "MIT 开源决策模型，4B/27B 两档，上下文 64k",
+     "result": "自报 JevBench 困难档 82.9% 超 Jev 73.0%；权重地址未核",
+     "evidence": "作者自报",
+     "polarity": "正面",
+     "date": "2026-09-24",
+     "url": "https://x.com/i/status/2102777292275556494"
+    },
+    {
+     "title": "Julia-1",
+     "who": "Supersonic Labs",
+     "what": "mmBERT-small 底座的小决策模型，做分类、路由、打分",
+     "result": "称 1.44 亿参数、550MB、CPU 可跑；成绩未独立复现",
+     "evidence": "作者自报",
+     "polarity": "中性",
+     "date": "2026-09-28",
+     "url": "https://huggingface.co/SupersonicLabs/Julia-1"
     }
    ],
    "hue": 110,
@@ -795,7 +866,84 @@
     "label": "25 分钟自训一个同类模型",
     "source": "Together AI · 作者自报"
    },
-   "pitfall": "自报成绩多略低于 Jev，还没有中立横评"
+   "pitfall": "自报成绩多略低于 Jev，还没有中立横评",
+   "part": "follow"
+  },
+  {
+   "id": "rivals",
+   "part": "follow",
+   "name": "竞品与运行环境",
+   "tagline": "别家也卖选择题接口，或让你在本地跑",
+   "intro": "Jev 发布两周内，OpenAI 和 LiquidAI 推出了同类决策接口，LangChain、Ollaya、Unsloth、Ollama 把开源决策模型接进托管和本地运行环境，这四家都兼容 TypeSafe 的接口，换过去只改配置。性能说法几乎都是厂商自报；目前唯一的对照是 gunta85 粗测：文本 Jev 占优，图像 OpenAI Decisions 占优。",
+   "hue": 330,
+   "highlight": {
+    "stat": "约 10ms",
+    "label": "本地 4090 跑 5 问的中位延迟",
+    "source": "Ollaya · 作者自报"
+   },
+   "pitfall": "「超过 Jev」的说法都是厂商自报，分数和口径未公布",
+   "cases": [
+    {
+     "title": "OpenAI Decisions API",
+     "who": "OpenAI（@thsottiaux）",
+     "what": "DevDay 发布，Luna 驱动的单次决策接口，支持视觉输入",
+     "result": "官方称端到端数百毫秒内；Latent Space 称是 Luna 轻封装、无校准层",
+     "evidence": "官方",
+     "polarity": "中性",
+     "date": "2026-09-30",
+     "url": "https://x.com/i/status/2104986448269279399"
+    },
+    {
+     "title": "LiquidAI d1",
+     "who": "LiquidAI",
+     "what": "首个自家决策模型，API 已上线，OpenRouter 即将上架",
+     "result": "自称首个在 HF Decision Index 上超过 Jev；分数、价格未公布",
+     "evidence": "作者自报",
+     "polarity": "中性",
+     "date": "2026-09-30",
+     "url": "https://x.com/i/status/2105003472332693869"
+    },
+    {
+     "title": "LangSmith Gateway 托管 SemIf",
+     "who": "LangChain（@hwchase17）",
+     "what": "免费托管开源决策模型 SemIf（基于 Qwen3.5）一周",
+     "result": "兼容 TypeSafe SDK，改一个字符串即可从 Jev 切换；与 Jev 的差距未测",
+     "evidence": "官方",
+     "polarity": "中性",
+     "date": "2026-09-22",
+     "url": "https://x.com/i/status/2102065131202945152"
+    },
+    {
+     "title": "Ollaya 本地运行器",
+     "who": "Ollaya",
+     "what": "开源本地运行器跑决策模型，兼容 /v1/systemone 接口",
+     "result": "称 RTX 4090 上 5 问中位约 10ms，托管 Jev API 236-276ms（含网络）",
+     "evidence": "作者自报",
+     "polarity": "正面",
+     "date": "2026-09-26",
+     "url": "https://ollaya.dev/"
+    },
+    {
+     "title": "Unsloth 本地跑 Laya Decision",
+     "who": "Unsloth",
+     "what": "本地跑 Laya Decision 系列，提供 Jev 兼容接口",
+     "result": "最低 4GB 内存，CPU/Mac/Win/Linux 通用；基准与 license 未核",
+     "evidence": "官方",
+     "polarity": "中性",
+     "date": "2026-09-29",
+     "url": "https://x.com/i/status/2104592692072304916"
+    },
+    {
+     "title": "Ollama 原生支持决策模型",
+     "who": "Ollama",
+     "what": "ollama pull nimble 即用，新增本地 systemone 接口",
+     "result": "接口与 TypeSafe 托管版同形；nimble 来源、本地延迟均未核",
+     "evidence": "官方",
+     "polarity": "正面",
+     "date": "2026-09-30",
+     "url": "https://x.com/i/status/2105152056382345544"
+    }
+   ]
   }
  ]
 }

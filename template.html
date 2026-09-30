@@ -128,6 +128,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .ev.official { background: var(--ink); color: var(--paper); } .ev.third { background: var(--violet); color: var(--paper); } .ev.self { background: var(--paper); } .ev.relay { background: var(--paper); border-style: dashed; }
 .empty { font-weight: 700; opacity: .6; padding: 12px 0; }
 
+/* follow-ups: clones and rivals, kept apart from the real uses above */
+.followups { border-style: dashed; }
+.followups > h2 span { background: var(--teal); transform: rotate(1.5deg); }
+.followups .lead { margin: 16px 0 0; max-width: 48em; font-size: 15px; line-height: 1.7; }
+.anchor-alias { display: block; position: relative; top: -12px; }
+.grp .notes { margin: 0 0 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 14px; font-weight: 700; }
+.grp .notes b { font-size: 20px; font-weight: 900; }
+.grp .notes small { font-size: 12px; opacity: .6; margin-right: 10px; }
+.grp .notes .boom { font-size: 12px; font-weight: 900; background: var(--red); color: var(--paper); border: 2px solid var(--ink); padding: 0 6px; transform: rotate(-3deg); }
+
 /* appendix: what Jev is */
 .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 48px; align-items: start; margin-bottom: 56px; scroll-margin-top: 12px; }
 .about .intro-card { background: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
@@ -227,7 +237,7 @@ footer p { margin: 0; max-width: 60em; }
   <header class="hero">
     <div class="kicker">新模型落地案例 · 第 1 册 · JEV</div>
     <h1>Jev<br><span>落地图鉴</span></h1>
-    <p>__TOTAL__ 个真实案例，按「让它判断什么」分成 __NCAT__ 类。往下滑，一类一类看：它判断什么、最亮眼的数字、在哪翻的车。</p>
+    <p>__TOTAL__ 个真实落地案例，按「让它判断什么」分成 __NCAT__ 类。往下滑，一类一类看：它判断什么、最亮眼的数字、在哪翻的车。别人照着做的开源复刻和竞品另列在<a href="#followups">后面（__NFOLLOW__ 个）</a>。</p>
     <div class="row">
       <a class="btn" href="#__FIRST__">开始看 ↓</a>
       <a class="btn ghost" href="#about">第一次听说 Jev？30 秒看懂</a>
@@ -239,7 +249,7 @@ footer p { margin: 0; max-width: 60em; }
   </div>
 
   <section class="list" id="all" aria-labelledby="all-h">
-    <h2 id="all-h"><span>全部 __TOTAL__ 个案例</span></h2>
+    <h2 id="all-h"><span>全部 __TOTAL__ 个落地案例</span></h2>
     <div class="filters" role="group" aria-label="按证据筛选">
       <button class="chip" id="f-all" data-f="all" aria-pressed="true">全部</button>
       <button class="chip" id="f-third" data-f="third" aria-pressed="false">只看第三方实测 / 官方</button>
@@ -247,6 +257,12 @@ footer p { margin: 0; max-width: 60em; }
     </div>
     <div class="legend"><span><i class="pol pos"></i>正面</span><span><i class="pol neg"></i>反面</span><span><i class="pol neu"></i>中性 / 有保留</span><span>标签是证据强度，说明见页脚</span></div>
     __GROUPS__
+  </section>
+
+  <section class="list followups" id="followups" aria-labelledby="followups-h">
+    <h2 id="followups-h"><span>跟进与复刻 __NFOLLOW__ 个</span></h2>
+    <p class="lead">__FOLLOWNOTE__</p>
+    __FOLLOWGROUPS__
   </section>
 
   <section class="about" id="about" aria-labelledby="about-h">
@@ -299,7 +315,7 @@ requestAnimationFrame(() => requestAnimationFrame(() => {
 }));
 function applyFilter(f) {
   document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === f)));
-  document.querySelectorAll(".grp").forEach(g => {
+  document.querySelectorAll("#all .grp").forEach(g => {
     let shown = 0;
     g.querySelectorAll(".case").forEach(li => {
       const ok = f === "all" || (f === "third" && (li.dataset.ev === "third" || li.dataset.ev === "official")) || (f === "neg" && li.dataset.pol === "neg");

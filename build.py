@@ -55,11 +55,6 @@ SVG = {
 <g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
 <g text-anchor="middle"><text x="42" y="24">OpenRouter</text><text x="198" y="24">Vercel</text><text x="40" y="59">LangChain</text><text x="200" y="59">DSPy</text><text x="42" y="94">pydantic-ai</text><text x="198" y="94">Pydantic GW</text></g>
 <circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text>""",
-    "opensource": """
-<rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
-<text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
-<path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
-<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g>""",
 }
 EV = {"官方": "official", "第三方实测": "third", "作者自报": "self", "转述未核": "relay"}
 POL = {"正面": "pos", "反面": "neg", "中性": "neu"}
@@ -108,38 +103,59 @@ def chapter(c, i, n):
   </section>'''
 
 
+def group(c, follow=False):
+    """One category in a case list. Follow-part groups have no scroll chapter, so they also carry the old chapter id
+    (#opensource was shared before the split) and show the highlight/pitfall inline."""
+    anchor = f'<span id="{c["id"]}" class="anchor-alias"></span>' if follow else ""
+    notes = ""
+    if follow and "highlight" in c:
+        h = c["highlight"]
+        notes = (f'<p class="notes"><b>{e(h["stat"])}</b> {e(h["label"])}<small>{e(h["source"])}</small>'
+                 f'<span class="boom">翻车</span>{e(c["pitfall"])}</p>')
+    return f'''
+      <div class="grp" id="list-{c["id"]}" style="--h:{c["hue"]}">{anchor}
+        <h3><i></i>{e(c["name"])}<small>{len(c["cases"])} 例</small></h3>
+        <p class="intro">{e(c["intro"])}</p>{notes}
+        <ul class="cases">{"".join(case(c, i, k) for i, k in enumerate(c["cases"]))}
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>'''
+
+
 def main():
     data = json.loads((ROOT / "data/cases.json").read_text())
-    cats, ov = data["categories"], data["overview"]
+    ov = data["overview"]
+    # Two parts that must not be mixed: real uses of Jev (the story) and what others built after it (clones, rivals, runners).
+    cats = [c for c in data["categories"] if c.get("part", "landing") == "landing"]
+    follow = [c for c in data["categories"] if c.get("part") == "follow"]
+    unknown = [c["id"] for c in data["categories"] if c.get("part", "landing") not in ("landing", "follow")]
+    if unknown:
+        sys.exit(f"unknown part for category: {unknown} (use \"follow\" or leave it out)")
     missing = [c["id"] for c in cats if c["id"] not in SVG or "highlight" not in c]
     if missing:
         sys.exit(f"no scene illustration for category: {missing} (add a scene to SVG in build.py and highlight/pitfall/hue to cases.json)")
     total = sum(len(c["cases"]) for c in cats)
+    nfollow = sum(len(c["cases"]) for c in follow)
     chapters = "".join(chapter(c, i, len(cats)) for i, c in enumerate(cats))
-    groups = "".join(f'''
-      <div class="grp" id="list-{c["id"]}" style="--h:{c["hue"]}">
-        <h3><i></i>{e(c["name"])}<small>{len(c["cases"])} 例</small></h3>
-        <p class="intro">{e(c["intro"])}</p>
-        <ul class="cases">{"".join(case(c, i, k) for i, k in enumerate(c["cases"]))}
-        </ul>
-        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-      </div>''' for c in cats)
+    groups = "".join(group(c) for c in cats)
+    follow_groups = "".join(group(c, follow=True) for c in follow)
     facts = "".join(f"<dt>{k}</dt><dd>{e(v)}</dd>" for k, v in
                     [("发布", ov["launch_date"]), ("价格与速度", "厂商口径：" + ov["pricing_claim"]), ("注意", ov["caveat"])])
-    desc = f"{total} 个 Jev 真实落地案例，按「让它判断什么」分成 {len(cats)} 类，每条附数字、来源与证据强度。"
+    desc = f"{total} 个 Jev 真实落地案例，按「让它判断什么」分成 {len(cats)} 类，每条附数字、来源与证据强度；另列 {nfollow} 个开源复刻与竞品。"
     out = (ROOT / "template.html").read_text()
     for key, val in {
         "__DESC__": e(desc), "__SITE__": SITE, "__REPO__": REPO, "__UPDATED__": date.today().isoformat(),
         "__LEDE__": e(ov["plain"]), "__TOTAL__": str(total), "__NCAT__": str(len(cats)), "__FACTS__": facts, "__CAVEAT__": e(ov["caveat"]),
         "__HERO__": dist([["账单", .81], ["技术支持", .12], ["销售", .05], ["垃圾邮件", .02]]),
         "__FIRST__": cats[0]["id"], "__CHAPTERS__": chapters, "__GROUPS__": groups,
+        "__NFOLLOW__": str(nfollow), "__FOLLOWNOTE__": e(ov["follow_note"]), "__FOLLOWGROUPS__": follow_groups,
     }.items():
         out = out.replace(key, val)
     left = sorted(set(re.findall(r"__[A-Z]+__", out)))
     if left:
         sys.exit(f"unfilled placeholders: {left}")
     (ROOT / "index.html").write_text(out)
-    print(f"index.html: {len(cats)} categories, {total} cases, {len(out):,} bytes")
+    print(f"index.html: {len(cats)} categories, {total} cases; follow-ups: {len(follow)} groups, {nfollow} entries; {len(out):,} bytes")
 
 
 if __name__ == "__main__":

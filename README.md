@@ -1,6 +1,6 @@
 # Jev 落地图鉴
 
-收集 TypeSafe Jev（只回答选择题、输出概率的决策模型）的真实落地案例，按「让它判断什么」分类，每条附数字、来源和证据强度。
+收集 TypeSafe Jev（只回答选择题、输出概率的决策模型）的真实落地案例，按「让它判断什么」分类，每条附数字、来源和证据强度。另列一部分「跟进与复刻」：开源复刻、竞品和本地运行环境，与落地案例分开。
 
 在线版：https://zhenninglang.github.io/jev-cases/
 
@@ -10,10 +10,10 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `data/cases.json` | 案例数据，唯一的事实源 |
+| `data/cases.json` | 案例数据，唯一的事实源；`"part": "follow"` 的类进「跟进与复刻」区，其余是落地 |
 | `template.html` | 页面样式和骨架 |
 | `build.py` | 把数据渲染进 `index.html`（静态页面，不靠 JS 也能读） |
-| `scripts/pull_notes.sh` | 从私有 RSS 笔记拉取 Jev 相关条目到 `.notes/`（不入库） |
+| `scripts/pull_notes.sh` | 从私有 RSS 笔记拉取 Jev 相关条目和散落提及到 `.notes/`（不入库） |
 | `scripts/update_prompt.md` | 每周更新时交给 agent 的提示词 |
 
 ## 更新

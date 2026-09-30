@@ -9,9 +9,9 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#fff6e0">
 <meta name="color-scheme" content="light">
-<meta name="description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
+<meta name="description" content="60 个 Jev 真实落地案例，按「让它判断什么」分成 7 类，每条附数字、来源与证据强度；另列 20 个开源复刻与竞品。">
 <meta property="og:title" content="Jev 落地图鉴：判断题，别让 AI 写作文">
-<meta property="og:description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
+<meta property="og:description" content="60 个 Jev 真实落地案例，按「让它判断什么」分成 7 类，每条附数字、来源与证据强度；另列 20 个开源复刻与竞品。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zhenninglang.github.io/jev-cases/">
 <meta property="og:image" content="https://zhenninglang.github.io/jev-cases/og.png">
@@ -128,6 +128,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .ev.official { background: var(--ink); color: var(--paper); } .ev.third { background: var(--violet); color: var(--paper); } .ev.self { background: var(--paper); } .ev.relay { background: var(--paper); border-style: dashed; }
 .empty { font-weight: 700; opacity: .6; padding: 12px 0; }
 
+/* follow-ups: clones and rivals, kept apart from the real uses above */
+.followups { border-style: dashed; }
+.followups > h2 span { background: var(--teal); transform: rotate(1.5deg); }
+.followups .lead { margin: 16px 0 0; max-width: 48em; font-size: 15px; line-height: 1.7; }
+.anchor-alias { display: block; position: relative; top: -12px; }
+.grp .notes { margin: 0 0 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 14px; font-weight: 700; }
+.grp .notes b { font-size: 20px; font-weight: 900; }
+.grp .notes small { font-size: 12px; opacity: .6; margin-right: 10px; }
+.grp .notes .boom { font-size: 12px; font-weight: 900; background: var(--red); color: var(--paper); border: 2px solid var(--ink); padding: 0 6px; transform: rotate(-3deg); }
+
 /* appendix: what Jev is */
 .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 48px; align-items: start; margin-bottom: 56px; scroll-margin-top: 12px; }
 .about .intro-card { background: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
@@ -227,18 +237,18 @@ footer p { margin: 0; max-width: 60em; }
   <header class="hero">
     <div class="kicker">新模型落地案例 · 第 1 册 · JEV</div>
     <h1>Jev<br><span>落地图鉴</span></h1>
-    <p>67 个真实案例，按「让它判断什么」分成 8 类。往下滑，一类一类看：它判断什么、最亮眼的数字、在哪翻的车。</p>
+    <p>60 个真实落地案例，按「让它判断什么」分成 7 类。往下滑，一类一类看：它判断什么、最亮眼的数字、在哪翻的车。别人照着做的开源复刻和竞品另列在<a href="#followups">后面（20 个）</a>。</p>
     <div class="row">
       <a class="btn" href="#browser">开始看 ↓</a>
       <a class="btn ghost" href="#about">第一次听说 Jev？30 秒看懂</a>
-      <span class="meta">更新于 2026-09-29</span>
+      <span class="meta">更新于 2026-09-30</span>
     </div>
   </header>
 
   <div id="idx">
   <section class="chapter" id="browser" style="--h:250" aria-labelledby="h-browser">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>01 / 08</b><span>8 例</span></div>
+      <div class="fld"><div class="no"><b>01 / 07</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
 <circle cx="20" cy="16" r="3" class="pp"/><circle cx="30" cy="16" r="3" class="pp"/><circle cx="40" cy="16" r="3" class="pp"/><rect x="54" y="11" width="120" height="10" rx="5" class="pp"/>
@@ -256,7 +266,7 @@ footer p { margin: 0; max-width: 60em; }
   </section>
   <section class="chapter" id="routing" style="--h:295" aria-labelledby="h-routing">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>02 / 08</b><span>8 例</span></div>
+      <div class="fld"><div class="no"><b>02 / 07</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <path d="M70 55 C 110 55, 110 20, 150 20" class="lnm"/><path d="M70 55 L150 55" class="ln" stroke-width="3"/><path d="M70 55 C 110 55, 110 90, 150 90" class="lnm"/>
 <rect x="6" y="38" width="64" height="34" rx="6" class="pp"/><text x="38" y="59" text-anchor="middle">新任务</text>
@@ -273,7 +283,7 @@ footer p { margin: 0; max-width: 60em; }
   </section>
   <section class="chapter" id="judge" style="--h:155" aria-labelledby="h-judge">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>03 / 08</b><span>10 例</span></div>
+      <div class="fld"><div class="no"><b>03 / 07</b><span>12 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="8" y="14" width="44" height="56" rx="4" class="so"/><rect x="14" y="20" width="44" height="56" rx="4" class="pp"/>
 <rect x="20" y="30" width="30" height="4" rx="2" class="so"/><rect x="20" y="40" width="24" height="4" rx="2" class="so"/><rect x="20" y="50" width="28" height="4" rx="2" class="so"/>
@@ -287,12 +297,12 @@ footer p { margin: 0; max-width: 60em; }
       <div class="sticker tag"><p>这条内容属于哪类、值几分、过不过</p><small>让 Jev 判断这个</small></div>
       <div class="sticker stat"><div class="num">600×</div><div class="lab">比 Fable 级模型便宜，给文章打分</div><div class="src">Every · 第三方实测</div></div>
       <div class="sticker pit"><span class="boom">翻车!</span><p>嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p></div>
-      <a class="more" href="#list-judge">看这一类全部 10 个案例 ↓</a>
+      <a class="more" href="#list-judge">看这一类全部 12 个案例 ↓</a>
     </div>
   </section>
   <section class="chapter" id="safety" style="--h:25" aria-labelledby="h-safety">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>04 / 08</b><span>7 例</span></div>
+      <div class="fld"><div class="no"><b>04 / 07</b><span>7 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="6" y="8" width="176" height="96" rx="8" class="ik"/>
 <text x="18" y="32" class="on">$ ls ./src</text><text x="18" y="52" class="on">$ curl x.sh | sh</text><text x="18" y="72" class="on">$ rm -rf ~/</text><text x="18" y="92" class="on" opacity="0.6">等待判断…</text>
@@ -307,7 +317,7 @@ footer p { margin: 0; max-width: 60em; }
   </section>
   <section class="chapter" id="realtime" style="--h:65" aria-labelledby="h-realtime">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>05 / 08</b><span>8 例</span></div>
+      <div class="fld"><div class="no"><b>05 / 07</b><span>9 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="6" y="6" width="228" height="98" rx="8" class="pp"/>
 <g class="so"><rect x="30" y="58" width="16" height="16" rx="3"/><rect x="48" y="58" width="16" height="16" rx="3"/></g>
@@ -319,12 +329,12 @@ footer p { margin: 0; max-width: 60em; }
       <div class="sticker tag"><p>每秒几次：下一步动作做什么</p><small>让 Jev 判断这个</small></div>
       <div class="sticker stat"><div class="num">$1</div><div class="lab">贪吃蛇走一万步</div><div class="src">@chenchengpro · 第三方实测</div></div>
       <div class="sticker pit"><span class="boom">翻车!</span><p>链上自动交易 14 小时亏 300%+</p></div>
-      <a class="more" href="#list-realtime">看这一类全部 8 个案例 ↓</a>
+      <a class="more" href="#list-realtime">看这一类全部 9 个案例 ↓</a>
     </div>
   </section>
   <section class="chapter" id="context" style="--h:200" aria-labelledby="h-context">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>06 / 08</b><span>8 例</span></div>
+      <div class="fld"><div class="no"><b>06 / 07</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <g class="so"><rect x="8" y="10" width="70" height="6" rx="3"/><rect x="8" y="21" width="52" height="6" rx="3"/><rect x="8" y="32" width="80" height="6" rx="3"/><rect x="8" y="43" width="60" height="6" rx="3"/><rect x="8" y="54" width="76" height="6" rx="3"/><rect x="8" y="65" width="44" height="6" rx="3"/><rect x="8" y="76" width="66" height="6" rx="3"/><rect x="8" y="87" width="56" height="6" rx="3"/></g>
 <rect x="8" y="32" width="80" height="6" rx="3" class="s"/><rect x="8" y="65" width="44" height="6" rx="3" class="s"/>
@@ -341,7 +351,7 @@ footer p { margin: 0; max-width: 60em; }
   </section>
   <section class="chapter" id="platform" style="--h:340" aria-labelledby="h-platform">
     <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>07 / 08</b><span>8 例</span></div>
+      <div class="fld"><div class="no"><b>07 / 07</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <g class="lnm"><path d="M120 55 L42 20"/><path d="M120 55 L198 20"/><path d="M120 55 L40 55"/><path d="M120 55 L200 55"/><path d="M120 55 L42 90"/><path d="M120 55 L198 90"/></g>
 <g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
@@ -355,26 +365,10 @@ footer p { margin: 0; max-width: 60em; }
       <a class="more" href="#list-platform">看这一类全部 8 个案例 ↓</a>
     </div>
   </section>
-  <section class="chapter" id="opensource" style="--h:110" aria-labelledby="h-opensource">
-    <div class="art"><div class="card">
-      <div class="fld"><div class="no"><b>08 / 08</b><span>10 例</span></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">
-<rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
-<text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
-<path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
-<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg></div>
-      <h2 id="h-opensource">开源复刻与自部署</h2></div></div>
-    <div class="text">
-      <div class="sticker tag"><p>不调 API，在本地做同一道选择题</p><small>让 Jev 判断这个</small></div>
-      <div class="sticker stat"><div class="num">$17</div><div class="lab">25 分钟自训一个同类模型</div><div class="src">Together AI · 作者自报</div></div>
-      <div class="sticker pit"><span class="boom">翻车!</span><p>自报成绩多略低于 Jev，还没有中立横评</p></div>
-      <a class="more" href="#list-opensource">看这一类全部 10 个案例 ↓</a>
-    </div>
-  </section>
   </div>
 
   <section class="list" id="all" aria-labelledby="all-h">
-    <h2 id="all-h"><span>全部 67 个案例</span></h2>
+    <h2 id="all-h"><span>全部 60 个落地案例</span></h2>
     <div class="filters" role="group" aria-label="按证据筛选">
       <button class="chip" id="f-all" data-f="all" aria-pressed="true">全部</button>
       <button class="chip" id="f-third" data-f="third" aria-pressed="false">只看第三方实测 / 官方</button>
@@ -509,7 +503,7 @@ footer p { margin: 0; max-width: 60em; }
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
       <div class="grp" id="list-judge" style="--h:155">
-        <h3><i></i>分类·打分·Judge<small>10 例</small></h3>
+        <h3><i></i>分类·打分·Judge<small>12 例</small></h3>
         <p class="intro">类目固定、量大的分类和打分是 Jev 最稳的场景：多份第三方实测都是快几倍到几十倍、便宜几十到几百倍。准确率则只是持平或略高：verysmallwoods 实测 Banking77 为 81.6% vs Haiku 80.1%，而嵌入+逻辑回归能到 94.25%。类目固定时经典小模型可能更准更便宜，用前应先对可信标注验证。</p>
         <ul class="cases">
           <li class="case" id="judge-1" data-ev="third" data-pol="pos">
@@ -582,6 +576,20 @@ footer p { margin: 0; max-width: 60em; }
             <div class="res"><i class="pol neg" title="反面"></i>bge-large+LR 94.25% vs Jev 零样本 87.0%；分类器 642KB</div>
             <span class="ev self">作者自报</span>
           </li>
+          <li class="case" id="judge-11" data-ev="third" data-pol="neu">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2105037585529897171" target="_blank" rel="noopener">Jev vs OpenAI Decisions 粗测 ↗</a><a class="anchor" href="#judge-11" aria-label="本案例链接">#</a><span class="who">@gunta85</span></div>
+              <p class="what">同题粗测 Jev 与 OpenAI Decisions，简单分类两者打平</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>多选项、细微差别 Jev 占优，160ms vs 300ms；图像/OCR 输给 Decisions</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="judge-12" data-ev="third" data-pol="pos">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t"><a href="https://swizec.com/blog/why-im-excited-about-jev-like-classifiers" target="_blank" rel="noopener">商品推荐分类对比 Claude ↗</a><a class="anchor" href="#judge-12" aria-label="本案例链接">#</a><span class="who">swizec</span></div>
+              <p class="what">同为 prompt 工程、不训练，对比 Jev 与 Claude 做商品推荐分类</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>速度、成本差距显著（未给数字）；还快到能每次按键调一次 API 实时玩游戏</div>
+            <span class="ev third">第三方实测</span>
+          </li>
         </ul>
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
@@ -642,7 +650,7 @@ footer p { margin: 0; max-width: 60em; }
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
       <div class="grp" id="list-realtime" style="--h:65">
-        <h3><i></i>游戏与实时控制<small>8 例</small></h3>
+        <h3><i></i>游戏与实时控制<small>9 例</small></h3>
         <p class="intro">单次几百毫秒、输出免费，让「每一步都问一次模型」变得可负担：贪吃蛇 $1 走一万步，Doom 约 $7/小时。能落地的形态是分层：高频控制留给代码、低频判断给模型、安全层握否决权（jev-drone）。直接拿去做需要预测的交易，转述案例 14 小时亏 300%+。</p>
         <ul class="cases">
           <li class="case" id="realtime-1" data-ev="official" data-pol="pos">
@@ -700,6 +708,13 @@ footer p { margin: 0; max-width: 60em; }
               <p class="what">纯 AI 原生链上自动交易系统</p></div>
             <div class="res"><i class="pol neg" title="反面"></i>demo 跑 14 小时亏 300%+</div>
             <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="realtime-9" data-ev="self" data-pol="neu">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t">电话对话 turn 级预测<a class="anchor" href="#realtime-9" aria-label="本案例链接">#</a><span class="who">muratcan（产品方）</span></div>
+              <p class="what">2,029 通真实电话，不接音频、只输入对话结构，逐轮预测</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>38,012 次 turn 级预测，中位延迟 118ms；产品方营销数据，无准确率</div>
+            <span class="ev self">作者自报</span>
           </li>
         </ul>
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
@@ -830,9 +845,15 @@ footer p { margin: 0; max-width: 60em; }
         </ul>
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
-      <div class="grp" id="list-opensource" style="--h:110">
-        <h3><i></i>开源复刻与自部署<small>10 例</small></h3>
-        <p class="intro">Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。</p>
+  </section>
+
+  <section class="list followups" id="followups" aria-labelledby="followups-h">
+    <h2 id="followups-h"><span>跟进与复刻 20 个</span></h2>
+    <p class="lead">下面不是 Jev 本身的落地，而是 Jev 发布后别人跟着做的同类东西：开源复刻、竞品接口和本地运行环境。它们的数字大多是作者或厂商自报，单独列出，不和落地效果混在一起。</p>
+    
+      <div class="grp" id="list-opensource" style="--h:110"><span id="opensource" class="anchor-alias"></span>
+        <h3><i></i>开源复刻与自部署<small>14 例</small></h3>
+        <p class="intro">Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间，最小的做到 0.5B、CPU 可跑。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），也有自称反超的（Eikos 困难档 82.9% vs 73.0%）。几乎所有数字都是作者自报，尚无中立横评。</p><p class="notes"><b>$17</b> 25 分钟自训一个同类模型<small>Together AI · 作者自报</small><span class="boom">翻车</span>自报成绩多略低于 Jev，还没有中立横评</p>
         <ul class="cases">
           <li class="case" id="opensource-1" data-ev="self" data-pol="neg">
             <span class="dt">09-23</span>
@@ -904,6 +925,83 @@ footer p { margin: 0; max-width: 60em; }
             <div class="res"><i class="pol neu" title="中性"></i>本地 CPU 约 15ms、Jev API 约 300ms；用公式约束与 Jev 一致率下限</div>
             <span class="ev self">作者自报</span>
           </li>
+          <li class="case" id="opensource-11" data-ev="self" data-pol="neu">
+            <span class="dt">09-19</span>
+            <div class="main"><div class="t"><a href="https://github.com/jaredpalmer/kev" target="_blank" rel="noopener">Kev-0.5B ↗</a><a class="anchor" href="#opensource-11" aria-label="本案例链接">#</a><span class="who">jaredpalmer</span></div>
+              <p class="what">Qwen2.5-0.5B 底座，兼容 TypeSafe API 的决策模型</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>称 MacBook Pro 上可训练和运行；Apache-2.0，无基准数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-12" data-ev="self" data-pol="neu">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://github.com/Zefan-Cai/Open-Jev" target="_blank" rel="noopener">Open-Jev ↗</a><a class="anchor" href="#opensource-12" aria-label="本案例链接">#</a><span class="who">Zefan Cai（学术团队）</span></div>
+              <p class="what">开源 2B/9B LoRA adapter、decision head 和数据集</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>MIT；与 Jev 的准确率对比未公布</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-13" data-ev="self" data-pol="pos">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2102777292275556494" target="_blank" rel="noopener">Eikos ↗</a><a class="anchor" href="#opensource-13" aria-label="本案例链接">#</a><span class="who">@0xCVYH</span></div>
+              <p class="what">MIT 开源决策模型，4B/27B 两档，上下文 64k</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>自报 JevBench 困难档 82.9% 超 Jev 73.0%；权重地址未核</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-14" data-ev="self" data-pol="neu">
+            <span class="dt">09-28</span>
+            <div class="main"><div class="t"><a href="https://huggingface.co/SupersonicLabs/Julia-1" target="_blank" rel="noopener">Julia-1 ↗</a><a class="anchor" href="#opensource-14" aria-label="本案例链接">#</a><span class="who">Supersonic Labs</span></div>
+              <p class="what">mmBERT-small 底座的小决策模型，做分类、路由、打分</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>称 1.44 亿参数、550MB、CPU 可跑；成绩未独立复现</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-rivals" style="--h:330"><span id="rivals" class="anchor-alias"></span>
+        <h3><i></i>竞品与运行环境<small>6 例</small></h3>
+        <p class="intro">Jev 发布两周内，OpenAI 和 LiquidAI 推出了同类决策接口，LangChain、Ollaya、Unsloth、Ollama 把开源决策模型接进托管和本地运行环境，这四家都兼容 TypeSafe 的接口，换过去只改配置。性能说法几乎都是厂商自报；目前唯一的对照是 gunta85 粗测：文本 Jev 占优，图像 OpenAI Decisions 占优。</p><p class="notes"><b>约 10ms</b> 本地 4090 跑 5 问的中位延迟<small>Ollaya · 作者自报</small><span class="boom">翻车</span>「超过 Jev」的说法都是厂商自报，分数和口径未公布</p>
+        <ul class="cases">
+          <li class="case" id="rivals-1" data-ev="official" data-pol="neu">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2104986448269279399" target="_blank" rel="noopener">OpenAI Decisions API ↗</a><a class="anchor" href="#rivals-1" aria-label="本案例链接">#</a><span class="who">OpenAI（@thsottiaux）</span></div>
+              <p class="what">DevDay 发布，Luna 驱动的单次决策接口，支持视觉输入</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>官方称端到端数百毫秒内；Latent Space 称是 Luna 轻封装、无校准层</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="rivals-2" data-ev="self" data-pol="neu">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2105003472332693869" target="_blank" rel="noopener">LiquidAI d1 ↗</a><a class="anchor" href="#rivals-2" aria-label="本案例链接">#</a><span class="who">LiquidAI</span></div>
+              <p class="what">首个自家决策模型，API 已上线，OpenRouter 即将上架</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>自称首个在 HF Decision Index 上超过 Jev；分数、价格未公布</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="rivals-3" data-ev="official" data-pol="neu">
+            <span class="dt">09-22</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2102065131202945152" target="_blank" rel="noopener">LangSmith Gateway 托管 SemIf ↗</a><a class="anchor" href="#rivals-3" aria-label="本案例链接">#</a><span class="who">LangChain（@hwchase17）</span></div>
+              <p class="what">免费托管开源决策模型 SemIf（基于 Qwen3.5）一周</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>兼容 TypeSafe SDK，改一个字符串即可从 Jev 切换；与 Jev 的差距未测</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="rivals-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://ollaya.dev/" target="_blank" rel="noopener">Ollaya 本地运行器 ↗</a><a class="anchor" href="#rivals-4" aria-label="本案例链接">#</a><span class="who">Ollaya</span></div>
+              <p class="what">开源本地运行器跑决策模型，兼容 /v1/systemone 接口</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>称 RTX 4090 上 5 问中位约 10ms，托管 Jev API 236-276ms（含网络）</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="rivals-5" data-ev="official" data-pol="neu">
+            <span class="dt">09-29</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2104592692072304916" target="_blank" rel="noopener">Unsloth 本地跑 Laya Decision ↗</a><a class="anchor" href="#rivals-5" aria-label="本案例链接">#</a><span class="who">Unsloth</span></div>
+              <p class="what">本地跑 Laya Decision 系列，提供 Jev 兼容接口</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>最低 4GB 内存，CPU/Mac/Win/Linux 通用；基准与 license 未核</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="rivals-6" data-ev="official" data-pol="pos">
+            <span class="dt">09-30</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2105152056382345544" target="_blank" rel="noopener">Ollama 原生支持决策模型 ↗</a><a class="anchor" href="#rivals-6" aria-label="本案例链接">#</a><span class="who">Ollama</span></div>
+              <p class="what">ollama pull nimble 即用，新增本地 systemone 接口</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>接口与 TypeSafe 托管版同形；nimble 来源、本地延迟均未核</div>
+            <span class="ev official">官方</span>
+          </li>
         </ul>
         <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
@@ -959,7 +1057,7 @@ requestAnimationFrame(() => requestAnimationFrame(() => {
 }));
 function applyFilter(f) {
   document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === f)));
-  document.querySelectorAll(".grp").forEach(g => {
+  document.querySelectorAll("#all .grp").forEach(g => {
     let shown = 0;
     g.querySelectorAll(".case").forEach(li => {
       const ok = f === "all" || (f === "third" && (li.dataset.ev === "third" || li.dataset.ev === "official")) || (f === "neg" && li.dataset.pol === "neg");
