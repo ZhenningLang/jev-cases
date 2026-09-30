@@ -184,11 +184,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .follow { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center; padding: 26px 28px; border-radius: 14px; background: var(--ink); color: var(--bg); }
 .follow h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; }
 .follow p { margin: 0; opacity: 0.8; max-width: 40em; }
-.follow .name { font-family: var(--font-display); font-weight: 900; font-size: 1.25rem; border: 1px solid currentColor; border-radius: 8px; padding: 10px 16px; white-space: nowrap; }
+.follow .qr { margin: 0; display: grid; justify-items: center; gap: 8px; text-align: center; }
+/* white quiet zone on purpose: the block is ink-coloured (dark in light mode, light in dark mode) and a QR needs a light background to scan */
+.follow .qr img { display: block; width: 132px; height: 132px; background: #fff; padding: 8px; border-radius: 10px; }
+.follow .qr figcaption { font-size: 0.8rem; line-height: 1.4; opacity: 0.85; }
+.follow .qr b { display: block; font-family: var(--font-display); font-size: 1.05rem; opacity: 1; }
 .case .anchor { margin-left: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; opacity: 0; }
 .case:hover .anchor, .case .anchor:focus-visible { opacity: 1; }
 .case:target { background: var(--accent-soft); }
-@media (max-width: 640px) { .follow { grid-template-columns: minmax(0, 1fr); } .case .anchor { opacity: 1; } }
+@media (max-width: 640px) { .follow { grid-template-columns: minmax(0, 1fr); } .follow .qr { justify-self: start; } .case .anchor { opacity: 1; } }
 footer { margin-top: 32px; padding-block: 24px 48px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.85rem; display: grid; gap: 6px; }
 footer p { margin: 0; max-width: 60em; }
 .legend-line { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; color: var(--muted); font-size: 0.8rem; }
@@ -266,9 +270,12 @@ footer p { margin: 0; max-width: 60em; }
   <section class="follow" id="follow" aria-labelledby="follow-h">
     <div>
       <h2 id="follow-h">这些案例背后的判断，我写在公众号里</h2>
-      <p>哪类场景该交给 Jev、哪类别碰、怎么先配评测集再上线。AI 编程工程化的实操，微信搜索公众号关注。</p>
+      <p>哪类场景该交给 Jev、哪类别碰、怎么先配评测集再上线。AI 编程工程化的实操，微信扫码或搜索「小郎碎碎念」关注。</p>
     </div>
-    <span class="name">小郎碎碎念</span>
+    <figure class="qr">
+      <img src="wechat-qr.jpg" width="132" height="132" alt="公众号「小郎碎碎念」二维码">
+      <figcaption><b>小郎碎碎念</b>微信扫码关注</figcaption>
+    </figure>
   </section>
 
   <footer>
