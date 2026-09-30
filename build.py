@@ -141,7 +141,7 @@ def main():
     follow_groups = "".join(group(c, follow=True) for c in follow)
     facts = "".join(f"<dt>{k}</dt><dd>{e(v)}</dd>" for k, v in
                     [("发布", ov["launch_date"]), ("价格与速度", "厂商口径：" + ov["pricing_claim"]), ("注意", ov["caveat"])])
-    desc = f"{total} 个 Jev 真实落地案例，按「让它判断什么」分成 {len(cats)} 类，每条附数字、来源与证据强度；另列 {nfollow} 个开源复刻与竞品。"
+    desc = f"{total} 个 Jev 真实案例，按「让它判断什么」分成 {len(cats)} 类，每条附数字、来源与证据强度；另列 {nfollow} 个开源复刻与竞品。"
     out = (ROOT / "template.html").read_text()
     for key, val in {
         "__DESC__": e(desc), "__SITE__": SITE, "__REPO__": REPO, "__UPDATED__": date.today().isoformat(),
