@@ -7,7 +7,8 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#15171b">
+<meta name="theme-color" content="#fff6e0">
+<meta name="color-scheme" content="light">
 <meta name="description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
 <meta property="og:title" content="Jev 落地图鉴：判断题，别让 AI 写作文">
 <meta property="og:description" content="67 个 Jev 真实落地案例，按「让它判断什么」分成 8 类，每条附数字、来源与证据强度。">
@@ -19,261 +20,260 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Non-blocking: where Google Fonts is unreachable (e.g. mainland China) the page renders at once with system fonts. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;800;900&display=swap"></noscript>
 <style>
-/* Layout: a field guide. Hero = one live "Jev response" specimen; index = one plate per category (the plate is a sample decision drawn as a probability distribution); below, each category is a ledger of cases. */
-:root {
-  --bg: #eceee9;
-  --paper: #f7f8f5;
-  --ink: #15171b;
-  --muted: #5d6268;
-  --rule: #cfd3cc;
-  --accent: #2448e8;
-  --accent-soft: #d9e0fb;
-  --bar: #c5cac2;
-  --pos: #1f7a4d;
-  --neg: #b4382f;
-  --neutral: #7a6f2e;
-  --panel-l: 0.93; --panel-c: 0.045; --strong-l: 0.5; --strong-c: 0.16; --soft-l: 0.8; --soft-c: 0.08;
-  --font-display: "Schibsted Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
-  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --step-0: 0.9375rem;
-  --step-1: 1.125rem;
-  --step-2: 1.5rem;
-  --step-3: clamp(1.9rem, 4vw, 2.6rem);
-  --step-4: clamp(2.4rem, 7vw, 4.6rem);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-    --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #111317; --paper: #181b20; --ink: #e7e9ec; --muted: #9aa0a8; --rule: #2c3038;
-  --accent: #7d97ff; --accent-soft: #232c4d; --bar: #353a43; --pos: #5cc592; --neg: #f07b70; --neutral: #d2c070; --panel-l: 0.27; --panel-c: 0.045; --strong-l: 0.8; --strong-c: 0.13; --soft-l: 0.45; --soft-c: 0.07;
-  color-scheme: dark;
-}
+/* Style anchor: Memphis Group (Ettore Sottsass). Rationale and tokens: DESIGN.md.
+   Desktop tells the eight categories as a scroll story (pinned scene card, stickers scroll past); phones read them in order. */
+:root { --bg: #fff6e0; --ink: #151515; --paper: #fff; --yellow: #ffd23f; --pink: #ff6fb5; --teal: #2ec4b6; --violet: #7b5cff; --red: #ff4d4d; --pinkwash: #ffe3ef;
+  --font: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", system-ui, sans-serif; color-scheme: light; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 html, body { overflow-x: clip; }
-body { margin: 0; padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px); background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(var(--ink) 1.2px, transparent 1.3px); background-size: 22px 22px; background-position: -11px -11px; }
 a { color: inherit; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+.w { max-width: 1200px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
 
-/* Top bar */
-.topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 20px; padding-block: 14px; border-bottom: 1px solid var(--rule); font-size: 0.85rem; }
-.topbar .brand { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
-.topbar nav { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
-.topbar a { text-decoration: none; }
-.topbar a:hover { color: var(--accent); }
-.wx { display: inline-flex; align-items: center; gap: 6px; }
-.wx b { color: var(--accent); font-weight: 700; }
+/* background layer: geometric debris that scrolls slower than the content */
+.layer-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.shape { position: absolute; opacity: .9; }
+.squig { width: 220px; left: 6%; top: 18%; }
+.tri { left: 78%; top: 12%; width: 0; height: 0; border-left: 56px solid transparent; border-right: 56px solid transparent; border-bottom: 96px solid var(--teal); filter: drop-shadow(4px 4px 0 var(--ink)); }
+.dot { left: 86%; top: 62%; width: 84px; height: 84px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+.ring { left: 4%; top: 70%; width: 110px; height: 110px; border-radius: 50%; border: 10px solid var(--pink); box-shadow: 4px 4px 0 var(--ink); }
+.bars { left: 48%; top: 86%; width: 120px; height: 44px; background: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 16px); }
+.half { left: 40%; top: 4%; width: 90px; height: 45px; border-radius: 90px 90px 0 0; background: var(--violet); border: 3px solid var(--ink); }
 
-/* Intro: key info first */
-.intro { padding-block: 40px 8px; display: grid; gap: 14px; }
-.intro h1 { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
-.intro .sub { margin: 0; font-size: var(--step-1); color: var(--muted); max-width: 36em; line-height: 1.6; }
-.intro .sub b { color: var(--ink); font-weight: 700; }
-.intro .row { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 4px; }
-.primer { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.85rem; padding: 7px 14px 7px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper); transition: border-color 200ms ease, transform 200ms ease; }
-.primer:hover { border-color: var(--accent); transform: translateY(-1px); }
-.primer .glyph { display: inline-grid; gap: 2px; width: 22px; }
-.primer .glyph i { display: block; height: 3px; border-radius: 2px; background: var(--bar); }
-.primer .glyph i:first-child { background: var(--accent); width: 100%; } .primer .glyph i:nth-child(2) { width: 40%; } .primer .glyph i:nth-child(3) { width: 18%; }
-.primer .arrow { color: var(--accent); font-family: var(--font-mono); }
-.intro .meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+/* top bar */
+.top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 18px; padding: 18px 0; font-weight: 800; font-size: 15px; }
+.top .brand { font-weight: 800; letter-spacing: .02em; }
+.top nav { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+.wx { font: inherit; font-weight: 800; cursor: pointer; background: var(--yellow); color: var(--ink); border: 2.5px solid var(--ink); border-radius: 999px; padding: 3px 12px; box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .12s cubic-bezier(.2,.8,.2,1), box-shadow .12s; }
+.wx:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.wx:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
 
-/* About Jev (end of page) */
-.about { margin-top: 64px; padding-top: 18px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: start; scroll-margin-top: 16px; }
-.about h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: 900; line-height: 1.1; margin: 4px 0 14px; letter-spacing: -0.02em; }
-.about p { margin: 0 0 14px; max-width: 36em; }
-.about .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 18px 0; font-size: 0.88rem; }
-.about .facts dt { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); padding-top: 2px; }
-.about .facts dd { margin: 0; }
-.about blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); color: var(--muted); font-size: 0.9rem; }
-.about blockquote b { color: var(--ink); font-size: 1.05rem; }
-.back { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); text-decoration: none; }
-.specimen { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px; font-family: var(--font-mono); font-size: 0.82rem; min-width: 0; }
-.specimen .ask, .specimen .ans { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 12px; align-items: start; }
-.specimen .ask { font-family: var(--font-body); font-size: 1rem; font-weight: 500; line-height: 1.5; margin: 14px 0 16px; }
-.specimen .ask small { font-weight: 400; font-size: 0.8rem; color: var(--muted); }
-.specimen .who { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; color: var(--muted); padding-top: 3px; }
-.specimen .ans .who { color: var(--accent); padding-top: 0; }
-.specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); color: var(--muted); font-size: 0.74rem; }
+/* hero */
+.hero { position: relative; background: var(--paper); border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink); padding: 52px 44px 40px; margin: 22px 0 48px; }
+.hero .kicker { font-weight: 800; font-size: 14px; letter-spacing: .08em; }
+.hero h1 { margin: 10px 0 0; font-size: clamp(56px, 10vw, 128px); font-weight: 900; line-height: .95; letter-spacing: -.03em; }
+.hero h1 span { background: var(--pink); padding: 0 12px; border: 3px solid var(--ink); display: inline-block; transform: rotate(-2deg); margin-top: 8px; white-space: nowrap; }
+.hero p { font-size: 20px; font-weight: 700; max-width: 30em; line-height: 1.6; margin: 26px 0 0; }
+.hero .row { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; margin-top: 24px; }
+.btn { display: inline-block; background: var(--yellow); border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); padding: 8px 16px; font-weight: 900; text-decoration: none;
+  transition: transform .12s cubic-bezier(.2,.8,.2,1), box-shadow .12s; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.btn.ghost { background: var(--paper); }
+.hero .meta { font-size: 13px; font-weight: 700; opacity: .7; }
 
-/* distribution rows (shared by hero + plates) */
-.dist { display: grid; gap: 9px; }
-.dist .row { display: grid; grid-template-columns: minmax(0, 8.5em) minmax(0, 1fr) 3.2em; gap: 10px; align-items: center; }
+/* scroll story */
+.chapter { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; min-height: 170vh; scroll-margin-top: 12px; }
+.chapter .art { position: sticky; top: 10vh; height: 80vh; display: grid; align-content: center; }
+.card { background: var(--paper); border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink); }
+.card .fld { background: oklch(.86 .13 var(--h)); border-bottom: 3px solid var(--ink); padding: 22px 22px 6px; }
+.card .no { display: flex; justify-content: space-between; font-weight: 900; font-size: 14px; }
+.card .no b { background: var(--ink); color: var(--paper); padding: 2px 8px; }
+.card svg { display: block; width: 100%; height: auto; margin-top: 10px; }
+.card svg rect, .card svg circle { stroke: var(--ink); stroke-width: 2; }
+.card svg .s { fill: oklch(.62 .2 var(--h)); } .card svg .so { fill: var(--paper); } .card svg .pp { fill: #fffdf5; } .card svg .ik { fill: var(--ink); }
+.card svg .ln { stroke: var(--ink); fill: none; stroke-width: 2.5; } .card svg .lnm { stroke: var(--ink); fill: none; stroke-width: 2; stroke-dasharray: 3 4; }
+.card svg text { font: 800 10px var(--font); fill: var(--ink); stroke: none; } .card svg text.on { fill: var(--paper); } .card svg text.st { font-size: 15px; fill: oklch(.5 .2 var(--h)); } .card svg text.st2 { font-size: 15px; }
+.card h2 { margin: 0; padding: 18px 22px 20px; font-size: clamp(26px, 3vw, 36px); font-weight: 900; line-height: 1.15; }
+.chapter .text { padding: 42vh 0 34vh; display: grid; gap: 30vh; align-content: start; }
+.sticker { background: var(--paper); border: 3px solid var(--ink); box-shadow: 7px 7px 0 var(--ink); padding: 20px 22px; max-width: 420px; }
+.sticker.tag { transform: rotate(-1.5deg); }
+.sticker.tag p { margin: 0; font-size: 20px; font-weight: 800; line-height: 1.5; }
+.sticker.tag small { display: inline-block; margin-top: 10px; background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; padding: 0 10px; font-weight: 800; }
+.stat { transform: rotate(1.5deg); background: oklch(.86 .13 var(--h)); }
+.stat .num { font-size: clamp(64px, 8vw, 104px); font-weight: 900; line-height: 1; letter-spacing: -.03em; -webkit-text-stroke: 3px var(--ink); color: var(--paper); paint-order: stroke fill; }
+.stat .lab { font-size: 18px; font-weight: 800; margin-top: 8px; }
+.stat .src { font-size: 13px; font-weight: 700; margin-top: 4px; opacity: .75; }
+.pit { background: var(--pinkwash); border-style: dashed; transform: rotate(-1deg); }
+.pit .boom { display: inline-block; background: var(--red); color: var(--paper); border: 2.5px solid var(--ink); padding: 0 8px; transform: rotate(-5deg); font-weight: 900; margin-bottom: 8px; }
+.pit p { margin: 0; font-size: 19px; font-weight: 800; line-height: 1.5; }
+.more { justify-self: start; font-weight: 900; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; text-decoration-color: oklch(.7 .15 var(--h)); }
+
+/* full case list */
+.list { background: var(--paper); border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink); padding: 36px 36px 20px; margin: 40px 0 64px; scroll-margin-top: 12px; }
+.list > h2 { margin: 0; font-size: clamp(34px, 5vw, 56px); font-weight: 900; line-height: 1; }
+.list > h2 span { background: var(--yellow); border: 3px solid var(--ink); padding: 0 10px; display: inline-block; transform: rotate(-1.5deg); }
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 6px; }
+.chip { font: inherit; font-weight: 800; font-size: 14px; background: var(--paper); color: var(--ink); border: 2.5px solid var(--ink); border-radius: 999px; padding: 5px 14px; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; font-weight: 700; margin-top: 10px; }
+.grp { margin-top: 34px; scroll-margin-top: 12px; }
+.grp h3 { margin: 0 0 6px; font-size: 24px; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+.grp h3 i { flex: none; width: 18px; height: 18px; border: 2.5px solid var(--ink); background: oklch(.8 .15 var(--h)); display: inline-block; }
+.grp h3 small { flex: none; white-space: nowrap; font-size: 13px; background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; padding: 0 8px; }
+.grp .intro { margin: 4px 0 8px; max-width: 48em; font-size: 15px; line-height: 1.7; }
+.cases { list-style: none; margin: 0; padding: 0; }
+.case { display: grid; grid-template-columns: 4.2em minmax(0, 1.2fr) minmax(0, 1fr) auto; gap: 6px 18px; padding: 14px 0; border-bottom: 2px dashed rgba(21,21,21,.25); align-items: baseline; scroll-margin-top: 12px; }
+.case:target { background: var(--pinkwash); outline: 3px solid var(--ink); outline-offset: 4px; }
+.case .dt { font-weight: 800; font-size: 13px; }
+.case .t { font-weight: 900; line-height: 1.4; }
+.case .t a:not(.anchor) { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: oklch(.7 .15 var(--h)); }
+.case .t a:not(.anchor):hover { background: oklch(.9 .1 var(--h)); }
+.case .anchor { margin-left: 6px; font-size: 13px; text-decoration: none; opacity: 0; }
+.case:hover .anchor, .case .anchor:focus-visible { opacity: .6; }
+.case .who { display: block; font-weight: 600; font-size: 13px; opacity: .7; }
+.case .what { margin: 2px 0 0; font-size: 14px; line-height: 1.55; }
+.case .res { font-size: 14px; font-weight: 700; line-height: 1.55; }
+.pol { display: inline-block; width: 11px; height: 11px; border: 2px solid var(--ink); border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.pol.pos { background: var(--teal); } .pol.neg { background: var(--red); } .pol.neu { background: var(--yellow); }
+.ev { font-size: 12px; font-weight: 900; border: 2px solid var(--ink); padding: 1px 8px; white-space: nowrap; transform: rotate(-2deg); }
+.ev.official { background: var(--ink); color: var(--paper); } .ev.third { background: var(--violet); color: var(--paper); } .ev.self { background: var(--paper); } .ev.relay { background: var(--paper); border-style: dashed; }
+.empty { font-weight: 700; opacity: .6; padding: 12px 0; }
+
+/* appendix: what Jev is */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 48px; align-items: start; margin-bottom: 56px; scroll-margin-top: 12px; }
+.about .intro-card { background: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
+.about .label { display: inline-block; font-weight: 900; font-size: 13px; background: var(--teal); border: 2px solid var(--ink); padding: 0 8px; transform: rotate(-2deg); }
+.about h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 900; line-height: 1.1; margin: 12px 0 14px; }
+.about p { margin: 0 0 14px; }
+.facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; margin: 18px 0; font-size: 14px; }
+.facts dt { font-weight: 900; }
+.facts dd { margin: 0; }
+.about blockquote { margin: 0; padding: 12px 16px; background: var(--yellow); border: 2.5px solid var(--ink); font-size: 14px; }
+.about blockquote b { font-size: 17px; }
+.back { font-weight: 900; }
+.specimen { margin: 0; background: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 24px; min-width: 0; transform: rotate(1deg); }
+.specimen .ask, .specimen .ans { display: grid; grid-template-columns: 3.6em minmax(0, 1fr); gap: 12px; align-items: start; }
+.specimen .ask { font-weight: 800; font-size: 16px; line-height: 1.5; margin: 14px 0 16px; }
+.specimen .ask small { font-weight: 600; font-size: 13px; opacity: .7; }
+.specimen .who { font-size: 12px; font-weight: 900; padding-top: 3px; }
+.specimen .ans .who { color: oklch(.5 .2 340); }
+.specimen .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-top: 12px; border-top: 2px dashed rgba(21,21,21,.3); font-size: 13px; font-weight: 700; }
+.dist { display: grid; gap: 9px; font-size: 14px; font-weight: 700; }
+.dist .row { display: grid; grid-template-columns: minmax(0, 6em) minmax(0, 1fr) 3em; gap: 10px; align-items: center; }
 .dist .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dist .track { height: 10px; background: color-mix(in srgb, var(--bar) 40%, transparent); border-radius: 2px; overflow: hidden; }
-.dist .fill { height: 100%; background: var(--bar); width: 0; transition: width 900ms cubic-bezier(.2,.7,.2,1); }
-.dist .row.win .fill { background: var(--accent); }
-.dist .row.win .name, .dist .row.win .p { color: var(--accent); font-weight: 500; }
+.dist .track { height: 14px; background: var(--paper); border: 2px solid var(--ink); overflow: hidden; }
+.dist .fill { height: 100%; background: var(--bg); width: 0; transition: width 900ms cubic-bezier(.2,.7,.2,1); }
+.dist .row.win .fill { background: var(--pink); }
 .dist .p { text-align: right; font-variant-numeric: tabular-nums; }
 
-/* Index of plates: each category gets its own hue (--h, an oklch hue); lightness and chroma come from theme tokens */
-.section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
-.section-head h2 { font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; margin: 0; letter-spacing: -0.01em; }
-.plates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding-block: 22px 8px; }
-.plate { --tint: oklch(var(--panel-l) var(--panel-c) var(--h)); --strong: oklch(var(--strong-l) var(--strong-c) var(--h)); --soft: oklch(var(--soft-l) var(--soft-c) var(--h));
-  display: flex; flex-direction: column; text-decoration: none; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; transition: transform 220ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease; min-width: 0; }
-.plate:hover { transform: translateY(-4px); border-color: var(--strong); }
-.plate .art { background: var(--tint); padding: 16px 16px 0; display: grid; grid-template-rows: auto 1fr; min-height: 220px; }
-.plate .stat { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.9rem, 3.2vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; color: var(--strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.plate .stat-label { min-height: 2.9em; margin-top: 6px; font-size: 0.82rem; line-height: 1.45; color: var(--ink); max-width: 17em; }
-.plate .stat-src { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-.plate svg { display: block; width: 100%; height: auto; max-width: 100%; margin-top: 10px; align-self: end; }
-.plate svg .s { fill: var(--strong); } .plate svg .so { fill: var(--soft); } .plate svg .pp { fill: var(--paper); } .plate svg .ik { fill: var(--ink); }
-.plate svg .ln { stroke: var(--strong); fill: none; stroke-width: 2; stroke-linecap: round; } .plate svg .lnm { stroke: var(--soft); fill: none; stroke-width: 2; }
-.plate svg text { font-family: var(--font-mono); font-size: 10px; fill: var(--ink); }
-.plate svg text.on { fill: var(--paper); font-weight: 500; }
-.plate svg text.st { fill: var(--strong); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; }
-.plate svg text.st2 { font-size: 15px; font-weight: 700; }
-.plate .body { padding: 14px 16px 16px; display: grid; gap: 8px; flex: 1; align-content: start; }
-.plate h3 { margin: 0; font-family: var(--font-display); font-size: 1.12rem; font-weight: 900; line-height: 1.3; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.plate h3 .n { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-.plate .judges { margin: 0; font-size: 0.86rem; line-height: 1.55; color: var(--muted); }
-.plate .pit { margin: 0; font-size: 0.8rem; line-height: 1.5; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
-.plate .pit::before { content: "翻车"; flex: none; font-family: var(--font-mono); font-size: 0.66rem; color: var(--neg); border: 1px solid var(--neg); border-radius: 3px; padding: 0 4px; }
-.plate .go { font-family: var(--font-mono); font-size: 0.75rem; color: var(--strong); }
-.swipe-hint { display: none; }
-@media (max-width: 1000px) { .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) {
-  .plates { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px; overscroll-behavior-x: contain; scrollbar-width: none; }
-  .plates::-webkit-scrollbar { display: none; }
-  .plate { flex: 0 0 82%; scroll-snap-align: start; }
-  .plate .art { min-height: 0; }
-  .swipe-hint { display: inline; }
-}
+/* follow */
+.follow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 32px; align-items: center; padding: 30px 32px; background: var(--ink); color: var(--paper); border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--pink); scroll-margin-top: 12px; }
+.follow h2 { margin: 0 0 6px; font-size: clamp(24px, 3vw, 32px); font-weight: 900; }
+.follow p { margin: 0; opacity: .85; max-width: 40em; }
+.qr { margin: 0; display: grid; justify-items: center; gap: 8px; text-align: center; }
+/* white quiet zone on purpose: a QR needs a light background to scan */
+.qr img { display: block; width: 132px; height: 132px; background: #fff; padding: 8px; border: 3px solid var(--ink); }
+.qr figcaption { font-size: 13px; line-height: 1.4; }
+.qr b { display: block; font-size: 17px; }
 
-/* Filters */
-.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 18px 0; }
-.chip { font: inherit; font-family: var(--font-mono); font-size: 0.78rem; background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 13px; cursor: pointer; }
-.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-
-/* Category ledgers */
-.cat { padding-block: 44px 8px; scroll-margin-top: 16px; }
-.cat-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 40px; align-items: start; border-top: 2px solid var(--ink); padding-top: 16px; }
-.cat-head h2 { font-family: var(--font-display); font-size: var(--step-3); font-weight: 900; line-height: 1.08; margin: 4px 0 0; letter-spacing: -0.02em; text-wrap: balance; }
-.cat-head p { margin: 0; max-width: 38em; }
-.cat-head .tag { color: var(--accent); font-weight: 500; margin-bottom: 6px; }
-.cases { list-style: none; margin: 18px 0 0; padding: 0; }
-.case { display: grid; grid-template-columns: 6.2em minmax(0, 1.2fr) minmax(0, 1fr) 8.5em; gap: 6px 22px; padding-block: 16px; border-bottom: 1px solid var(--rule); align-items: baseline; }
-.case .date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
-.case .title { font-weight: 700; line-height: 1.45; }
-.case .title a { text-decoration-color: var(--rule); text-underline-offset: 3px; }
-.case .title a:hover { text-decoration-color: var(--accent); color: var(--accent); }
-.case .who { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); }
-.case .what { margin: 2px 0 0; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-.case .result { font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.6; }
-.case .result .pol { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
-.pol.pos { background: var(--pos); } .pol.neg { background: var(--neg); } .pol.neu { background: var(--neutral); }
-.ev { font-family: var(--font-mono); font-size: 0.72rem; justify-self: start; border: 1px solid var(--rule); border-radius: 4px; padding: 1px 7px; white-space: nowrap; color: var(--muted); }
-.ev.official { border-color: var(--ink); color: var(--ink); }
-.ev.third { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.empty { padding: 18px 0; color: var(--muted); font-size: 0.9rem; }
-
-.follow { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center; padding: 26px 28px; border-radius: 14px; background: var(--ink); color: var(--bg); }
-.follow h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: var(--step-2); font-weight: 900; }
-.follow p { margin: 0; opacity: 0.8; max-width: 40em; }
-.follow .qr { margin: 0; display: grid; justify-items: center; gap: 8px; text-align: center; }
-/* white quiet zone on purpose: the block is ink-coloured (dark in light mode, light in dark mode) and a QR needs a light background to scan */
-.follow .qr img { display: block; width: 132px; height: 132px; background: #fff; padding: 8px; border-radius: 10px; }
-.follow .qr figcaption { font-size: 0.8rem; line-height: 1.4; opacity: 0.85; }
-.follow .qr b { display: block; font-family: var(--font-display); font-size: 1.05rem; opacity: 1; }
-.case .anchor { margin-left: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; opacity: 0; }
-.case:hover .anchor, .case .anchor:focus-visible { opacity: 1; }
-.case:target { background: var(--accent-soft); }
-@media (max-width: 640px) { .follow { grid-template-columns: minmax(0, 1fr); } .follow .qr { justify-self: start; } .case .anchor { opacity: 1; } }
-footer { margin-top: 32px; padding-block: 24px 48px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.85rem; display: grid; gap: 6px; }
+footer { margin: 40px 0 0; padding: 24px 0 48px; border-top: 3px solid var(--ink); font-size: 14px; display: grid; gap: 8px; }
 footer p { margin: 0; max-width: 60em; }
-.legend-line { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; color: var(--muted); font-size: 0.8rem; }
 
+/* QR dialog (native <dialog>: focus trap, Esc to close and top layer come with the element) */
+.qr-dialog { border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink); padding: 28px 28px 22px; background: var(--paper); color: var(--ink); max-width: min(92vw, 360px); }
+.qr-dialog::backdrop { background: rgba(21,21,21,.55); }
+.qr-dialog h2 { margin: 0 0 4px; font-size: 22px; font-weight: 900; }
+.qr-dialog p { margin: 0 0 16px; font-size: 14px; }
+.qr-dialog .qr img { width: 220px; height: 220px; }
+.qr-dialog .close { position: absolute; top: 10px; right: 10px; font: inherit; font-weight: 900; font-size: 18px; width: 36px; height: 36px; background: var(--yellow); border: 2.5px solid var(--ink); cursor: pointer; }
+
+@supports (animation-timeline: view()) {
+  .layer-bg .shape { animation: float linear both; animation-timeline: scroll(root); }
+  .layer-bg .shape:nth-child(odd) { animation-name: floatA; }
+  @keyframes float { to { transform: translateY(-38vh) rotate(40deg); } }
+  @keyframes floatA { to { transform: translateY(-22vh) rotate(-30deg); } }
+  .chapter .card { animation: cardin linear both; animation-timeline: view(); animation-range: entry 5% cover 35%; }
+  @keyframes cardin { from { transform: translateY(80px) rotate(-6deg) scale(.92); opacity: 0; } to { transform: rotate(-1deg); opacity: 1; } }
+  .chapter .card svg { animation: bob linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  @keyframes bob { from { transform: translateY(12px); } to { transform: translateY(-12px); } }
+  .chapter .text > .sticker { animation: pop linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+  @keyframes pop { from { opacity: 0; transform: translateX(60px) rotate(6deg) scale(.9); } to { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media (max-width: 860px) {
-  .about { grid-template-columns: minmax(0, 1fr); }
-  .cat-head { grid-template-columns: minmax(0, 1fr); }
+  .w { padding: 0 16px; }
+  .hero { padding: 30px 20px; box-shadow: 6px 6px 0 var(--ink); }
+  /* phones: no pinned stage; a tall pinned card leaves no room and the stickers slide under it */
+  .chapter { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 0; padding-top: 48px; }
+  .chapter .art { position: static; height: auto; }
+  .card .fld { padding: 12px 14px 2px; } .card h2 { padding: 10px 14px 12px; font-size: 22px; } .card svg { max-height: 140px; }
+  .chapter .text { padding: 22px 4px 8px; gap: 22px; } .sticker { max-width: none; }
+  .list { padding: 24px 16px 12px; box-shadow: 6px 6px 0 var(--ink); }
   .case { grid-template-columns: minmax(0, 1fr) auto; }
-  .case .date { grid-column: 1; grid-row: 1; }
-  .case .ev { grid-column: 2; grid-row: 1; justify-self: end; }
-  .case .main, .case .result { grid-column: 1 / -1; }
+  .case .dt { grid-column: 1; } .case .ev { grid-column: 2; grid-row: 1; justify-self: end; }
+  .case .main, .case .res { grid-column: 1 / -1; }
+  .case .anchor { opacity: .6; }
+  .about { grid-template-columns: minmax(0, 1fr); }
+  .follow { grid-template-columns: minmax(0, 1fr); padding: 24px 20px; box-shadow: 6px 6px 0 var(--pink); }
+  .follow .qr { justify-self: start; }
+  .layer-bg .shape { opacity: .35; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="topbar">
+<div class="layer-bg" aria-hidden="true">
+  <svg class="shape squig" viewBox="0 0 260 60"><path d="M5 30 Q 35 -10 65 30 T 125 30 T 185 30 T 245 30" fill="none" stroke="#151515" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="shape tri"></div><div class="shape dot"></div><div class="shape ring"></div><div class="shape bars"></div><div class="shape half"></div>
+</div>
+<div class="w">
+  <div class="top">
     <span class="brand">jev-cases</span>
     <nav>
-      <a class="wx" href="#follow">公众号 <b>小郎碎碎念</b></a>
+      <button class="wx" type="button" data-open-qr aria-haspopup="dialog">公众号 小郎碎碎念</button>
       <a href="https://github.com/ZhenningLang/jev-cases/issues/new?title=%E6%8F%90%E4%BA%A4%E6%A1%88%E4%BE%8B%EF%BC%9A&body=%E8%B0%81%E5%81%9A%E7%9A%84%EF%BC%9A%0A%E7%94%A8+Jev+%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%EF%BC%9A%0A%E7%BB%93%E6%9E%9C%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89%EF%BC%9A%0A%E6%9D%A5%E6%BA%90%E9%93%BE%E6%8E%A5%EF%BC%9A" target="_blank" rel="noopener">提交案例 ↗</a>
       <a href="https://github.com/ZhenningLang/jev-cases" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
   </div>
-  <header class="intro">
-    <div class="label">新模型落地案例 · 第 1 册 · Jev</div>
-    <h1>Jev 落地图鉴</h1>
-    <p class="sub"><b>67 个真实案例</b>，按「让它判断什么」分成 <b>8 类</b>。每类先看一个亮点数字、一个翻车点，再点进去看全部案例和来源。</p>
+
+  <header class="hero">
+    <div class="kicker">新模型落地案例 · 第 1 册 · JEV</div>
+    <h1>Jev<br><span>落地图鉴</span></h1>
+    <p>67 个真实案例，按「让它判断什么」分成 8 类。往下滑，一类一类看：它判断什么、最亮眼的数字、在哪翻的车。</p>
     <div class="row">
-      <a class="primer" href="#about"><span class="glyph" aria-hidden="true"><i></i><i></i><i></i></span>第一次听说 Jev？30 秒看懂<span class="arrow">↓</span></a>
+      <a class="btn" href="#browser">开始看 ↓</a>
+      <a class="btn ghost" href="#about">第一次听说 Jev？30 秒看懂</a>
       <span class="meta">更新于 2026-09-29</span>
     </div>
   </header>
 
-  <section aria-labelledby="idx">
-    <div class="section-head">
-      <h2 id="idx">按「让它判断什么」分类</h2>
-      <span class="label">8 类 · 67 个案例 · 点卡片跳到该类<span class="swipe-hint"> · 左右滑动</span></span>
-    </div>
-    <div class="plates">
-    <a class="plate" href="#browser" style="--h:250">
-      <div class="art">
-        <div><div class="stat">7 秒</div>
-        <div class="stat-label">查完一次航班<span class="stat-src">Browser Use · 转述未核</span></div></div>
+  <div id="idx">
+  <section class="chapter" id="browser" style="--h:250" aria-labelledby="h-browser">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>01 / 08</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
 <circle cx="20" cy="16" r="3" class="pp"/><circle cx="30" cy="16" r="3" class="pp"/><circle cx="40" cy="16" r="3" class="pp"/><rect x="54" y="11" width="120" height="10" rx="5" class="pp"/>
 <rect x="22" y="36" width="92" height="6" rx="3" class="so"/><rect x="22" y="48" width="150" height="6" rx="3" class="so"/><rect x="22" y="60" width="118" height="6" rx="3" class="so"/>
 <rect x="22" y="76" width="56" height="20" rx="5" class="so"/><text x="50" y="90" text-anchor="middle">取消</text>
 <rect x="88" y="76" width="80" height="20" rx="5" class="s"/><text x="128" y="90" text-anchor="middle" class="on">搜索航班</text>
-<path d="M156 86 L156 104 L160.5 99.5 L164 107 L167 105.6 L163.6 98.4 L170 98.4 Z" class="ik"/></svg>
-      </div>
-      <div class="body">
-        <h3>浏览器与 Computer Use<span class="n">8 例</span></h3>
-        <p class="judges">每一步选哪个操作、点哪个页面元素</p>
-        <p class="pit">长任务 20 道只做对 1 道</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#routing" style="--h:295">
-      <div class="art">
-        <div><div class="stat">−71%</div>
-        <div class="stat-label">派单成本，25 个任务与 Fable 判断全同<span class="stat-src">firstmate · 作者自报</span></div></div>
+<path d="M156 86 L156 104 L160.5 99.5 L164 107 L167 105.6 L163.6 98.4 L170 98.4 Z" class="ik"/></svg></div>
+      <h2 id="h-browser">浏览器与 Computer Use</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>每一步选哪个操作、点哪个页面元素</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">7 秒</div><div class="lab">查完一次航班</div><div class="src">Browser Use · 转述未核</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>长任务 20 道只做对 1 道</p></div>
+      <a class="more" href="#list-browser">看这一类全部 8 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="routing" style="--h:295" aria-labelledby="h-routing">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>02 / 08</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <path d="M70 55 C 110 55, 110 20, 150 20" class="lnm"/><path d="M70 55 L150 55" class="ln" stroke-width="3"/><path d="M70 55 C 110 55, 110 90, 150 90" class="lnm"/>
 <rect x="6" y="38" width="64" height="34" rx="6" class="pp"/><text x="38" y="59" text-anchor="middle">新任务</text>
 <rect x="150" y="8" width="84" height="24" rx="12" class="so"/><text x="192" y="24" text-anchor="middle">大模型 · 贵</text>
 <rect x="150" y="43" width="84" height="24" rx="12" class="s"/><text x="192" y="59" text-anchor="middle" class="on">小模型 · 快 ✓</text>
-<rect x="150" y="78" width="84" height="24" rx="12" class="so"/><text x="192" y="94" text-anchor="middle">转人工</text></svg>
-      </div>
-      <div class="body">
-        <h3>Agent 路由与调度<span class="n">8 例</span></h3>
-        <p class="judges">这件事交给谁做、用哪个模型、要不要升级</p>
-        <p class="pit">theo 实测编码路由：耗时约 5 倍</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#judge" style="--h:155">
-      <div class="art">
-        <div><div class="stat">600×</div>
-        <div class="stat-label">比 Fable 级模型便宜，给文章打分<span class="stat-src">Every · 第三方实测</span></div></div>
+<rect x="150" y="78" width="84" height="24" rx="12" class="so"/><text x="192" y="94" text-anchor="middle">转人工</text></svg></div>
+      <h2 id="h-routing">Agent 路由与调度</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>这件事交给谁做、用哪个模型、要不要升级</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">−71%</div><div class="lab">派单成本，25 个任务与 Fable 判断全同</div><div class="src">firstmate · 作者自报</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>theo 实测编码路由：耗时约 5 倍</p></div>
+      <a class="more" href="#list-routing">看这一类全部 8 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="judge" style="--h:155" aria-labelledby="h-judge">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>03 / 08</b><span>10 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="8" y="14" width="44" height="56" rx="4" class="so"/><rect x="14" y="20" width="44" height="56" rx="4" class="pp"/>
 <rect x="20" y="30" width="30" height="4" rx="2" class="so"/><rect x="20" y="40" width="24" height="4" rx="2" class="so"/><rect x="20" y="50" width="28" height="4" rx="2" class="so"/>
@@ -281,804 +281,645 @@ footer p { margin: 0; max-width: 60em; }
 <g transform="rotate(14 172 42)"><rect x="160" y="28" width="24" height="30" rx="3" class="pp"/><rect x="165" y="36" width="14" height="3" rx="1.5" class="so"/><rect x="165" y="43" width="10" height="3" rx="1.5" class="so"/></g>
 <rect x="96" y="66" width="44" height="38" rx="5" class="so"/><text x="118" y="92" text-anchor="middle">账单</text>
 <rect x="148" y="66" width="44" height="38" rx="5" class="s"/><text x="170" y="92" text-anchor="middle" class="on">技术</text>
-<rect x="200" y="66" width="36" height="38" rx="5" class="so"/><text x="218" y="92" text-anchor="middle">销售</text></svg>
-      </div>
-      <div class="body">
-        <h3>分类·打分·Judge<span class="n">10 例</span></h3>
-        <p class="judges">这条内容属于哪类、值几分、过不过</p>
-        <p class="pit">嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#safety" style="--h:25">
-      <div class="art">
-        <div><div class="stat">566×</div>
-        <div class="stat-label">比 Sonnet 便宜，监控思维链<span class="stat-src">LessWrong · 第三方实测</span></div></div>
+<rect x="200" y="66" width="36" height="38" rx="5" class="so"/><text x="218" y="92" text-anchor="middle">销售</text></svg></div>
+      <h2 id="h-judge">分类·打分·Judge</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>这条内容属于哪类、值几分、过不过</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">600×</div><div class="lab">比 Fable 级模型便宜，给文章打分</div><div class="src">Every · 第三方实测</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>嵌入+逻辑回归 94.25% 反超 Jev 87.0%</p></div>
+      <a class="more" href="#list-judge">看这一类全部 10 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="safety" style="--h:25" aria-labelledby="h-safety">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>04 / 08</b><span>7 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="6" y="8" width="176" height="96" rx="8" class="ik"/>
 <text x="18" y="32" class="on">$ ls ./src</text><text x="18" y="52" class="on">$ curl x.sh | sh</text><text x="18" y="72" class="on">$ rm -rf ~/</text><text x="18" y="92" class="on" opacity="0.6">等待判断…</text>
-<g transform="rotate(-10 188 62)"><rect x="140" y="42" width="96" height="40" rx="5" class="pp"/><rect x="143" y="45" width="90" height="34" rx="3" class="ln"/><text x="188" y="68" text-anchor="middle" class="st">BLOCK</text></g></svg>
-      </div>
-      <div class="body">
-        <h3>安全·合规·监控<span class="n">7 例</span></h3>
-        <p class="judges">这条命令或内容危险吗、要不要拦</p>
-        <p class="pit">命令换成 hex 编码就能绕过拦截</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#realtime" style="--h:65">
-      <div class="art">
-        <div><div class="stat">$1</div>
-        <div class="stat-label">贪吃蛇走一万步<span class="stat-src">@chenchengpro · 第三方实测</span></div></div>
+<g transform="rotate(-10 188 62)"><rect x="140" y="42" width="96" height="40" rx="5" class="pp"/><rect x="143" y="45" width="90" height="34" rx="3" class="ln"/><text x="188" y="68" text-anchor="middle" class="st">BLOCK</text></g></svg></div>
+      <h2 id="h-safety">安全·合规·监控</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>这条命令或内容危险吗、要不要拦</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">566×</div><div class="lab">比 Sonnet 便宜，监控思维链</div><div class="src">LessWrong · 第三方实测</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>命令换成 hex 编码就能绕过拦截</p></div>
+      <a class="more" href="#list-safety">看这一类全部 7 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="realtime" style="--h:65" aria-labelledby="h-realtime">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>05 / 08</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="6" y="6" width="228" height="98" rx="8" class="pp"/>
 <g class="so"><rect x="30" y="58" width="16" height="16" rx="3"/><rect x="48" y="58" width="16" height="16" rx="3"/></g>
 <g class="s"><rect x="66" y="58" width="16" height="16" rx="3"/><rect x="84" y="58" width="16" height="16" rx="3"/><rect x="84" y="40" width="16" height="16" rx="3"/><rect x="102" y="40" width="16" height="16" rx="3"/><rect x="120" y="40" width="18" height="18" rx="4"/></g>
 <path d="M144 49 L196 49" class="ln" stroke-dasharray="3 5"/><circle cx="208" cy="49" r="7" class="ik"/>
-<text x="120" y="92">→ 0.72   ↓ 0.19   ↑ 0.08</text></svg>
-      </div>
-      <div class="body">
-        <h3>游戏与实时控制<span class="n">8 例</span></h3>
-        <p class="judges">每秒几次：下一步动作做什么</p>
-        <p class="pit">链上自动交易 14 小时亏 300%+</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#context" style="--h:200">
-      <div class="art">
-        <div><div class="stat">−29%</div>
-        <div class="stat-label">Jevgrep 跑 10 个任务的成本：$7.62→$5.44<span class="stat-src">dzhng · 作者自报</span></div></div>
+<text x="120" y="92">→ 0.72   ↓ 0.19   ↑ 0.08</text></svg></div>
+      <h2 id="h-realtime">游戏与实时控制</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>每秒几次：下一步动作做什么</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">$1</div><div class="lab">贪吃蛇走一万步</div><div class="src">@chenchengpro · 第三方实测</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>链上自动交易 14 小时亏 300%+</p></div>
+      <a class="more" href="#list-realtime">看这一类全部 8 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="context" style="--h:200" aria-labelledby="h-context">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>06 / 08</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <g class="so"><rect x="8" y="10" width="70" height="6" rx="3"/><rect x="8" y="21" width="52" height="6" rx="3"/><rect x="8" y="32" width="80" height="6" rx="3"/><rect x="8" y="43" width="60" height="6" rx="3"/><rect x="8" y="54" width="76" height="6" rx="3"/><rect x="8" y="65" width="44" height="6" rx="3"/><rect x="8" y="76" width="66" height="6" rx="3"/><rect x="8" y="87" width="56" height="6" rx="3"/></g>
 <rect x="8" y="32" width="80" height="6" rx="3" class="s"/><rect x="8" y="65" width="44" height="6" rx="3" class="s"/>
 <path d="M98 8 L150 36" class="lnm"/><path d="M98 100 L150 74" class="lnm"/>
 <rect x="150" y="28" width="84" height="54" rx="6" class="pp"/><rect x="160" y="42" width="60" height="7" rx="3" class="s"/><rect x="160" y="56" width="40" height="7" rx="3" class="s"/>
-<text x="192" y="100" text-anchor="middle">只留 2 段进上下文</text></svg>
-      </div>
-      <div class="body">
-        <h3>上下文·记忆·检索<span class="n">8 例</span></h3>
-        <p class="judges">哪段代码、哪个技能、哪条记忆该进上下文</p>
-        <p class="pit">检索重排没打赢 bge-m3</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#platform" style="--h:340">
-      <div class="art">
-        <div><div class="stat">6 家</div>
-        <div class="stat-label">框架和网关两周内接入<span class="stat-src">官方 release notes / 官方账号</span></div></div>
+<text x="192" y="100" text-anchor="middle">只留 2 段进上下文</text></svg></div>
+      <h2 id="h-context">上下文·记忆·检索</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>哪段代码、哪个技能、哪条记忆该进上下文</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">−29%</div><div class="lab">Jevgrep 跑 10 个任务的成本：$7.62→$5.44</div><div class="src">dzhng · 作者自报</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>检索重排没打赢 bge-m3</p></div>
+      <a class="more" href="#list-context">看这一类全部 8 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="platform" style="--h:340" aria-labelledby="h-platform">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>07 / 08</b><span>8 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <g class="lnm"><path d="M120 55 L42 20"/><path d="M120 55 L198 20"/><path d="M120 55 L40 55"/><path d="M120 55 L200 55"/><path d="M120 55 L42 90"/><path d="M120 55 L198 90"/></g>
 <g class="pp"><rect x="6" y="11" width="72" height="18" rx="9"/><rect x="162" y="11" width="72" height="18" rx="9"/><rect x="4" y="46" width="72" height="18" rx="9"/><rect x="164" y="46" width="72" height="18" rx="9"/><rect x="6" y="81" width="72" height="18" rx="9"/><rect x="162" y="81" width="72" height="18" rx="9"/></g>
 <g text-anchor="middle"><text x="42" y="24">OpenRouter</text><text x="198" y="24">Vercel</text><text x="40" y="59">LangChain</text><text x="200" y="59">DSPy</text><text x="42" y="94">pydantic-ai</text><text x="198" y="94">Pydantic GW</text></g>
-<circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text></svg>
-      </div>
-      <div class="body">
-        <h3>框架与平台接入<span class="n">8 例</span></h3>
-        <p class="judges">在常用框架和网关里直接调用 Jev</p>
-        <p class="pit">只证明能接，不证明好用</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>
-    <a class="plate" href="#opensource" style="--h:110">
-      <div class="art">
-        <div><div class="stat">$17</div>
-        <div class="stat-label">25 分钟自训一个同类模型<span class="stat-src">Together AI · 作者自报</span></div></div>
+<circle cx="120" cy="55" r="22" class="s"/><text x="120" y="59" text-anchor="middle" class="on">Jev</text></svg></div>
+      <h2 id="h-platform">框架与平台接入</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>在常用框架和网关里直接调用 Jev</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">6 家</div><div class="lab">框架和网关两周内接入</div><div class="src">官方 release notes / 官方账号</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>只证明能接，不证明好用</p></div>
+      <a class="more" href="#list-platform">看这一类全部 8 个案例 ↓</a>
+    </div>
+  </section>
+  <section class="chapter" id="opensource" style="--h:110" aria-labelledby="h-opensource">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>08 / 08</b><span>10 例</span></div>
         <svg viewBox="0 0 240 110" aria-hidden="true">
 <rect x="30" y="8" width="128" height="76" rx="6" class="ik"/><rect x="37" y="15" width="114" height="62" rx="3" class="so"/>
 <text x="94" y="42" text-anchor="middle">本地 4B 模型</text><text x="94" y="60" text-anchor="middle">不调 API</text>
 <path d="M18 86 L170 86 L184 100 L4 100 Z" class="so"/>
-<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg>
+<g transform="rotate(8 206 44)"><rect x="176" y="26" width="58" height="34" rx="5" class="s"/><circle cx="184" cy="43" r="3" class="pp"/><text x="210" y="48" text-anchor="middle" class="on st2">$17</text></g></svg></div>
+      <h2 id="h-opensource">开源复刻与自部署</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>不调 API，在本地做同一道选择题</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">$17</div><div class="lab">25 分钟自训一个同类模型</div><div class="src">Together AI · 作者自报</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>自报成绩多略低于 Jev，还没有中立横评</p></div>
+      <a class="more" href="#list-opensource">看这一类全部 10 个案例 ↓</a>
+    </div>
+  </section>
+  </div>
+
+  <section class="list" id="all" aria-labelledby="all-h">
+    <h2 id="all-h"><span>全部 67 个案例</span></h2>
+    <div class="filters" role="group" aria-label="按证据筛选">
+      <button class="chip" id="f-all" data-f="all" aria-pressed="true">全部</button>
+      <button class="chip" id="f-third" data-f="third" aria-pressed="false">只看第三方实测 / 官方</button>
+      <button class="chip" id="f-neg" data-f="neg" aria-pressed="false">只看反面结果</button>
+    </div>
+    <div class="legend"><span><i class="pol pos"></i>正面</span><span><i class="pol neg"></i>反面</span><span><i class="pol neu"></i>中性 / 有保留</span><span>标签是证据强度，说明见页脚</span></div>
+    
+      <div class="grp" id="list-browser" style="--h:250">
+        <h3><i></i>浏览器与 Computer Use<small>8 例</small></h3>
+        <p class="intro">点按钮本质是离散多选题，Jev 每步只选操作和元素，单步快、成本低，短任务 demo 普遍在 7 秒级。但转述的长任务实测 Jev 1/20 vs GPT Luna 17/20：零推理、遇弹窗或验证码不会回退。适合短链路和高并发测试，不适合长链路自主操作。</p>
+        <ul class="cases">
+          <li class="case" id="browser-1" data-ev="self" data-pol="pos">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://github.com/browser-use/jev-ultrafast" target="_blank" rel="noopener">browser-use/jev-ultrafast ↗</a><a class="anchor" href="#browser-1" aria-label="本案例链接">#</a><span class="who">Browser Use</span></div>
+              <p class="what">每步只做两个决策：选操作、选页面元素</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>同任务耗时中位数 9.45s→7.09s，通信次数 1092→101（作者自测三轮）</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="browser-2" data-ev="relay" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100669930001822202" target="_blank" rel="noopener">Jev × Browser Use 7 秒查航班 ↗</a><a class="anchor" href="#browser-2" aria-label="本案例链接">#</a><span class="who">Browser Use（@0xTykoo 转述）</span></div>
+              <p class="what">网页 agent 查苏黎世—伦敦航班</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>约 7.1 秒、成本 4 厘美金；计时从初始页面观察完成后开始</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="browser-3" data-ev="relay" data-pol="neg">
+            <span class="dt">09-20</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101367171687280894" target="_blank" rel="noopener">jev-ultrafast 长链路 20 题实测 ↗</a><a class="anchor" href="#browser-3" aria-label="本案例链接">#</a><span class="who">Browser Use 创始人（@SUOHA_AI 转述）</span></div>
+              <p class="what">20 道真实长任务网页操作</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>Jev 1/20 vs GPT Luna 17/20；零推理，遇弹窗/验证码不会回退</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="browser-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103512634293162443" target="_blank" rel="noopener">Lightpanda × Jev ↗</a><a class="anchor" href="#browser-4" aria-label="本案例链接">#</a><span class="who">Lightpanda</span></div>
+              <p class="what">Jev 做决策，Lightpanda 浏览器执行点击</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>单机 129 个 agent（Chrome 约 12），内存省 11 倍，6.7s vs 14.1s</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="browser-5" data-ev="third" data-pol="pos">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103450014143947164" target="_blank" rel="noopener">Playwright CLI + Jev 对比 MCP ↗</a><a class="anchor" href="#browser-5" aria-label="本案例链接">#</a><span class="who">filip_hric</span></div>
+              <p class="what">用模糊指令（新建看板）驱动浏览器测试</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>比 Playwright MCP 插件便宜 98%、快一倍</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="browser-6" data-ev="relay" data-pol="pos">
+            <span class="dt">09-20</span>
+            <div class="main"><div class="t"><a href="https://x.com/rafalwilinski/status/2100882207879434359" target="_blank" rel="noopener">百路无头浏览器对抗测试 ↗</a><a class="anchor" href="#browser-6" aria-label="本案例链接">#</a><span class="who">Rafal Wilinski（前 Zapier AI Agent 负责人）</span></div>
+              <p class="what">在页面状态+预设动作中 100ms 选一个，并发轰炸前端</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>上百路无头浏览器一轮几美分；输出免费使并发边际成本近零</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="browser-7" data-ev="self" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">jev-use（Jev + Cua Driver）<a class="anchor" href="#browser-7" aria-label="本案例链接">#</a><span class="who">Cua（@trycua）</span></div>
+              <p class="what">用 Jev + Cua Driver 做快速 computer use</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>三平台 dev preview（trycua/cua Draft #3943），无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="browser-8" data-ev="self" data-pol="neu">
+            <span class="dt">09-29</span>
+            <div class="main"><div class="t"><a href="https://github.com/Ice-Hazymoon/jevwright" target="_blank" rel="noopener">jevwright ↗</a><a class="anchor" href="#browser-8" aria-label="本案例链接">#</a><span class="who">Ice-Hazymoon</span></div>
+              <p class="what">AI 找一次页面控件并记录，之后照记录回放测试</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>7★ 早期项目，作者称成本极低、速度快，无实测数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
-      <div class="body">
-        <h3>开源复刻与自部署<span class="n">10 例</span></h3>
-        <p class="judges">不调 API，在本地做同一道选择题</p>
-        <p class="pit">自报成绩多略低于 Jev，还没有中立横评</p>
-        <span class="go">看全部案例 ↓</span>
+      <div class="grp" id="list-routing" style="--h:295">
+        <h3><i></i>Agent 路由与调度<small>8 例</small></h3>
+        <p class="intro">路由是在固定候选里挑一个，正好是 Jev 的题型：firstmate 派单 25 个任务与 Fable 判断全同，派单成本降 71%。但把 Jev 当整条编码链路的路由器时，theo 实测耗时约 5 倍、成本略高，Magpie 作者也自述内部测试效果差。路由分错不报错只变差，上线前要先配评测集。</p>
+        <ul class="cases">
+          <li class="case" id="routing-1" data-ev="self" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100468943853085061" target="_blank" rel="noopener">firstmate 派单决策 ↗</a><a class="anchor" href="#routing-1" aria-label="本案例链接">#</a><span class="who">kunchenguid</span></div>
+              <p class="what">派单：读规则、查额度、选 harness×模型×推理力度</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>25 任务与 Fable 决策全同，单次~200ms；派单成本 -71%、耗时 -90%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="routing-2" data-ev="relay" data-pol="pos">
+            <span class="dt">09-28</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2104011604472082941" target="_blank" rel="noopener">OpenRouter Jev Router ↗</a><a class="anchor" href="#routing-2" aria-label="本案例链接">#</a><span class="who">OpenRouter</span></div>
+              <p class="what">每轮请求前判难度，决定沿用、加推理强度或换模型</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>官方自测 423 个 agent 任务 237 vs Auto Router 130（约 +82%）</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="routing-3" data-ev="third" data-pol="neg">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103774771788108008" target="_blank" rel="noopener">theo 自费实测 Jev Router ↗</a><a class="anchor" href="#routing-3" aria-label="本案例链接">#</a><span class="who">theo（t3.gg 创始人）</span></div>
+              <p class="what">自费 $1,000 用 Jev Router 跑编码任务</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>DeepSWE 上与 GPT-6 Astra low 档基本持平、成本略高、耗时约 5 倍</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="routing-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t">Vercel fx auto 模式<a class="anchor" href="#routing-4" aria-label="本案例链接">#</a><span class="who">Vercel（rauchg）</span></div>
+              <p class="what">fx 默认 auto 模式用 Jev，每条命令另有安全评审模型把关</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>Jev p95 快 18x 且更准（厂商口径）</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="routing-5" data-ev="self" data-pol="pos">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101827553048883467" target="_blank" rel="noopener">Holon 调度器语义判断 ↗</a><a class="anchor" href="#routing-5" aria-label="本案例链接">#</a><span class="who">Holon 作者</span></div>
+              <p class="what">事件插队或入队、关联工作项、唤醒睡眠 agent、丢弃过期结果</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>好于预期并重启方案；自训分类器因过度保守失败；无量化数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="routing-6" data-ev="relay" data-pol="pos">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2102744556286652805" target="_blank" rel="noopener">主模型前置分诊台 ↗</a><a class="anchor" href="#routing-6" aria-label="本案例链接">#</a><span class="who">一线用户（@realchendahuang 汇总 60 多条反馈）</span></div>
+              <p class="what">主模型前面先分诊，大模型只做兜底</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>有团队把 LLM 参与压到约 10%；有人全流程实测 $0.0036</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="routing-7" data-ev="self" data-pol="neu">
+            <span class="dt">09-16</span>
+            <div class="main"><div class="t">MLforge 置信度门<a class="anchor" href="#routing-7" aria-label="本案例链接">#</a><span class="who">CoreWeave Hacks 参赛仓 MLforge</span></div>
+              <p class="what">typed Choice + 校准概率决定是否要第二意见</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>置信度 &lt;0.40 触发 second_opinion；无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="routing-8" data-ev="self" data-pol="neg">
+            <span class="dt">09-27</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2104042148496842898" target="_blank" rel="noopener">Magpie 语义模型路由 ↗</a><a class="anchor" href="#routing-8" aria-label="本案例链接">#</a><span class="who">yetone（Magpie）</span></div>
+              <p class="what">按语义给请求选模型</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>作者自述内部测试效果差，因大量用户要求仍上线</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
       </div>
-    </a></div>
+      <div class="grp" id="list-judge" style="--h:155">
+        <h3><i></i>分类·打分·Judge<small>10 例</small></h3>
+        <p class="intro">类目固定、量大的分类和打分是 Jev 最稳的场景：多份第三方实测都是快几倍到几十倍、便宜几十到几百倍。准确率则只是持平或略高：verysmallwoods 实测 Banking77 为 81.6% vs Haiku 80.1%，而嵌入+逻辑回归能到 94.25%。类目固定时经典小模型可能更准更便宜，用前应先对可信标注验证。</p>
+        <ul class="cases">
+          <li class="case" id="judge-1" data-ev="third" data-pol="pos">
+            <span class="dt">09-16</span>
+            <div class="main"><div class="t"><a href="https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds" target="_blank" rel="noopener">Every 用 Jev 给全部文章打分 ↗</a><a class="anchor" href="#judge-1" aria-label="本案例链接">#</a><span class="who">Every（Dan Shipper）</span></div>
+              <p class="what">当 judge 给自己写过的全部内容打分</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>实测约一周，对比 Fable 级模型快 25x、便宜 600x</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="judge-2" data-ev="third" data-pol="neu">
+            <span class="dt">09-22</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2102183268137206157" target="_blank" rel="noopener">662 次对照 Haiku 实测 ↗</a><a class="anchor" href="#judge-2" aria-label="本案例链接">#</a><span class="who">@verysmallwoods</span></div>
+              <p class="what">两个 Kaggle 分类数据集，对照 Claude Haiku 4.5</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>准确率 96.5% vs 93.5%、81.6% vs 80.1%；千次$0.08 vs $2.47</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="judge-3" data-ev="relay" data-pol="pos">
+            <span class="dt">09-19</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101709596922392606" target="_blank" rel="noopener">LangChain Jev-as-a-Judge ↗</a><a class="anchor" href="#judge-3" aria-label="本案例链接">#</a><span class="who">LangChain</span></div>
+              <p class="what">回放 500 个真实 agent 决策，对比 LLM judge</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>单次约 0.44 秒/$0.00035，质量波动比 LLM judge 低 92~913 倍</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="judge-4" data-ev="third" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100614133171552435" target="_blank" rel="noopener">AI 相关性预筛分类 ↗</a><a class="anchor" href="#judge-4" aria-label="本案例链接">#</a><span class="who">@Khazix0918</span></div>
+              <p class="what">AI 相关性预筛分类，对照 GLM 5.3 Flash 等</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>GLM 5.3 Flash 全对但最慢最贵；Jev 准确性第二、便宜很多</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="judge-5" data-ev="relay" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100426999546184123" target="_blank" rel="noopener">1,018 篇论文主题分类 ↗</a><a class="anchor" href="#judge-5" aria-label="本案例链接">#</a><span class="who">nutlope</span></div>
+              <p class="what">DeepSeek V4 Flash 先摘要，再由 Jev 分到 24 个主题</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>总价 $0.08，单篇端到端中位 256ms</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="judge-6" data-ev="self" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100718364922683499" target="_blank" rel="noopener">邮件分类级联 ↗</a><a class="anchor" href="#judge-6" aria-label="本案例链接">#</a><span class="who">nutlope</span></div>
+              <p class="what">给邮件分类，拿不准的升级给 Kimi K3</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>1.42 秒分完 100 封，96/100 正确，约 $0.07</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="judge-7" data-ev="relay" data-pol="pos">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2102744556286652805" target="_blank" rel="noopener">AI 问卷后台换掉 Flash-Lite ↗</a><a class="anchor" href="#judge-7" aria-label="本案例链接">#</a><span class="who">匿名团队（@realchendahuang 汇总）</span></div>
+              <p class="what">替换线上判断接口原用的 Gemini 3.5 Flash-Lite</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>速度 x2、成本 -85%</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="judge-8" data-ev="relay" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">Notra 生产分类器切换<a class="anchor" href="#judge-8" aria-label="本案例链接">#</a><span class="who">Notra（170⭐）</span></div>
+              <p class="what">生产环境用开关把分类器从 LLM 切到 Jev</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>目标 300ms p50</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="judge-9" data-ev="relay" data-pol="pos">
+            <span class="dt">09-27</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103880928409862323" target="_blank" rel="noopener">Kiln 锁模型只改外围 ↗</a><a class="anchor" href="#judge-9" aria-label="本案例链接">#</a><span class="who">Kiln</span></div>
+              <p class="what">锁死 Jev，只改输入侧 harness，给多音字「还」注音</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>错误减半、成本 1/7</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="judge-10" data-ev="self" data-pol="neg">
+            <span class="dt">09-27</span>
+            <div class="main"><div class="t"><a href="https://gist.github.com/nicobrenner/056a5aaff5d0119c0032ecdad5029557" target="_blank" rel="noopener">嵌入+逻辑回归压过 Jev ↗</a><a class="anchor" href="#judge-10" aria-label="本案例链接">#</a><span class="who">gist 作者 nicobrenner</span></div>
+              <p class="what">Banking77 意图分类：嵌入+逻辑回归对比 Jev 零样本</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>bge-large+LR 94.25% vs Jev 零样本 87.0%；分类器 642KB</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-safety" style="--h:25">
+        <h3><i></i>安全·合规·监控<small>7 例</small></h3>
+        <p class="intro">监控和初筛要求量大、便宜，Jev 在成本上优势明显（CoT 监控便宜 566x、漏扫约 $0.02/次）。但两份第三方实测指向同一边界：Southbridge 发现编码绕过即可漏拦，LessWrong 实测对有害样本漏报风险更高；另有红队自报间接注入成功率 43.5%。适合防手滑，不适合单独防蓄意攻击。</p>
+        <ul class="cases">
+          <li class="case" id="safety-1" data-ev="third" data-pol="neu">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://www.lesswrong.com/posts/GHCNKiFzDYThTELFp/jev-as-a-cot-monitor-6x-faster-and-500x-cheaper" target="_blank" rel="noopener">Jev 当 CoT 监控器 ↗</a><a class="anchor" href="#safety-1" aria-label="本案例链接">#</a><span class="who">llmpsychosis（LessWrong）</span></div>
+              <p class="what">筛查 2,200 条 ReasoningShield 标注思维链</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>精确匹配 71.5%≈Sonnet 5，542ms，便宜 566x；Harmful 级 F1 落后</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="safety-2" data-ev="third" data-pol="neu">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://www.southbridge.ai/blog/jev-watching-the-agents" target="_blank" rel="noopener">Southbridge：Jev 当 agent 监工 ↗</a><a class="anchor" href="#safety-2" aria-label="本案例链接">#</a><span class="who">Southbridge</span></div>
+              <p class="what">在 22 万次真实工具调用上判进度、判危险命令</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>测进度/估耗时最准；拦危险命令会漏，hex/Python 可绕过、约 1% 重试翻供</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="safety-3" data-ev="self" data-pol="neg">
+            <span class="dt">09-27</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2104003596375425117" target="_blank" rel="noopener">DTap 红队 Jev 1.13 ↗</a><a class="anchor" href="#safety-3" aria-label="本案例链接">#</a><span class="who">自称 DecodingTrust 团队（@zrrrr_cn）</span></div>
+              <p class="what">红队测试 Jev 1.13 驱动的 agent 工具调用</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>直接滥用 ASR 70.1%、间接提示注入 43.5%；自门控可显著降 ASR</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="safety-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103587218812248390" target="_blank" rel="noopener">Depth First Labs 漏洞初筛 ↗</a><a class="anchor" href="#safety-4" aria-label="本案例链接">#</a><span class="who">Depth First Labs</span></div>
+              <p class="what">漏洞扫描初筛，难例升级给前沿模型</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>约 $0.02/次、约 2 秒，称接近 GPT-5.6 Luna 找洞数（自有基准）</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="safety-5" data-ev="self" data-pol="neg">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101656436136661163" target="_blank" rel="noopener">验证码套利爆料 ↗</a><a class="anchor" href="#safety-5" aria-label="本案例链接">#</a><span class="who">@kenonews</span></div>
+              <p class="what">用 Jev 破验证码，对标真人打码市场</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>市场约 1 美分/个 vs Jev 0.68 美分/100 个，自算毛利 99.32%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="safety-6" data-ev="self" data-pol="neu">
+            <span class="dt">09-19</span>
+            <div class="main"><div class="t"><a href="https://github.com/win4r/jev-security-scan" target="_blank" rel="noopener">jev-security-scan ↗</a><a class="anchor" href="#safety-6" aria-label="本案例链接">#</a><span class="who">win4r</span></div>
+              <p class="what">装前零执行检查 Agent Skill/MCP 有无可疑行为</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>本地静态检查 + Jev 判定，不启动服务；1★ 新仓，无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="safety-7" data-ev="self" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">pg-redact<a class="anchor" href="#safety-7" aria-label="本案例链接">#</a><span class="who">pg-redact 作者（Show HN）</span></div>
+              <p class="what">在 Postgres 里做内容感知的 PII 脱敏</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>Show HN 2-3 分低热度，无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-realtime" style="--h:65">
+        <h3><i></i>游戏与实时控制<small>8 例</small></h3>
+        <p class="intro">单次几百毫秒、输出免费，让「每一步都问一次模型」变得可负担：贪吃蛇 $1 走一万步，Doom 约 $7/小时。能落地的形态是分层：高频控制留给代码、低频判断给模型、安全层握否决权（jev-drone）。直接拿去做需要预测的交易，转述案例 14 小时亏 300%+。</p>
+        <ul class="cases">
+          <li class="case" id="realtime-1" data-ev="official" data-pol="pos">
+            <span class="dt">09-16</span>
+            <div class="main"><div class="t"><a href="https://www.theregister.com/ai-and-ml/2026/09/16/typesafe-ai-debuts-model-for-machines-that-plays-doom/5296711" target="_blank" rel="noopener">TypeSafe 官方 Doom demo ↗</a><a class="anchor" href="#realtime-1" aria-label="本案例链接">#</a><span class="who">TypeSafe AI</span></div>
+              <p class="what">让 Jev 实时玩 Doom</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>The Register 报道 plays Doom demo；端到端 70-500ms（厂商口径）</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="realtime-2" data-ev="relay" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100234300218388988" target="_blank" rel="noopener">Doom / Minecraft 实时决策 ↗</a><a class="anchor" href="#realtime-2" aria-label="本案例链接">#</a><span class="who">@NFT_Chen</span></div>
+              <p class="what">实时打 Doom、Minecraft 自动生存</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>Doom 每秒约 10 次决策、约 $7/小时；Minecraft 2 分钟约 1 分钱</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="realtime-3" data-ev="relay" data-pol="pos">
+            <span class="dt">09-20</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101394993957274021" target="_blank" rel="noopener">Pipecat 语音管线 operator ↗</a><a class="anchor" href="#realtime-3" aria-label="本案例链接">#</a><span class="who">@jonptaylor（@kwindla 转述）</span></div>
+              <p class="what">在 Pipecat 语音管线里当 operator 角色</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>指令准确率 92.6%、中位 296ms vs GPT-5.6 Luna 81.3%、1008ms</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="realtime-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-27</span>
+            <div class="main"><div class="t"><a href="https://github.com/RomanSlack/jev-drone" target="_blank" rel="noopener">jev-drone 无人机战术层 ↗</a><a class="anchor" href="#realtime-4" aria-label="本案例链接">#</a><span class="who">RomanSlack</span></div>
+              <p class="what">仿真无人机每秒约 3 次战术判断，安全层握否决权</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>0 碰撞，目标可见率 19%→82%，安全反射介入 65-71%→9%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="realtime-5" data-ev="relay" data-pol="pos">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://github.com/TianyuCodings/JevHarness" target="_blank" rel="noopener">JevHarness 玩宝可梦 ↗</a><a class="anchor" href="#realtime-5" aria-label="本案例链接">#</a><span class="who">TianyuCodings</span></div>
+              <p class="what">LLM 先写任务专属决策流程，冻结后只跑代码+Jev 判断</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>宝可梦 5 轮迭代胜率 25%→75%（@NFT_Chen 推文口径）</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="realtime-6" data-ev="third" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100516953496670430" target="_blank" rel="noopener">贪吃蛇每步一问 ↗</a><a class="anchor" href="#realtime-6" aria-label="本案例链接">#</a><span class="who">@chenchengpro</span></div>
+              <p class="what">贪吃蛇每走一步问一次 Jev</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>200 请求 $0.02，$1 可走一万步</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="realtime-7" data-ev="self" data-pol="neu">
+            <span class="dt">09-25</span>
+            <div class="main"><div class="t"><a href="https://jev-pokemon.vercel.app/" target="_blank" rel="noopener">jev-pokemon ↗</a><a class="anchor" href="#realtime-7" aria-label="本案例链接">#</a><span class="who">christianmat</span></div>
+              <p class="what">用 Jev 的决策速度玩宝可梦红</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>开源，全程直播 token 与成本；无胜率数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="realtime-8" data-ev="relay" data-pol="neg">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100619720772694036" target="_blank" rel="noopener">链上自动交易 ↗</a><a class="anchor" href="#realtime-8" aria-label="本案例链接">#</a><span class="who">Monad 团队 @jarrodwatts（@SUOHA_AI 转述）</span></div>
+              <p class="what">纯 AI 原生链上自动交易系统</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>demo 跑 14 小时亏 300%+</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-context" style="--h:200">
+        <h3><i></i>上下文·记忆·检索<small>8 例</small></h3>
+        <p class="intro">Jev 在这里做「留谁、选谁」：Jevgrep 逐层缩小代码范围，10 个任务成本 $7.62→$5.44。但纯检索和压缩并不稳：GoSail 实测重排没打赢 bge-m3，Teknium 发现 Jev 即时压缩等价于一条删工具调用的规则，而且每次压缩都会打断缓存。</p>
+        <ul class="cases">
+          <li class="case" id="context-1" data-ev="self" data-pol="pos">
+            <span class="dt">09-28</span>
+            <div class="main"><div class="t"><a href="https://github.com/dzhng/jevgrep" target="_blank" rel="noopener">Jevgrep ↗</a><a class="anchor" href="#context-1" aria-label="本案例链接">#</a><span class="who">dzhng</span></div>
+              <p class="what">逐层缩小代码搜索范围，给 coding agent 带行号片段</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>10 个任务成本 $7.62→$5.44；v0.4 称与 subagent 持平、省 30%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="context-2" data-ev="third" data-pol="neg">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://x.com/Teknium/status/2101398453578555898" target="_blank" rel="noopener">Hermes 压缩评测证伪即时压缩 ↗</a><a class="anchor" href="#context-2" aria-label="本案例链接">#</a><span class="who">Teknium（Hermes）</span></div>
+              <p class="what">在 Hermes 公开压缩评测上跑 Jev 即时压缩</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>结果等价于直接删工具调用的程序化规则；每次压缩打断缓存</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="context-3" data-ev="third" data-pol="neg">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100877682972258619" target="_blank" rel="noopener">Agent Skills Hub 检索重排 ↗</a><a class="anchor" href="#context-3" aria-label="本案例链接">#</a><span class="who">GoSail</span></div>
+              <p class="what">给 33,047 条技能目录做检索重排</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>164 条查询、9,831 对标注、总成本 $2.6；Jev 单独重排没打赢 bge-m3</div>
+            <span class="ev third">第三方实测</span>
+          </li>
+          <li class="case" id="context-4" data-ev="relay" data-pol="pos">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103603205821366311" target="_blank" rel="noopener">Jev-Mem 记忆控制器 ↗</a><a class="anchor" href="#context-4" aria-label="本案例链接">#</a><span class="who">报告作者未核（@omarsar0 转述）</span></div>
+              <p class="what">轻量控制器全权做记忆存取，LLM 只在最后作答</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>构建快 6.6x、查询延迟降 36.7%，LoCoMo 0.777、较最强基线 +11%</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="context-5" data-ev="relay" data-pol="neu">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101942956567433395" target="_blank" rel="noopener">Jev Skill Suggestion ↗</a><a class="anchor" href="#context-5" aria-label="本案例链接">#</a><span class="who">claude-code-templates Mod（@realfxw 推荐）</span></div>
+              <p class="what">按用户指令挑出高置信度命中的技能再注入</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>技能常态零占用上下文；无独立效果数据</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="context-6" data-ev="relay" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">Instant compaction 插件<a class="anchor" href="#context-6" aria-label="本案例链接">#</a><span class="who">@tamarajtran</span></div>
+              <p class="what">给工具调用打分、丢弃无关项做即时压缩</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>插件已开源；@NFT_Chen 演示 156k→62k（该号有炒作前科）</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="context-7" data-ev="self" data-pol="neu">
+            <span class="dt">09-29</span>
+            <div class="main"><div class="t"><a href="https://github.com/Shanghua-Gao/RSI-Jev" target="_blank" rel="noopener">RSI-Jev 记忆排序 RL ↗</a><a class="anchor" href="#context-7" aria-label="本案例链接">#</a><span class="who">Shanghua Gao</span></div>
+              <p class="what">在 2B 决策模型上用 RL 学把正确记忆排在前面</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>59 个 RL 实验多数失败；有效做法使长记忆基准 +60%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="context-8" data-ev="self" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">Custom Relevance 排序<a class="anchor" href="#context-8" aria-label="本案例链接">#</a><span class="who">jev.foglight.co</span></div>
+              <p class="what">描述需求，让 Jev 给内容做相关性排序</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>Show HN 2-3 分低热度，无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-platform" style="--h:340">
+        <h3><i></i>框架与平台接入<small>8 例</small></h3>
+        <p class="intro">发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。</p>
+        <ul class="cases">
+          <li class="case" id="platform-1" data-ev="official" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100744709589316009" target="_blank" rel="noopener">OpenRouter 上架 Jev ↗</a><a class="anchor" href="#platform-1" aria-label="本案例链接">#</a><span class="who">OpenRouter</span></div>
+              <p class="what">官宣 Jev 上架 OpenRouter beta</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>waitlist 期结束，可直接调用</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="platform-2" data-ev="official" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">pydantic-ai TypeSafeModel<a class="anchor" href="#platform-2" aria-label="本案例链接">#</a><span class="who">Pydantic</span></div>
+              <p class="what">pydantic-ai v2.45.0 新增 TypeSafeModel</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>release notes 核实；19,869★ 框架原生接入</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="platform-3" data-ev="official" data-pol="pos">
+            <span class="dt">09-25</span>
+            <div class="main"><div class="t">DSPy 3.4.0 决策类型<a class="anchor" href="#platform-3" aria-label="本案例链接">#</a><span class="who">DSPy</span></div>
+              <p class="what">新增 Noul/Choice/Score 三种实验性决策类型</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>ReAnchor 优化器按任务指标校准决策置信度（release notes 核实）</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="platform-4" data-ev="official" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100843185383862626" target="_blank" rel="noopener">LangChain：Building a Harness with Jev ↗</a><a class="anchor" href="#platform-4" aria-label="本案例链接">#</a><span class="who">LangChain（Sydney Runkle）</span></div>
+              <p class="what">把 Jev 当 agent 决策层写进 harness 指南</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>官方账号官宣「LangChain 🤝 Jev!」；登上 Interrupt 主题演讲</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="platform-5" data-ev="relay" data-pol="pos">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">Vercel AI Gateway<a class="anchor" href="#platform-5" aria-label="本案例链接">#</a><span class="who">Vercel</span></div>
+              <p class="what">Jev 进 Vercel AI Gateway，免排队直调</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>Arcturus 转述：Vercel 称其为 AI Gateway 史上采用最快模型</div>
+            <span class="ev relay">转述未核</span>
+          </li>
+          <li class="case" id="platform-6" data-ev="official" data-pol="neu">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2103559381530955859" target="_blank" rel="noopener">Pydantic AI Gateway ↗</a><a class="anchor" href="#platform-6" aria-label="本案例链接">#</a><span class="who">Pydantic</span></div>
+              <p class="what">Pydantic AI Gateway 上架 Jev</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>一个 key 统一管用量与护栏；价格、限流未披露</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="platform-7" data-ev="self" data-pol="pos">
+            <span class="dt">09-17</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2100370557405667768" target="_blank" rel="noopener">DuckDB 扩展 ↗</a><a class="anchor" href="#platform-7" aria-label="本案例链接">#</a><span class="who">hamiltonulmer</span></div>
+              <p class="what">做成 DuckDB 扩展，SQL 里逐行给 CSV/parquet 分类</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>1k 行约 10 秒，作者称优于通用 LLM 分类</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="platform-8" data-ev="self" data-pol="neu">
+            <span class="dt">09-18</span>
+            <div class="main"><div class="t">Bannerbear 字段映射<a class="anchor" href="#platform-8" aria-label="本案例链接">#</a><span class="who">Bannerbear（@yongfook）</span></div>
+              <p class="what">模板与数据源字段名不一致时一键映射</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>首个公开上线用例；无效果数据</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
+      <div class="grp" id="list-opensource" style="--h:110">
+        <h3><i></i>开源复刻与自部署<small>10 例</small></h3>
+        <p class="intro">Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。</p>
+        <ul class="cases">
+          <li class="case" id="opensource-1" data-ev="self" data-pol="neg">
+            <span class="dt">09-23</span>
+            <div class="main"><div class="t"><a href="https://www.nobodywho.ai/posts/jev-in-25-lines/" target="_blank" rel="noopener">Jev in 25 Lines of Python ↗</a><a class="anchor" href="#opensource-1" aria-label="本案例链接">#</a><span class="who">nobodywho.ai</span></div>
+              <p class="what">25 行 Python 读本地小模型的选项 logits 复现 Jev</p></div>
+            <div class="res"><i class="pol neg" title="反面"></i>Qwen3-0.6B GGUF 钓鱼分类给出 Phishing 0.885；HN 329 分</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-2" data-ev="self" data-pol="neu">
+            <span class="dt">09-28</span>
+            <div class="main"><div class="t"><a href="http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html" target="_blank" rel="noopener">logprobs 限选项分类 + 视觉 ↗</a><a class="anchor" href="#opensource-2" aria-label="本案例链接">#</a><span class="who">allanrbo</span></div>
+              <p class="what">用普通模型 logprobs 做限选项分类，含摄像头画面</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>本地 Gemma 4 12B 三问判断约 1 FPS，gpt-6-luna 约 0.2 FPS</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-3" data-ev="self" data-pol="neu">
+            <span class="dt">09-19</span>
+            <div class="main"><div class="t"><a href="https://github.com/bespokelabsai/nimble" target="_blank" rel="noopener">Bespoke-Nimble-9B ↗</a><a class="anchor" href="#opensource-3" aria-label="本案例链接">#</a><span class="who">Bespoke Labs</span></div>
+              <p class="what">Qwen3.5-9B LoRA 复刻，数据、权重、配方全公开</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>324 条自建评测 Nimble 90.1% vs Jev 93.2%（原始 9B 66.4%）</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-4" data-ev="self" data-pol="pos">
+            <span class="dt">09-20</span>
+            <div class="main"><div class="t"><a href="https://x.com/mmastrac/status/2100626193943052784" target="_blank" rel="noopener">DiffusionGemma 当本地 Jev ↗</a><a class="anchor" href="#opensource-4" aria-label="本案例链接">#</a><span class="who">Matt Mastracci / vLLM</span></div>
+              <p class="what">vLLM 补丁把 DiffusionGemma 当本地 Jev 跑</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>与云端 Jev 智能大致打平，暖机后本地 DGX Spark 多数任务更快</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-5" data-ev="self" data-pol="pos">
+            <span class="dt">09-25</span>
+            <div class="main"><div class="t"><a href="https://github.com/Contrastive-LM/CLM" target="_blank" rel="noopener">CLM-8B ↗</a><a class="anchor" href="#opensource-5" aria-label="本案例链接">#</a><span class="who">斯坦福＋NVIDIA（@jackyk02 牵头）</span></div>
+              <p class="what">对比学习把「状态→动作」决策做成向量检索</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>自称比 Jev 推理快最多 9 倍、效果相当；微调后 DeepSWE 81.6%</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-6" data-ev="self" data-pol="pos">
+            <span class="dt">09-24</span>
+            <div class="main"><div class="t"><a href="https://github.com/togethercomputer/tev1" target="_blank" rel="noopener">Together tev1-4B ↗</a><a class="anchor" href="#opensource-6" aria-label="本案例链接">#</a><span class="who">Together AI（nutlope）</span></div>
+              <p class="what">Qwen3.5 4B 自训 Jev 式决策模型并上架</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>训练 $17、约 25 分钟、37,840 条示例；输入 $0.042/M、输出免费</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-7" data-ev="self" data-pol="pos">
+            <span class="dt">09-21</span>
+            <div class="main"><div class="t"><a href="https://x.com/i/status/2101709185155231895" target="_blank" rel="noopener">$42 自训 Jev 级判断模型 ↗</a><a class="anchor" href="#opensource-7" aria-label="本案例链接">#</a><span class="who">AstroHanRay</span></div>
+              <p class="what">Qwen3.5-4B + rank-8 LoRA + RLCD 复刻</p></div>
+            <div class="res"><i class="pol pos" title="正面"></i>3.2 万题、9 GPU 小时约 $42；自称 JevBench 120 题逐题打平</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-8" data-ev="official" data-pol="neu">
+            <span class="dt">09-26</span>
+            <div class="main"><div class="t"><a href="https://openrouter.ai/jaredpalmer/kev-4b" target="_blank" rel="noopener">Kev 4B ↗</a><a class="anchor" href="#opensource-8" aria-label="本案例链接">#</a><span class="who">Jared Palmer</span></div>
+              <p class="what">开源 Kev 4B，走与 Jev 相同的 /v1/systemone 契约</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>OpenRouter 在架，$0.042/M 输入、$0 输出，约 $0.019/千次决策</div>
+            <span class="ev official">官方</span>
+          </li>
+          <li class="case" id="opensource-9" data-ev="self" data-pol="neu">
+            <span class="dt">09-19</span>
+            <div class="main"><div class="t"><a href="https://github.com/githubnext/localjev" target="_blank" rel="noopener">githubnext/localjev ↗</a><a class="anchor" href="#opensource-9" aria-label="本案例链接">#</a><span class="who">GitHub Next</span></div>
+              <p class="what">团队不是人人有 Jev 权限，用本地推理拼「穷人版 Jev」</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>对比评测 diffusiongemma/Qwen MoE/Gemma 4；174★，结论数字未读</div>
+            <span class="ev self">作者自报</span>
+          </li>
+          <li class="case" id="opensource-10" data-ev="self" data-pol="neu">
+            <span class="dt">09-29</span>
+            <div class="main"><div class="t"><a href="https://jevstiller.pages.dev/posts/the-guarantee/" target="_blank" rel="noopener">Jevstiller ↗</a><a class="anchor" href="#opensource-10" aria-label="本案例链接">#</a><span class="who">Jevstiller 作者（Show HN）</span></div>
+              <p class="what">用 Jev 答案蒸馏本地小模型抢答，拿不准回落 Jev</p></div>
+            <div class="res"><i class="pol neu" title="中性"></i>本地 CPU 约 15ms、Jev API 约 300ms；用公式约束与 Jev 一致率下限</div>
+            <span class="ev self">作者自报</span>
+          </li>
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>
   </section>
 
-  <div class="filters" role="group" aria-label="按证据筛选">
-    <span class="label">筛选</span>
-    <button class="chip" id="f-all" data-f="all" aria-pressed="true">全部</button>
-    <button class="chip" id="f-third" data-f="third" aria-pressed="false">只看第三方实测 / 官方</button>
-    <button class="chip" id="f-neg" data-f="neg" aria-pressed="false">只看反面结果</button>
-  </div>
-  <div class="legend-line" style="padding-top:10px">
-    <span><i class="pol pos" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 正面</span>
-    <span><i class="pol neg" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 反面</span>
-    <span><i class="pol neu" style="display:inline-block;width:8px;height:8px;border-radius:50%"></i> 中性 / 有保留</span>
-    <span>卡片上的大数字取自该类最有代表性的一条案例，下方小字是来源和证据强度</span>
-  </div>
-
-  <main>
-    <section class="cat" id="browser" aria-labelledby="h-browser">
-      <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-browser">浏览器与 Computer Use</h2></div>
-        <div><p class="tag">每一步选哪个操作、点哪个页面元素</p><p>点按钮本质是离散多选题，Jev 每步只选操作和元素，单步快、成本低，短任务 demo 普遍在 7 秒级。但转述的长任务实测 Jev 1/20 vs GPT Luna 17/20：零推理、遇弹窗或验证码不会回退。适合短链路和高并发测试，不适合长链路自主操作。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="browser-1" data-ev="self" data-pol="pos">
-          <span class="date">09-24</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/browser-use/jev-ultrafast" target="_blank" rel="noopener">browser-use/jev-ultrafast ↗</a><a class="anchor" href="#browser-1" aria-label="本案例链接">#</a><span class="who">Browser Use</span></div>
-            <p class="what">每步只做两个决策：选操作、选页面元素</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>同任务耗时中位数 9.45s→7.09s，通信次数 1092→101（作者自测三轮）</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="browser-2" data-ev="relay" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100669930001822202" target="_blank" rel="noopener">Jev × Browser Use 7 秒查航班 ↗</a><a class="anchor" href="#browser-2" aria-label="本案例链接">#</a><span class="who">Browser Use（@0xTykoo 转述）</span></div>
-            <p class="what">网页 agent 查苏黎世—伦敦航班</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>约 7.1 秒、成本 4 厘美金；计时从初始页面观察完成后开始</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="browser-3" data-ev="relay" data-pol="neg">
-          <span class="date">09-20</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101367171687280894" target="_blank" rel="noopener">jev-ultrafast 长链路 20 题实测 ↗</a><a class="anchor" href="#browser-3" aria-label="本案例链接">#</a><span class="who">Browser Use 创始人（@SUOHA_AI 转述）</span></div>
-            <p class="what">20 道真实长任务网页操作</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>Jev 1/20 vs GPT Luna 17/20；零推理，遇弹窗/验证码不会回退</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="browser-4" data-ev="self" data-pol="pos">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103512634293162443" target="_blank" rel="noopener">Lightpanda × Jev ↗</a><a class="anchor" href="#browser-4" aria-label="本案例链接">#</a><span class="who">Lightpanda</span></div>
-            <p class="what">Jev 做决策，Lightpanda 浏览器执行点击</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>单机 129 个 agent（Chrome 约 12），内存省 11 倍，6.7s vs 14.1s</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="browser-5" data-ev="third" data-pol="pos">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103450014143947164" target="_blank" rel="noopener">Playwright CLI + Jev 对比 MCP ↗</a><a class="anchor" href="#browser-5" aria-label="本案例链接">#</a><span class="who">filip_hric</span></div>
-            <p class="what">用模糊指令（新建看板）驱动浏览器测试</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>比 Playwright MCP 插件便宜 98%、快一倍</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="browser-6" data-ev="relay" data-pol="pos">
-          <span class="date">09-20</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/rafalwilinski/status/2100882207879434359" target="_blank" rel="noopener">百路无头浏览器对抗测试 ↗</a><a class="anchor" href="#browser-6" aria-label="本案例链接">#</a><span class="who">Rafal Wilinski（前 Zapier AI Agent 负责人）</span></div>
-            <p class="what">在页面状态+预设动作中 100ms 选一个，并发轰炸前端</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>上百路无头浏览器一轮几美分；输出免费使并发边际成本近零</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="browser-7" data-ev="self" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">jev-use（Jev + Cua Driver）<a class="anchor" href="#browser-7" aria-label="本案例链接">#</a><span class="who">Cua（@trycua）</span></div>
-            <p class="what">用 Jev + Cua Driver 做快速 computer use</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>三平台 dev preview（trycua/cua Draft #3943），无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="browser-8" data-ev="self" data-pol="neu">
-          <span class="date">09-29</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/Ice-Hazymoon/jevwright" target="_blank" rel="noopener">jevwright ↗</a><a class="anchor" href="#browser-8" aria-label="本案例链接">#</a><span class="who">Ice-Hazymoon</span></div>
-            <p class="what">AI 找一次页面控件并记录，之后照记录回放测试</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>7★ 早期项目，作者称成本极低、速度快，无实测数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="routing" aria-labelledby="h-routing">
-      <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-routing">Agent 路由与调度</h2></div>
-        <div><p class="tag">这件事交给谁做、用哪个模型、要不要升级</p><p>路由是在固定候选里挑一个，正好是 Jev 的题型：firstmate 派单 25 个任务与 Fable 判断全同，派单成本降 71%。但把 Jev 当整条编码链路的路由器时，theo 实测耗时约 5 倍、成本略高，Magpie 作者也自述内部测试效果差。路由分错不报错只变差，上线前要先配评测集。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="routing-1" data-ev="self" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100468943853085061" target="_blank" rel="noopener">firstmate 派单决策 ↗</a><a class="anchor" href="#routing-1" aria-label="本案例链接">#</a><span class="who">kunchenguid</span></div>
-            <p class="what">派单：读规则、查额度、选 harness×模型×推理力度</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>25 任务与 Fable 决策全同，单次~200ms；派单成本 -71%、耗时 -90%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="routing-2" data-ev="relay" data-pol="pos">
-          <span class="date">09-28</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2104011604472082941" target="_blank" rel="noopener">OpenRouter Jev Router ↗</a><a class="anchor" href="#routing-2" aria-label="本案例链接">#</a><span class="who">OpenRouter</span></div>
-            <p class="what">每轮请求前判难度，决定沿用、加推理强度或换模型</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>官方自测 423 个 agent 任务 237 vs Auto Router 130（约 +82%）</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="routing-3" data-ev="third" data-pol="neg">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103774771788108008" target="_blank" rel="noopener">theo 自费实测 Jev Router ↗</a><a class="anchor" href="#routing-3" aria-label="本案例链接">#</a><span class="who">theo（t3.gg 创始人）</span></div>
-            <p class="what">自费 $1,000 用 Jev Router 跑编码任务</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>DeepSWE 上与 GPT-6 Astra low 档基本持平、成本略高、耗时约 5 倍</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="routing-4" data-ev="self" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title">Vercel fx auto 模式<a class="anchor" href="#routing-4" aria-label="本案例链接">#</a><span class="who">Vercel（rauchg）</span></div>
-            <p class="what">fx 默认 auto 模式用 Jev，每条命令另有安全评审模型把关</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>Jev p95 快 18x 且更准（厂商口径）</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="routing-5" data-ev="self" data-pol="pos">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101827553048883467" target="_blank" rel="noopener">Holon 调度器语义判断 ↗</a><a class="anchor" href="#routing-5" aria-label="本案例链接">#</a><span class="who">Holon 作者</span></div>
-            <p class="what">事件插队或入队、关联工作项、唤醒睡眠 agent、丢弃过期结果</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>好于预期并重启方案；自训分类器因过度保守失败；无量化数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="routing-6" data-ev="relay" data-pol="pos">
-          <span class="date">09-24</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2102744556286652805" target="_blank" rel="noopener">主模型前置分诊台 ↗</a><a class="anchor" href="#routing-6" aria-label="本案例链接">#</a><span class="who">一线用户（@realchendahuang 汇总 60 多条反馈）</span></div>
-            <p class="what">主模型前面先分诊，大模型只做兜底</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>有团队把 LLM 参与压到约 10%；有人全流程实测 $0.0036</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="routing-7" data-ev="self" data-pol="neu">
-          <span class="date">09-16</span>
-          <div class="main">
-            <div class="title">MLforge 置信度门<a class="anchor" href="#routing-7" aria-label="本案例链接">#</a><span class="who">CoreWeave Hacks 参赛仓 MLforge</span></div>
-            <p class="what">typed Choice + 校准概率决定是否要第二意见</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>置信度 &lt;0.40 触发 second_opinion；无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="routing-8" data-ev="self" data-pol="neg">
-          <span class="date">09-27</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2104042148496842898" target="_blank" rel="noopener">Magpie 语义模型路由 ↗</a><a class="anchor" href="#routing-8" aria-label="本案例链接">#</a><span class="who">yetone（Magpie）</span></div>
-            <p class="what">按语义给请求选模型</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>作者自述内部测试效果差，因大量用户要求仍上线</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="judge" aria-labelledby="h-judge">
-      <div class="cat-head">
-        <div><div class="label">10 个案例</div><h2 id="h-judge">分类·打分·Judge</h2></div>
-        <div><p class="tag">这条内容属于哪类、值几分、过不过</p><p>类目固定、量大的分类和打分是 Jev 最稳的场景：多份第三方实测都是快几倍到几十倍、便宜几十到几百倍。准确率则只是持平或略高：verysmallwoods 实测 Banking77 为 81.6% vs Haiku 80.1%，而嵌入+逻辑回归能到 94.25%。类目固定时经典小模型可能更准更便宜，用前应先对可信标注验证。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="judge-1" data-ev="third" data-pol="pos">
-          <span class="date">09-16</span>
-          <div class="main">
-            <div class="title"><a href="https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds" target="_blank" rel="noopener">Every 用 Jev 给全部文章打分 ↗</a><a class="anchor" href="#judge-1" aria-label="本案例链接">#</a><span class="who">Every（Dan Shipper）</span></div>
-            <p class="what">当 judge 给自己写过的全部内容打分</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>实测约一周，对比 Fable 级模型快 25x、便宜 600x</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="judge-2" data-ev="third" data-pol="neu">
-          <span class="date">09-22</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2102183268137206157" target="_blank" rel="noopener">662 次对照 Haiku 实测 ↗</a><a class="anchor" href="#judge-2" aria-label="本案例链接">#</a><span class="who">@verysmallwoods</span></div>
-            <p class="what">两个 Kaggle 分类数据集，对照 Claude Haiku 4.5</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>准确率 96.5% vs 93.5%、81.6% vs 80.1%；千次$0.08 vs $2.47</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="judge-3" data-ev="relay" data-pol="pos">
-          <span class="date">09-19</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101709596922392606" target="_blank" rel="noopener">LangChain Jev-as-a-Judge ↗</a><a class="anchor" href="#judge-3" aria-label="本案例链接">#</a><span class="who">LangChain</span></div>
-            <p class="what">回放 500 个真实 agent 决策，对比 LLM judge</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>单次约 0.44 秒/$0.00035，质量波动比 LLM judge 低 92~913 倍</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="judge-4" data-ev="third" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100614133171552435" target="_blank" rel="noopener">AI 相关性预筛分类 ↗</a><a class="anchor" href="#judge-4" aria-label="本案例链接">#</a><span class="who">@Khazix0918</span></div>
-            <p class="what">AI 相关性预筛分类，对照 GLM 5.3 Flash 等</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>GLM 5.3 Flash 全对但最慢最贵；Jev 准确性第二、便宜很多</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="judge-5" data-ev="relay" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100426999546184123" target="_blank" rel="noopener">1,018 篇论文主题分类 ↗</a><a class="anchor" href="#judge-5" aria-label="本案例链接">#</a><span class="who">nutlope</span></div>
-            <p class="what">DeepSeek V4 Flash 先摘要，再由 Jev 分到 24 个主题</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>总价 $0.08，单篇端到端中位 256ms</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="judge-6" data-ev="self" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100718364922683499" target="_blank" rel="noopener">邮件分类级联 ↗</a><a class="anchor" href="#judge-6" aria-label="本案例链接">#</a><span class="who">nutlope</span></div>
-            <p class="what">给邮件分类，拿不准的升级给 Kimi K3</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>1.42 秒分完 100 封，96/100 正确，约 $0.07</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="judge-7" data-ev="relay" data-pol="pos">
-          <span class="date">09-24</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2102744556286652805" target="_blank" rel="noopener">AI 问卷后台换掉 Flash-Lite ↗</a><a class="anchor" href="#judge-7" aria-label="本案例链接">#</a><span class="who">匿名团队（@realchendahuang 汇总）</span></div>
-            <p class="what">替换线上判断接口原用的 Gemini 3.5 Flash-Lite</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>速度 x2、成本 -85%</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="judge-8" data-ev="relay" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">Notra 生产分类器切换<a class="anchor" href="#judge-8" aria-label="本案例链接">#</a><span class="who">Notra（170⭐）</span></div>
-            <p class="what">生产环境用开关把分类器从 LLM 切到 Jev</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>目标 300ms p50</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="judge-9" data-ev="relay" data-pol="pos">
-          <span class="date">09-27</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103880928409862323" target="_blank" rel="noopener">Kiln 锁模型只改外围 ↗</a><a class="anchor" href="#judge-9" aria-label="本案例链接">#</a><span class="who">Kiln</span></div>
-            <p class="what">锁死 Jev，只改输入侧 harness，给多音字「还」注音</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>错误减半、成本 1/7</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="judge-10" data-ev="self" data-pol="neg">
-          <span class="date">09-27</span>
-          <div class="main">
-            <div class="title"><a href="https://gist.github.com/nicobrenner/056a5aaff5d0119c0032ecdad5029557" target="_blank" rel="noopener">嵌入+逻辑回归压过 Jev ↗</a><a class="anchor" href="#judge-10" aria-label="本案例链接">#</a><span class="who">gist 作者 nicobrenner</span></div>
-            <p class="what">Banking77 意图分类：嵌入+逻辑回归对比 Jev 零样本</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>bge-large+LR 94.25% vs Jev 零样本 87.0%；分类器 642KB</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="safety" aria-labelledby="h-safety">
-      <div class="cat-head">
-        <div><div class="label">7 个案例</div><h2 id="h-safety">安全·合规·监控</h2></div>
-        <div><p class="tag">这条命令或内容危险吗、要不要拦</p><p>监控和初筛要求量大、便宜，Jev 在成本上优势明显（CoT 监控便宜 566x、漏扫约 $0.02/次）。但两份第三方实测指向同一边界：Southbridge 发现编码绕过即可漏拦，LessWrong 实测对有害样本漏报风险更高；另有红队自报间接注入成功率 43.5%。适合防手滑，不适合单独防蓄意攻击。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="safety-1" data-ev="third" data-pol="neu">
-          <span class="date">09-24</span>
-          <div class="main">
-            <div class="title"><a href="https://www.lesswrong.com/posts/GHCNKiFzDYThTELFp/jev-as-a-cot-monitor-6x-faster-and-500x-cheaper" target="_blank" rel="noopener">Jev 当 CoT 监控器 ↗</a><a class="anchor" href="#safety-1" aria-label="本案例链接">#</a><span class="who">llmpsychosis（LessWrong）</span></div>
-            <p class="what">筛查 2,200 条 ReasoningShield 标注思维链</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>精确匹配 71.5%≈Sonnet 5，542ms，便宜 566x；Harmful 级 F1 落后</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="safety-2" data-ev="third" data-pol="neu">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://www.southbridge.ai/blog/jev-watching-the-agents" target="_blank" rel="noopener">Southbridge：Jev 当 agent 监工 ↗</a><a class="anchor" href="#safety-2" aria-label="本案例链接">#</a><span class="who">Southbridge</span></div>
-            <p class="what">在 22 万次真实工具调用上判进度、判危险命令</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>测进度/估耗时最准；拦危险命令会漏，hex/Python 可绕过、约 1% 重试翻供</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="safety-3" data-ev="self" data-pol="neg">
-          <span class="date">09-27</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2104003596375425117" target="_blank" rel="noopener">DTap 红队 Jev 1.13 ↗</a><a class="anchor" href="#safety-3" aria-label="本案例链接">#</a><span class="who">自称 DecodingTrust 团队（@zrrrr_cn）</span></div>
-            <p class="what">红队测试 Jev 1.13 驱动的 agent 工具调用</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>直接滥用 ASR 70.1%、间接提示注入 43.5%；自门控可显著降 ASR</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="safety-4" data-ev="self" data-pol="pos">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103587218812248390" target="_blank" rel="noopener">Depth First Labs 漏洞初筛 ↗</a><a class="anchor" href="#safety-4" aria-label="本案例链接">#</a><span class="who">Depth First Labs</span></div>
-            <p class="what">漏洞扫描初筛，难例升级给前沿模型</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>约 $0.02/次、约 2 秒，称接近 GPT-5.6 Luna 找洞数（自有基准）</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="safety-5" data-ev="self" data-pol="neg">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101656436136661163" target="_blank" rel="noopener">验证码套利爆料 ↗</a><a class="anchor" href="#safety-5" aria-label="本案例链接">#</a><span class="who">@kenonews</span></div>
-            <p class="what">用 Jev 破验证码，对标真人打码市场</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>市场约 1 美分/个 vs Jev 0.68 美分/100 个，自算毛利 99.32%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="safety-6" data-ev="self" data-pol="neu">
-          <span class="date">09-19</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/win4r/jev-security-scan" target="_blank" rel="noopener">jev-security-scan ↗</a><a class="anchor" href="#safety-6" aria-label="本案例链接">#</a><span class="who">win4r</span></div>
-            <p class="what">装前零执行检查 Agent Skill/MCP 有无可疑行为</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>本地静态检查 + Jev 判定，不启动服务；1★ 新仓，无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="safety-7" data-ev="self" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">pg-redact<a class="anchor" href="#safety-7" aria-label="本案例链接">#</a><span class="who">pg-redact 作者（Show HN）</span></div>
-            <p class="what">在 Postgres 里做内容感知的 PII 脱敏</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>Show HN 2-3 分低热度，无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="realtime" aria-labelledby="h-realtime">
-      <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-realtime">游戏与实时控制</h2></div>
-        <div><p class="tag">每秒几次：下一步动作做什么</p><p>单次几百毫秒、输出免费，让「每一步都问一次模型」变得可负担：贪吃蛇 $1 走一万步，Doom 约 $7/小时。能落地的形态是分层：高频控制留给代码、低频判断给模型、安全层握否决权（jev-drone）。直接拿去做需要预测的交易，转述案例 14 小时亏 300%+。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="realtime-1" data-ev="official" data-pol="pos">
-          <span class="date">09-16</span>
-          <div class="main">
-            <div class="title"><a href="https://www.theregister.com/ai-and-ml/2026/09/16/typesafe-ai-debuts-model-for-machines-that-plays-doom/5296711" target="_blank" rel="noopener">TypeSafe 官方 Doom demo ↗</a><a class="anchor" href="#realtime-1" aria-label="本案例链接">#</a><span class="who">TypeSafe AI</span></div>
-            <p class="what">让 Jev 实时玩 Doom</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>The Register 报道 plays Doom demo；端到端 70-500ms（厂商口径）</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="realtime-2" data-ev="relay" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100234300218388988" target="_blank" rel="noopener">Doom / Minecraft 实时决策 ↗</a><a class="anchor" href="#realtime-2" aria-label="本案例链接">#</a><span class="who">@NFT_Chen</span></div>
-            <p class="what">实时打 Doom、Minecraft 自动生存</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>Doom 每秒约 10 次决策、约 $7/小时；Minecraft 2 分钟约 1 分钱</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="realtime-3" data-ev="relay" data-pol="pos">
-          <span class="date">09-20</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101394993957274021" target="_blank" rel="noopener">Pipecat 语音管线 operator ↗</a><a class="anchor" href="#realtime-3" aria-label="本案例链接">#</a><span class="who">@jonptaylor（@kwindla 转述）</span></div>
-            <p class="what">在 Pipecat 语音管线里当 operator 角色</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>指令准确率 92.6%、中位 296ms vs GPT-5.6 Luna 81.3%、1008ms</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="realtime-4" data-ev="self" data-pol="pos">
-          <span class="date">09-27</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/RomanSlack/jev-drone" target="_blank" rel="noopener">jev-drone 无人机战术层 ↗</a><a class="anchor" href="#realtime-4" aria-label="本案例链接">#</a><span class="who">RomanSlack</span></div>
-            <p class="what">仿真无人机每秒约 3 次战术判断，安全层握否决权</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>0 碰撞，目标可见率 19%→82%，安全反射介入 65-71%→9%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="realtime-5" data-ev="relay" data-pol="pos">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/TianyuCodings/JevHarness" target="_blank" rel="noopener">JevHarness 玩宝可梦 ↗</a><a class="anchor" href="#realtime-5" aria-label="本案例链接">#</a><span class="who">TianyuCodings</span></div>
-            <p class="what">LLM 先写任务专属决策流程，冻结后只跑代码+Jev 判断</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>宝可梦 5 轮迭代胜率 25%→75%（@NFT_Chen 推文口径）</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="realtime-6" data-ev="third" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100516953496670430" target="_blank" rel="noopener">贪吃蛇每步一问 ↗</a><a class="anchor" href="#realtime-6" aria-label="本案例链接">#</a><span class="who">@chenchengpro</span></div>
-            <p class="what">贪吃蛇每走一步问一次 Jev</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>200 请求 $0.02，$1 可走一万步</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="realtime-7" data-ev="self" data-pol="neu">
-          <span class="date">09-25</span>
-          <div class="main">
-            <div class="title"><a href="https://jev-pokemon.vercel.app/" target="_blank" rel="noopener">jev-pokemon ↗</a><a class="anchor" href="#realtime-7" aria-label="本案例链接">#</a><span class="who">christianmat</span></div>
-            <p class="what">用 Jev 的决策速度玩宝可梦红</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>开源，全程直播 token 与成本；无胜率数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="realtime-8" data-ev="relay" data-pol="neg">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100619720772694036" target="_blank" rel="noopener">链上自动交易 ↗</a><a class="anchor" href="#realtime-8" aria-label="本案例链接">#</a><span class="who">Monad 团队 @jarrodwatts（@SUOHA_AI 转述）</span></div>
-            <p class="what">纯 AI 原生链上自动交易系统</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>demo 跑 14 小时亏 300%+</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="context" aria-labelledby="h-context">
-      <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-context">上下文·记忆·检索</h2></div>
-        <div><p class="tag">哪段代码、哪个技能、哪条记忆该进上下文</p><p>Jev 在这里做「留谁、选谁」：Jevgrep 逐层缩小代码范围，10 个任务成本 $7.62→$5.44。但纯检索和压缩并不稳：GoSail 实测重排没打赢 bge-m3，Teknium 发现 Jev 即时压缩等价于一条删工具调用的规则，而且每次压缩都会打断缓存。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="context-1" data-ev="self" data-pol="pos">
-          <span class="date">09-28</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/dzhng/jevgrep" target="_blank" rel="noopener">Jevgrep ↗</a><a class="anchor" href="#context-1" aria-label="本案例链接">#</a><span class="who">dzhng</span></div>
-            <p class="what">逐层缩小代码搜索范围，给 coding agent 带行号片段</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>10 个任务成本 $7.62→$5.44；v0.4 称与 subagent 持平、省 30%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="context-2" data-ev="third" data-pol="neg">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/Teknium/status/2101398453578555898" target="_blank" rel="noopener">Hermes 压缩评测证伪即时压缩 ↗</a><a class="anchor" href="#context-2" aria-label="本案例链接">#</a><span class="who">Teknium（Hermes）</span></div>
-            <p class="what">在 Hermes 公开压缩评测上跑 Jev 即时压缩</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>结果等价于直接删工具调用的程序化规则；每次压缩打断缓存</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="context-3" data-ev="third" data-pol="neg">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100877682972258619" target="_blank" rel="noopener">Agent Skills Hub 检索重排 ↗</a><a class="anchor" href="#context-3" aria-label="本案例链接">#</a><span class="who">GoSail</span></div>
-            <p class="what">给 33,047 条技能目录做检索重排</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>164 条查询、9,831 对标注、总成本 $2.6；Jev 单独重排没打赢 bge-m3</div>
-          <span class="ev third">第三方实测</span>
-        </li>
-        <li class="case" id="context-4" data-ev="relay" data-pol="pos">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103603205821366311" target="_blank" rel="noopener">Jev-Mem 记忆控制器 ↗</a><a class="anchor" href="#context-4" aria-label="本案例链接">#</a><span class="who">报告作者未核（@omarsar0 转述）</span></div>
-            <p class="what">轻量控制器全权做记忆存取，LLM 只在最后作答</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>构建快 6.6x、查询延迟降 36.7%，LoCoMo 0.777、较最强基线 +11%</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="context-5" data-ev="relay" data-pol="neu">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101942956567433395" target="_blank" rel="noopener">Jev Skill Suggestion ↗</a><a class="anchor" href="#context-5" aria-label="本案例链接">#</a><span class="who">claude-code-templates Mod（@realfxw 推荐）</span></div>
-            <p class="what">按用户指令挑出高置信度命中的技能再注入</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>技能常态零占用上下文；无独立效果数据</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="context-6" data-ev="relay" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">Instant compaction 插件<a class="anchor" href="#context-6" aria-label="本案例链接">#</a><span class="who">@tamarajtran</span></div>
-            <p class="what">给工具调用打分、丢弃无关项做即时压缩</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>插件已开源；@NFT_Chen 演示 156k→62k（该号有炒作前科）</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="context-7" data-ev="self" data-pol="neu">
-          <span class="date">09-29</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/Shanghua-Gao/RSI-Jev" target="_blank" rel="noopener">RSI-Jev 记忆排序 RL ↗</a><a class="anchor" href="#context-7" aria-label="本案例链接">#</a><span class="who">Shanghua Gao</span></div>
-            <p class="what">在 2B 决策模型上用 RL 学把正确记忆排在前面</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>59 个 RL 实验多数失败；有效做法使长记忆基准 +60%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="context-8" data-ev="self" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">Custom Relevance 排序<a class="anchor" href="#context-8" aria-label="本案例链接">#</a><span class="who">jev.foglight.co</span></div>
-            <p class="what">描述需求，让 Jev 给内容做相关性排序</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>Show HN 2-3 分低热度，无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="platform" aria-labelledby="h-platform">
-      <div class="cat-head">
-        <div><div class="label">8 个案例</div><h2 id="h-platform">框架与平台接入</h2></div>
-        <div><p class="tag">在常用框架和网关里直接调用 Jev</p><p>发布两周内，Jev 从 waitlist 变成主流基础设施的标准件：OpenRouter、Vercel 与 Pydantic 两个网关可直调，pydantic-ai、DSPy 原生支持，LangChain 官方把它写进 harness 指南。这一类证据多来自官方 release notes 和官方账号，可信度较高，但只证明「能接」，不证明「好用」。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="platform-1" data-ev="official" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100744709589316009" target="_blank" rel="noopener">OpenRouter 上架 Jev ↗</a><a class="anchor" href="#platform-1" aria-label="本案例链接">#</a><span class="who">OpenRouter</span></div>
-            <p class="what">官宣 Jev 上架 OpenRouter beta</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>waitlist 期结束，可直接调用</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="platform-2" data-ev="official" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">pydantic-ai TypeSafeModel<a class="anchor" href="#platform-2" aria-label="本案例链接">#</a><span class="who">Pydantic</span></div>
-            <p class="what">pydantic-ai v2.45.0 新增 TypeSafeModel</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>release notes 核实；19,869★ 框架原生接入</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="platform-3" data-ev="official" data-pol="pos">
-          <span class="date">09-25</span>
-          <div class="main">
-            <div class="title">DSPy 3.4.0 决策类型<a class="anchor" href="#platform-3" aria-label="本案例链接">#</a><span class="who">DSPy</span></div>
-            <p class="what">新增 Noul/Choice/Score 三种实验性决策类型</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>ReAnchor 优化器按任务指标校准决策置信度（release notes 核实）</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="platform-4" data-ev="official" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100843185383862626" target="_blank" rel="noopener">LangChain：Building a Harness with Jev ↗</a><a class="anchor" href="#platform-4" aria-label="本案例链接">#</a><span class="who">LangChain（Sydney Runkle）</span></div>
-            <p class="what">把 Jev 当 agent 决策层写进 harness 指南</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>官方账号官宣「LangChain 🤝 Jev!」；登上 Interrupt 主题演讲</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="platform-5" data-ev="relay" data-pol="pos">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">Vercel AI Gateway<a class="anchor" href="#platform-5" aria-label="本案例链接">#</a><span class="who">Vercel</span></div>
-            <p class="what">Jev 进 Vercel AI Gateway，免排队直调</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>Arcturus 转述：Vercel 称其为 AI Gateway 史上采用最快模型</div>
-          <span class="ev relay">转述未核</span>
-        </li>
-        <li class="case" id="platform-6" data-ev="official" data-pol="neu">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2103559381530955859" target="_blank" rel="noopener">Pydantic AI Gateway ↗</a><a class="anchor" href="#platform-6" aria-label="本案例链接">#</a><span class="who">Pydantic</span></div>
-            <p class="what">Pydantic AI Gateway 上架 Jev</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>一个 key 统一管用量与护栏；价格、限流未披露</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="platform-7" data-ev="self" data-pol="pos">
-          <span class="date">09-17</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2100370557405667768" target="_blank" rel="noopener">DuckDB 扩展 ↗</a><a class="anchor" href="#platform-7" aria-label="本案例链接">#</a><span class="who">hamiltonulmer</span></div>
-            <p class="what">做成 DuckDB 扩展，SQL 里逐行给 CSV/parquet 分类</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>1k 行约 10 秒，作者称优于通用 LLM 分类</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="platform-8" data-ev="self" data-pol="neu">
-          <span class="date">09-18</span>
-          <div class="main">
-            <div class="title">Bannerbear 字段映射<a class="anchor" href="#platform-8" aria-label="本案例链接">#</a><span class="who">Bannerbear（@yongfook）</span></div>
-            <p class="what">模板与数据源字段名不一致时一键映射</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>首个公开上线用例；无效果数据</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>
-    <section class="cat" id="opensource" aria-labelledby="h-opensource">
-      <div class="cat-head">
-        <div><div class="label">10 个案例</div><h2 id="h-opensource">开源复刻与自部署</h2></div>
-        <div><p class="tag">不调 API，在本地做同一道选择题</p><p>Jev 的核心手法（只读候选答案的概率、不逐字生成）用几十行代码就能在本地模型上复现，自训复刻成本在 $17 到 $42 之间。自报成绩多数接近但略低于 Jev（Nimble 90.1% vs 93.2%），优势在自部署、零 API 费和数据不出本地。几乎所有数字都是作者自报，尚无中立横评。</p></div>
-      </div>
-      <ul class="cases">
-        <li class="case" id="opensource-1" data-ev="self" data-pol="neg">
-          <span class="date">09-23</span>
-          <div class="main">
-            <div class="title"><a href="https://www.nobodywho.ai/posts/jev-in-25-lines/" target="_blank" rel="noopener">Jev in 25 Lines of Python ↗</a><a class="anchor" href="#opensource-1" aria-label="本案例链接">#</a><span class="who">nobodywho.ai</span></div>
-            <p class="what">25 行 Python 读本地小模型的选项 logits 复现 Jev</p>
-          </div>
-          <div class="result"><span class="pol neg" title="反面"></span>Qwen3-0.6B GGUF 钓鱼分类给出 Phishing 0.885；HN 329 分</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-2" data-ev="self" data-pol="neu">
-          <span class="date">09-28</span>
-          <div class="main">
-            <div class="title"><a href="http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html" target="_blank" rel="noopener">logprobs 限选项分类 + 视觉 ↗</a><a class="anchor" href="#opensource-2" aria-label="本案例链接">#</a><span class="who">allanrbo</span></div>
-            <p class="what">用普通模型 logprobs 做限选项分类，含摄像头画面</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>本地 Gemma 4 12B 三问判断约 1 FPS，gpt-6-luna 约 0.2 FPS</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-3" data-ev="self" data-pol="neu">
-          <span class="date">09-19</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/bespokelabsai/nimble" target="_blank" rel="noopener">Bespoke-Nimble-9B ↗</a><a class="anchor" href="#opensource-3" aria-label="本案例链接">#</a><span class="who">Bespoke Labs</span></div>
-            <p class="what">Qwen3.5-9B LoRA 复刻，数据、权重、配方全公开</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>324 条自建评测 Nimble 90.1% vs Jev 93.2%（原始 9B 66.4%）</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-4" data-ev="self" data-pol="pos">
-          <span class="date">09-20</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/mmastrac/status/2100626193943052784" target="_blank" rel="noopener">DiffusionGemma 当本地 Jev ↗</a><a class="anchor" href="#opensource-4" aria-label="本案例链接">#</a><span class="who">Matt Mastracci / vLLM</span></div>
-            <p class="what">vLLM 补丁把 DiffusionGemma 当本地 Jev 跑</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>与云端 Jev 智能大致打平，暖机后本地 DGX Spark 多数任务更快</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-5" data-ev="self" data-pol="pos">
-          <span class="date">09-25</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/Contrastive-LM/CLM" target="_blank" rel="noopener">CLM-8B ↗</a><a class="anchor" href="#opensource-5" aria-label="本案例链接">#</a><span class="who">斯坦福＋NVIDIA（@jackyk02 牵头）</span></div>
-            <p class="what">对比学习把「状态→动作」决策做成向量检索</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>自称比 Jev 推理快最多 9 倍、效果相当；微调后 DeepSWE 81.6%</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-6" data-ev="self" data-pol="pos">
-          <span class="date">09-24</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/togethercomputer/tev1" target="_blank" rel="noopener">Together tev1-4B ↗</a><a class="anchor" href="#opensource-6" aria-label="本案例链接">#</a><span class="who">Together AI（nutlope）</span></div>
-            <p class="what">Qwen3.5 4B 自训 Jev 式决策模型并上架</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>训练 $17、约 25 分钟、37,840 条示例；输入 $0.042/M、输出免费</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-7" data-ev="self" data-pol="pos">
-          <span class="date">09-21</span>
-          <div class="main">
-            <div class="title"><a href="https://x.com/i/status/2101709185155231895" target="_blank" rel="noopener">$42 自训 Jev 级判断模型 ↗</a><a class="anchor" href="#opensource-7" aria-label="本案例链接">#</a><span class="who">AstroHanRay</span></div>
-            <p class="what">Qwen3.5-4B + rank-8 LoRA + RLCD 复刻</p>
-          </div>
-          <div class="result"><span class="pol pos" title="正面"></span>3.2 万题、9 GPU 小时约 $42；自称 JevBench 120 题逐题打平</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-8" data-ev="official" data-pol="neu">
-          <span class="date">09-26</span>
-          <div class="main">
-            <div class="title"><a href="https://openrouter.ai/jaredpalmer/kev-4b" target="_blank" rel="noopener">Kev 4B ↗</a><a class="anchor" href="#opensource-8" aria-label="本案例链接">#</a><span class="who">Jared Palmer</span></div>
-            <p class="what">开源 Kev 4B，走与 Jev 相同的 /v1/systemone 契约</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>OpenRouter 在架，$0.042/M 输入、$0 输出，约 $0.019/千次决策</div>
-          <span class="ev official">官方</span>
-        </li>
-        <li class="case" id="opensource-9" data-ev="self" data-pol="neu">
-          <span class="date">09-19</span>
-          <div class="main">
-            <div class="title"><a href="https://github.com/githubnext/localjev" target="_blank" rel="noopener">githubnext/localjev ↗</a><a class="anchor" href="#opensource-9" aria-label="本案例链接">#</a><span class="who">GitHub Next</span></div>
-            <p class="what">团队不是人人有 Jev 权限，用本地推理拼「穷人版 Jev」</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>对比评测 diffusiongemma/Qwen MoE/Gemma 4；174★，结论数字未读</div>
-          <span class="ev self">作者自报</span>
-        </li>
-        <li class="case" id="opensource-10" data-ev="self" data-pol="neu">
-          <span class="date">09-29</span>
-          <div class="main">
-            <div class="title"><a href="https://jevstiller.pages.dev/posts/the-guarantee/" target="_blank" rel="noopener">Jevstiller ↗</a><a class="anchor" href="#opensource-10" aria-label="本案例链接">#</a><span class="who">Jevstiller 作者（Show HN）</span></div>
-            <p class="what">用 Jev 答案蒸馏本地小模型抢答，拿不准回落 Jev</p>
-          </div>
-          <div class="result"><span class="pol neu" title="中性"></span>本地 CPU 约 15ms、Jev API 约 300ms；用公式约束与 Jev 一致率下限</div>
-          <span class="ev self">作者自报</span>
-        </li>
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section></main>
-
   <section class="about" id="about" aria-labelledby="about-h">
-    <div>
-      <div class="label">附录</div>
+    <div class="intro-card">
+      <span class="label">附录</span>
       <h2 id="about-h">Jev 是什么</h2>
       <p>Jev 是 TypeSafe 在 9 月 14 日发布的模型。它不写文字，只做选择题：给它一段内容和几个选项，它直接返回每个选项的概率。所以它快、便宜，适合 agent 里「选哪个」「过不过」「危不危险」这类小判断。</p>
       <dl class="facts"><dt>发布</dt><dd>2026-09-14 官方博客发布（waitlist 制）；09-18 上架 OpenRouter beta；09-22 前后取消候补名单全面开放</dd><dt>价格与速度</dt><dd>厂商口径：输入 $0.042/M token、输出免费；端到端 70-500ms，自称快 40-200x（另有「快 194 倍/便宜 445 倍」口径）；注册送 $5 额度</dd><dt>注意</dt><dd>除框架接入类有官方 release notes 核实外，大部分效果与成本数字为作者自报或转述，尚无独立复现。</dd></dl>
       <blockquote><b>判断题，别让 AI 写作文。</b><br>Vonng《<a href="https://vonng.com/ai/jev-shutup-model/" target="_blank" rel="noopener">无嘴模型：AI 的 OLTP 时刻</a>》</blockquote>
-      <p style="margin-top:18px"><a class="back" href="#idx">↑ 回到分类</a></p>
+      <p style="margin-top:18px"><a class="back" href="#all">↑ 回到案例清单</a></p>
     </div>
     <figure class="specimen" aria-label="一次 Jev 调用的示意">
-      <div class="label">示意 · 一次调用长这样</div>
+      <span class="label">示意 · 一次调用长这样</span>
       <div class="ask"><span class="who">你问</span><span>这封邮件该转给哪个团队？<br><small>选项：账单 / 技术支持 / 销售 / 垃圾邮件</small></span></div>
       <div class="ans"><span class="who">Jev 答</span><div class="dist"><div class="row win"><span class="name">账单</span><span class="track"><span class="fill" style="display:block" data-w="81"></span></span><span class="p">0.81</span></div><div class="row"><span class="name">技术支持</span><span class="track"><span class="fill" style="display:block" data-w="12"></span></span><span class="p">0.12</span></div><div class="row"><span class="name">销售</span><span class="track"><span class="fill" style="display:block" data-w="5"></span></span><span class="p">0.05</span></div><div class="row"><span class="name">垃圾邮件</span><span class="track"><span class="fill" style="display:block" data-w="2"></span></span><span class="p">0.02</span></div></div></div>
       <div class="foot"><span>不写一个字，只给每个选项的概率</span><span>输出 0 token</span></div>
@@ -1102,28 +943,46 @@ footer p { margin: 0; max-width: 60em; }
   </footer>
 </div>
 
+<dialog class="qr-dialog" id="qr-dialog" aria-labelledby="qr-h">
+  <button class="close" type="button" data-close-qr aria-label="关闭">×</button>
+  <h2 id="qr-h">关注公众号</h2>
+  <p>这些案例背后的判断，我写在公众号里。</p>
+  <figure class="qr">
+    <img src="wechat-qr.jpg" width="220" height="220" alt="公众号「小郎碎碎念」二维码" loading="lazy">
+    <figcaption><b>小郎碎碎念</b>微信扫码，或搜索公众号名称</figcaption>
+  </figure>
+</dialog>
+
 <script>
 requestAnimationFrame(() => requestAnimationFrame(() => {
   document.querySelectorAll("[data-w]").forEach(el => el.style.width = el.dataset.w + "%");
-  document.querySelectorAll("[data-h]").forEach(el => el.style.height = el.dataset.h + "%");
 }));
 function applyFilter(f) {
   document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === f)));
-  document.querySelectorAll(".cat").forEach(sec => {
+  document.querySelectorAll(".grp").forEach(g => {
     let shown = 0;
-    sec.querySelectorAll(".case").forEach(li => {
+    g.querySelectorAll(".case").forEach(li => {
       const ok = f === "all" || (f === "third" && (li.dataset.ev === "third" || li.dataset.ev === "official")) || (f === "neg" && li.dataset.pol === "neg");
       li.hidden = !ok; if (ok) shown++;
     });
-    sec.querySelector(".empty").hidden = shown > 0;
+    g.querySelector(".empty").hidden = shown > 0;
   });
   try { localStorage.setItem("jev-filter", f); } catch (e) {}
 }
 document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.f)));
 let saved = "all";
 try { saved = localStorage.getItem("jev-filter") || "all"; } catch (e) {}
-// A shared link to one case must show that case, so it overrides the remembered filter.
-applyFilter(location.hash.includes("-") ? "all" : (["all", "third", "neg"].includes(saved) ? saved : "all"));
+// A shared link to one case (#category-n) must show that case, so it overrides the remembered filter.
+applyFilter(/^#[a-z]+-\d+$/.test(location.hash) ? "all" : (["all", "third", "neg"].includes(saved) ? saved : "all"));
+
+const qr = document.getElementById("qr-dialog");
+document.querySelectorAll("[data-open-qr]").forEach(b => b.addEventListener("click", () => qr.showModal()));
+qr.querySelector("[data-close-qr]").addEventListener("click", () => qr.close());
+// Click on the backdrop (outside the dialog box) closes it; Esc is handled by <dialog> itself.
+qr.addEventListener("click", ev => {
+  const r = qr.getBoundingClientRect();
+  if (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom) qr.close();
+});
 </script>
 </body>
 </html>

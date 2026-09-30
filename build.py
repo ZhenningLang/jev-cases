@@ -11,7 +11,7 @@ ROOT = Path(__file__).parent
 SITE = "https://zhenninglang.github.io/jev-cases/"
 REPO = "https://github.com/ZhenningLang/jev-cases"
 
-# Plate illustrations: one small scene per category, drawn in the category hue (classes map to CSS in template.html).
+# Scene illustrations: one per category, drawn in the category hue (classes map to CSS in template.html).
 SVG = {
     "browser": """
 <rect x="8" y="6" width="224" height="100" rx="8" class="pp"/><rect x="8" y="6" width="224" height="20" rx="8" class="so"/><rect x="8" y="18" width="224" height="8" class="so"/>
@@ -76,19 +76,36 @@ def dist(opts):
 
 
 def case(c, i, k):
+    """One row of the full case list. The id format {category}-{n} is what shared links point at; keep it stable."""
     cid = f'{c["id"]}-{i + 1}'
     ev, pol = EV.get(k["evidence"], "relay"), POL.get(k["polarity"], "neu")
     title = (f'<a href="{e(k["url"])}" target="_blank" rel="noopener">{e(k["title"])} ↗</a>' if k.get("url") else e(k["title"]))
     return f'''
-        <li class="case" id="{cid}" data-ev="{ev}" data-pol="{pol}">
-          <span class="date">{e(k.get("date", "")[5:])}</span>
-          <div class="main">
-            <div class="title">{title}<a class="anchor" href="#{cid}" aria-label="本案例链接">#</a><span class="who">{e(k["who"])}</span></div>
-            <p class="what">{e(k["what"])}</p>
-          </div>
-          <div class="result"><span class="pol {pol}" title="{e(k["polarity"])}"></span>{e(k["result"])}</div>
-          <span class="ev {ev}">{e(k["evidence"])}</span>
-        </li>'''
+          <li class="case" id="{cid}" data-ev="{ev}" data-pol="{pol}">
+            <span class="dt">{e(k.get("date", "")[5:])}</span>
+            <div class="main"><div class="t">{title}<a class="anchor" href="#{cid}" aria-label="本案例链接">#</a><span class="who">{e(k["who"])}</span></div>
+              <p class="what">{e(k["what"])}</p></div>
+            <div class="res"><i class="pol {pol}" title="{e(k["polarity"])}"></i>{e(k["result"])}</div>
+            <span class="ev {ev}">{e(k["evidence"])}</span>
+          </li>'''
+
+
+def chapter(c, i, n):
+    """One scroll-story chapter: the scene card stays pinned (desktop) while three stickers scroll past."""
+    h = c["highlight"]
+    return f'''
+  <section class="chapter" id="{c["id"]}" style="--h:{c["hue"]}" aria-labelledby="h-{c["id"]}">
+    <div class="art"><div class="card">
+      <div class="fld"><div class="no"><b>{i + 1:02d} / {n:02d}</b><span>{len(c["cases"])} 例</span></div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">{SVG[c["id"]]}</svg></div>
+      <h2 id="h-{c["id"]}">{e(c["name"])}</h2></div></div>
+    <div class="text">
+      <div class="sticker tag"><p>{e(c["tagline"])}</p><small>让 Jev 判断这个</small></div>
+      <div class="sticker stat"><div class="num">{e(h["stat"])}</div><div class="lab">{e(h["label"])}</div><div class="src">{e(h["source"])}</div></div>
+      <div class="sticker pit"><span class="boom">翻车!</span><p>{e(c["pitfall"])}</p></div>
+      <a class="more" href="#list-{c["id"]}">看这一类全部 {len(c["cases"])} 个案例 ↓</a>
+    </div>
+  </section>'''
 
 
 def main():
@@ -96,32 +113,17 @@ def main():
     cats, ov = data["categories"], data["overview"]
     missing = [c["id"] for c in cats if c["id"] not in SVG or "highlight" not in c]
     if missing:
-        sys.exit(f"no plate illustration for category: {missing} (add a scene to SVG in build.py and highlight/pitfall/hue to cases.json)")
+        sys.exit(f"no scene illustration for category: {missing} (add a scene to SVG in build.py and highlight/pitfall/hue to cases.json)")
     total = sum(len(c["cases"]) for c in cats)
-    plates = "".join(f'''
-    <a class="plate" href="#{c["id"]}" style="--h:{c["hue"]}">
-      <div class="art">
-        <div><div class="stat">{e(c["highlight"]["stat"])}</div>
-        <div class="stat-label">{e(c["highlight"]["label"])}<span class="stat-src">{e(c["highlight"]["source"])}</span></div></div>
-        <svg viewBox="0 0 240 110" aria-hidden="true">{SVG[c["id"]]}</svg>
-      </div>
-      <div class="body">
-        <h3>{e(c["name"])}<span class="n">{len(c["cases"])} 例</span></h3>
-        <p class="judges">{e(c["tagline"])}</p>
-        <p class="pit">{e(c["pitfall"])}</p>
-        <span class="go">看全部案例 ↓</span>
-      </div>
-    </a>''' for c in cats)
-    sections = "".join(f'''
-    <section class="cat" id="{c["id"]}" aria-labelledby="h-{c["id"]}">
-      <div class="cat-head">
-        <div><div class="label">{len(c["cases"])} 个案例</div><h2 id="h-{c["id"]}">{e(c["name"])}</h2></div>
-        <div><p class="tag">{e(c["tagline"])}</p><p>{e(c["intro"])}</p></div>
-      </div>
-      <ul class="cases">{"".join(case(c, i, k) for i, k in enumerate(c["cases"]))}
-      </ul>
-      <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
-    </section>''' for c in cats)
+    chapters = "".join(chapter(c, i, len(cats)) for i, c in enumerate(cats))
+    groups = "".join(f'''
+      <div class="grp" id="list-{c["id"]}" style="--h:{c["hue"]}">
+        <h3><i></i>{e(c["name"])}<small>{len(c["cases"])} 例</small></h3>
+        <p class="intro">{e(c["intro"])}</p>
+        <ul class="cases">{"".join(case(c, i, k) for i, k in enumerate(c["cases"]))}
+        </ul>
+        <p class="empty" hidden>这一类没有符合筛选条件的案例。</p>
+      </div>''' for c in cats)
     facts = "".join(f"<dt>{k}</dt><dd>{e(v)}</dd>" for k, v in
                     [("发布", ov["launch_date"]), ("价格与速度", "厂商口径：" + ov["pricing_claim"]), ("注意", ov["caveat"])])
     desc = f"{total} 个 Jev 真实落地案例，按「让它判断什么」分成 {len(cats)} 类，每条附数字、来源与证据强度。"
@@ -130,8 +132,7 @@ def main():
         "__DESC__": e(desc), "__SITE__": SITE, "__REPO__": REPO, "__UPDATED__": date.today().isoformat(),
         "__LEDE__": e(ov["plain"]), "__TOTAL__": str(total), "__NCAT__": str(len(cats)), "__FACTS__": facts, "__CAVEAT__": e(ov["caveat"]),
         "__HERO__": dist([["账单", .81], ["技术支持", .12], ["销售", .05], ["垃圾邮件", .02]]),
-        "__COUNT__": f"{len(cats)} 类 · {total} 个案例 · 点卡片跳到该类",
-        "__PLATES__": plates, "__CATS__": sections,
+        "__FIRST__": cats[0]["id"], "__CHAPTERS__": chapters, "__GROUPS__": groups,
     }.items():
         out = out.replace(key, val)
     left = sorted(set(re.findall(r"__[A-Z]+__", out)))
